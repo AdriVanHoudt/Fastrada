@@ -1,0 +1,5 @@
+*.pid
+maven.tar.gz
+remote_file/
+chef-stacktrace.out
+.vagrant/

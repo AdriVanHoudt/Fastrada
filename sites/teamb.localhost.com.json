@@ -1,0 +1,10 @@
+{
+	"name": "teamb.localhost.com",
+	"description": "School vagrant cobol",
+	"run_list": [
+		"recipe[common-packages]",
+		"recipe[java::default]",
+		"recipe[maven]",
+		"recipe[tomcat::default]"
+	]
+}
