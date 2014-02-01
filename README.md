@@ -33,3 +33,7 @@
 	https://github.com/opscode-cookbooks/java (Stripped windows support)
 
 ## Misc
+### Interesting Vagrant Commands
+* `vagrant halt <sitename>` (Stops the vagrant box)
+* `vagrant reload <sitename>` (Restarts the vagrant box)
+* `vagrant provision <sitename>` (Runs the provisioner for vagrant again)
