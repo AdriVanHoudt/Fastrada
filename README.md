@@ -24,10 +24,8 @@
 4. Enter `vagrant up <sitename>` (example: `vagrant up teamb.localhost.com` for the development box)
 5. Wait till it is completely done (Go grab some food or a drink :D)
 6. When it is done press `vagrant ssh <sitename>` (example: `vagrant ssh teamb.localhost.com` for the vagrant box) to enter the terminal
-7. When on the box make sure to run `sudo service nginx restart` if you can not access the webserver
-8. Make sure to run post installation steps, example: symfony2 needs the composer to 	update the vendors, ...
-9. Map `192.168.0.6` to `teamb.localhost.com` (Windows: C:\Windows\System32\drivers\etc\hosts, Ubuntu, mac: /etc/hosts)
-9. Have fun using Vagrant :D
+7. Map `192.168.0.6` to `teamb.localhost.com` (Windows: C:\Windows\System32\drivers\etc\hosts, Ubuntu, mac: /etc/hosts)
+8. Have fun using Vagrant :D
 
 #### Used cookbooks from remote repositories:
 	https://github.com/opscode-cookbooks/java (Stripped windows support)
