@@ -37,3 +37,8 @@
 * `vagrant halt <sitename>` (Stops the vagrant box)
 * `vagrant reload <sitename>` (Restarts the vagrant box)
 * `vagrant provision <sitename>` (Runs the provisioner for vagrant again)
+
+## FAQ
+### Vagrant
+__(When booting i get a error saying that the guest machine entered an invalid state while waiting for it to boot.)__
+This is a virtualbox error, make sure that you disable Enable `VT-x/AMD-V` in <machine> --> Settings --> System --> Acceleration
