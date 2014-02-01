@@ -12,6 +12,7 @@
 * Virtualbox (Get the latest version here: https://www.virtualbox.org/wiki/Downloads)
 * Vagrant (Get the latest version here: http://downloads.vagrantup.com/)
 * Git
+* Git Bash (Instead of CMD)
 
 #### Installation
 1. Clone this repository using `git clone https://github.com/AdriVanHoudt/Fastrada.git`
