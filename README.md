@@ -36,6 +36,12 @@
 * `vagrant reload <sitename>` (Restarts the vagrant box)
 * `vagrant provision <sitename>` (Runs the provisioner for vagrant again)
 
+### Maven
+* deploy: `mvn tomcat7:deploy`
+* redeploy: `mvn tomcat7:redeploy` (Run after you ran the first deploy)
+* Manager URL: `http://teamb.localhost.com:8080/manager`
+* Credentials: `username`: `admin`, `password`: `admin`
+
 ## FAQ
 ### Vagrant
 __(When booting i get a error saying that the guest machine entered an invalid state while waiting for it to boot.)__
