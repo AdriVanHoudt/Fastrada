@@ -1,10 +1,14 @@
 {
 	"name": "teamb.localhost.com",
 	"description": "School vagrant cobol",
+    "tomcat": {
+        "base_version": 7
+    },
 	"run_list": [
 		"recipe[common-packages]",
 		"recipe[java::default]",
-		"recipe[maven]",
-		"recipe[tomcat::default]"
+		"recipe[tomcat::default]",
+		"recipe[tomcat::users]",
+		"recipe[maven]"
 	]
 }

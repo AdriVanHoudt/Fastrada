@@ -24,3 +24,10 @@ common_packages.each do |pkg|
 		:upgrade
 	end
 end
+
+template "/home/vagrant/.m2/settings.xml" do
+  source "maven_settings.erb"
+  mode 0755
+  owner "vagrant"
+  group "vagrant"
+end
