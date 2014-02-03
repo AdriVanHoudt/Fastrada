@@ -14,8 +14,8 @@ Vagrant.configure("2") do |config|
 
             nfs_setting = RUBY_PLATFORM =~ /darwin/ || RUBY_PLATFORM =~ /linux/
 
-            # IF NO NFS: node_config.vm.synced_folder "www", "/var/www", :owner => "www-data", :group => "www-data"
-            node_config.vm.synced_folder "www", "/var/www", :nfs => true
+            node_config.vm.synced_folder "www", "/var/www"
+            #node_config.vm.synced_folder "www", "/var/www", :nfs => true
             
             node_config.vm.box = node[:box]
             node_config.vm.box_url = node[:url]
