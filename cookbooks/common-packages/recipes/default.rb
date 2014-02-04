@@ -25,6 +25,13 @@ common_packages.each do |pkg|
 	end
 end
 
+directory "/home/vagrant/.m2" do
+  owner "vagrant"
+  group "vagrant"
+  mode 00644
+  action :create
+end
+
 template "/home/vagrant/.m2/settings.xml" do
   source "maven_settings.erb"
   mode 0755
