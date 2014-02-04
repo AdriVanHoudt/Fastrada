@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Fastrada_Android</string>
+    <string name="app_name">Fastrada Dashboard</string>
+    <string name="RPM">RPM</string>
 </resources>

@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
+              android:background="@color/background"
         >
-    <TextView
+
+    <ProgressBar
+            android:id="@+id/rpmIndicator"
+            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Hello World, Main"
+            android:layout_height="35dp"
+            android:max="2000"
+            android:progress="900"
+            android:progressDrawable="@drawable/rpmindicator"
             />
-</LinearLayout>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:text="@string/RPM"
+            android:layout_below="@id/rpmIndicator"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/greyWhite"
+            android:textSize="20dp"
+            />
+
+</RelativeLayout>
 
