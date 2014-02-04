@@ -28,7 +28,7 @@ end
 directory "/home/vagrant/.m2" do
   owner "vagrant"
   group "vagrant"
-  mode 00644
+  mode 00775
   action :create
 end
 
