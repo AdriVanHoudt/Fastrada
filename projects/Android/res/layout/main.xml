@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:background="@color/background"
+              xmlns:app="http://schemas.android.com/apk/res/com.example.Fastrada_Android"
+        >
+
+    <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rpmMenu">
+
+        <ProgressBar
+                android:id="@+id/rpmIndicator"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="35dp"
+                android:max="2000"
+                android:progress="900"
+                android:progressDrawable="@drawable/rpmindicator"
+                />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/RPM"
+                android:layout_below="@id/rpmIndicator"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/greyWhite"
+                android:textSize="20dp"
+                />
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rpmMenu">
+
+        <com.example.Fastrada_Android.HoloCircularProgressBar
+                android:id="@+id/speedIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:stroke_width="10dp"
+                app:progress="0.8"
+                app:marker_progress="0.8"
+                app:progress_color="@android:color/holo_red_dark"
+                app:progress_background_color="#cccccc"
+                app:thumb_visible="false"
+                />
+
+        <com.example.Fastrada_Android.HoloCircularProgressBar
+                android:id="@+id/thermometer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                app:stroke_width="10dp"
+                app:progress="0.8"
+                app:marker_progress="0.8"
+                app:progress_color="@android:color/holo_red_dark"
+                app:progress_background_color="#cccccc"
+                app:thumb_visible="false"
+                />
+    </RelativeLayout>
+</RelativeLayout>
+
