@@ -40,4 +40,22 @@ public class MainTest extends ActivityInstrumentationTestCase2<Main> {
         bar.setProgress(800);
 
     }
+
+    public void testMeters() throws Exception {
+        Main activity = getActivity();
+        HoloCircularProgressBar speedMeter = (HoloCircularProgressBar) activity.findViewById(R.id.speedIndicator);
+        HoloCircularProgressBar themormeter = (HoloCircularProgressBar) activity.findViewById(R.id.thermometer);
+
+        Assert.assertEquals("Progress expected = 0.8", 0.8f, speedMeter.getProgress());
+        Assert.assertEquals("Progress expected = 0.8", 0.8f, themormeter.getProgress());
+
+
+     // Cannot call setProgress -  Only the original thread that created a view hierarchy can touch its views - Custom view shortcoming
+    /*    themormeter.setProgress(0.3f);
+        speedMeter.setProgress(0.3f);
+
+        Assert.assertEquals("Progress expected = 0.3", 0.3f, speedMeter.getProgress());
+        Assert.assertEquals("Progress expected = 0.3", 0.3f, themormeter.getProgress());    */
+
+    }
 }
