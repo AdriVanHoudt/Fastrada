@@ -15,4 +15,7 @@
         <attr name="circularProgressBarStyle" format="reference"></attr>
     </declare-styleable>
 
+    <declare-styleable name="TextViewPlus">
+        <attr name="customFont" format="string"/>
+    </declare-styleable>
 </resources>
