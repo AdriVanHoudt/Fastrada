@@ -1,4 +1,4 @@
-package com.example.Fastrada_Android;
+package be.fastrada;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.ProgressBar;
@@ -11,13 +11,13 @@ import junit.framework.Assert;
  * <p/>
  * To run this test, you can type:
  * adb shell am instrument -w \
- * -e class com.example.Fastrada_Android.MainTest \
- * com.example.Fastrada_Android.tests/android.test.InstrumentationTestRunner
+ * -e class be.fastrada.MainTest \
+ * be.fastrada.tests/android.test.InstrumentationTestRunner
  */
 public class MainTest extends ActivityInstrumentationTestCase2<Main> {
 
     public MainTest() {
-        super("com.example.Fastrada_Android", Main.class);
+        super("be.fastrada", Main.class);
     }
 
     public void testProgressBar() throws Exception {
@@ -50,7 +50,7 @@ public class MainTest extends ActivityInstrumentationTestCase2<Main> {
         Assert.assertEquals("Progress expected = 0.8", 0.8f, themormeter.getProgress());
 
 
-     // Cannot call setProgress -  Only the original thread that created a view hierarchy can touch its views - Custom view shortcoming
+        // Cannot call setProgress -  Only the original thread that created a view hierarchy can touch its views - Custom view shortcoming
     /*    themormeter.setProgress(0.3f);
         speedMeter.setProgress(0.3f);
 

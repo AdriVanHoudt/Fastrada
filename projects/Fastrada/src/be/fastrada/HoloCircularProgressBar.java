@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.example.Fastrada_Android;
+package be.fastrada;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
