@@ -54,9 +54,9 @@
                     android:id="@+id/speedIndicator"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:stroke_width="10dp"
+                    app:stroke_width="20dp"
                     app:progress="0.8"
-                    app:marker_progress="0.8"
+                    app:marker_visible="false"
                     app:progress_color="@android:color/holo_red_dark"
                     app:progress_background_color="#cccccc"
                     app:thumb_visible="false"
@@ -91,16 +91,15 @@
         <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/thermometer"
                 android:layout_alignParentRight="true">
 
             <be.fastrada.HoloCircularProgressBar
                     android:id="@+id/thermometer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:stroke_width="10dp"
+                    app:stroke_width="20dp"
                     app:progress="0.8"
-                    app:marker_progress="0.8"
+                    app:marker_visible="false"
                     app:progress_color="@android:color/holo_red_dark"
                     app:progress_background_color="#cccccc"
                     app:thumb_visible="false"
@@ -140,9 +139,10 @@
                 <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:id="@+id/settings"
                         android:layout_alignParentRight="true"
                         android:src="@android:drawable/ic_menu_preferences"
-                        android:contentDescription="settings"
+                        android:contentDescription="@string/settings"
                         android:padding="8dp"
                         />
         </RelativeLayout>

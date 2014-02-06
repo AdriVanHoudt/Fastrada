@@ -1,5 +1,6 @@
 package be.fastrada;
 
+import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.ProgressBar;
 import junit.framework.Assert;
@@ -44,10 +45,10 @@ public class MainTest extends ActivityInstrumentationTestCase2<Main> {
     public void testMeters() throws Exception {
         Main activity = getActivity();
         HoloCircularProgressBar speedMeter = (HoloCircularProgressBar) activity.findViewById(R.id.speedIndicator);
-        HoloCircularProgressBar themormeter = (HoloCircularProgressBar) activity.findViewById(R.id.thermometer);
+        HoloCircularProgressBar thermometer = (HoloCircularProgressBar) activity.findViewById(R.id.thermometer);
 
         Assert.assertEquals("Progress expected = 0.8", 0.8f, speedMeter.getProgress());
-        Assert.assertEquals("Progress expected = 0.8", 0.8f, themormeter.getProgress());
+        Assert.assertEquals("Progress expected = 0.8", 0.8f, thermometer.getProgress());
 
 
         // Cannot call setProgress -  Only the original thread that created a view hierarchy can touch its views - Custom view shortcoming
@@ -56,6 +57,23 @@ public class MainTest extends ActivityInstrumentationTestCase2<Main> {
 
         Assert.assertEquals("Progress expected = 0.3", 0.3f, speedMeter.getProgress());
         Assert.assertEquals("Progress expected = 0.3", 0.3f, themormeter.getProgress());    */
+
+    }
+
+    public void testDashboard(){
+        Dashboard dashboard = new Dashboard();
+        dashboard.setMaxSpeed(250);
+        dashboard.setCurrentSpeed(50);
+        dashboard.setMaxTemperature(500);
+        dashboard.setCurrentTemperature(70);
+        dashboard.setMaxRPM(9000);
+        dashboard.setCurrentRPM(5000);
+
+        Intent intent = new Intent();
+        intent.putExtra("dashboard", dashboard);
+        getActivity().sendBroadcast(intent);
+
+
 
     }
 }
