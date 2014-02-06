@@ -4,24 +4,33 @@ import java.math.BigInteger;
 
 public class Packet {
 
-    private String content;
+    private String hexContent;
 
     public Packet(String packetString) {
-        content = packetString.replace(" ", "");
+        hexContent = packetString.replace(" ", "");
     }
 
     @Override
     public String toString() {
-        return  content;
+        return hexContent;
     }
 
     public BigInteger toBigInt() {
-        return new BigInteger(content, 16);
+        return new BigInteger(hexContent, 16);
     }
 
     public BigInteger applyMask(BigInteger mask) {
         BigInteger tempResult = toBigInt();
         BigInteger result = tempResult.and(mask);
         return result.shiftRight(32);
+    }
+
+    public int readId() {
+
+        return 0;
+    }
+
+    public String getHexString() {
+        return hexContent;
     }
 }

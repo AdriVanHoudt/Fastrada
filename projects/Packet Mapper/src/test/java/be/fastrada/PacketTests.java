@@ -12,7 +12,7 @@ public class PacketTests {
 
     @Test
     public void createPacket() {
-        assertEquals(packet.toString(), "00FFFF0A1700000000");
+        assertEquals(packet.getHexString(), "00FFFF0A1700000000");
     }
 
     @Test
@@ -21,7 +21,7 @@ public class PacketTests {
     }
 
     @Test
-    public void readByte1() {
-        assertEquals(packet.applyMask(), 0);
+    public void readId() {
+        assertEquals(packet.readId(), 0);
     }
 }
