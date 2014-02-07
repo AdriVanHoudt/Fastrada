@@ -57,15 +57,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    
-    <!-- Distribution Management -->
-    <distributionManagement>
-        <repository>
-            <id>TomcatServer</id>
-            <name>Localhost Repository</name>
-            <url>http://teamb.localhost.com:8080</url>
-        </repository>
-    </distributionManagement>
 
     <build>
         <finalName>Backend</finalName>
