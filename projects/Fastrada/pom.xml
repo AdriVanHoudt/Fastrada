@@ -2,12 +2,34 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    
     <groupId>be.fastrada</groupId>
     <artifactId>Fastrada</artifactId>
     <packaging>apk</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
+    
     <name>Fastrada</name>
 
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <!-- Android Compiler -->
+            <plugin>
+                <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                <artifactId>android-maven-plugin</artifactId>
+                <version>3.8.2</version>
+                <configuration>
+                    <sdk>
+                        <platform>19</platform>
+                    </sdk>
+                    <deleteConflictingFiles>true</deleteConflictingFiles>
+                    <undeployBeforeDeploy>true</undeployBeforeDeploy>
+                </configuration>
+                <extensions>true</extensions>
+            </plugin>
+        </plugins>
+    </build>
+    
     <dependencies>
         <!-- JUnit -->
         <dependency>
@@ -32,88 +54,5 @@
             <version>4.1.1.4</version>
             <scope>provided</scope>
         </dependency>
-        
-        <!-- Android Compiler -->
-        <dependency>
-            <groupId>com.jayway.maven.plugins.android.generation2</groupId>
-            <artifactId>android-maven-plugin</artifactId>
-            <version>3.8.0</version>
-        </dependency>
     </dependencies>
-    
-    <build>
-        <finalName>${project.artifactId}</finalName>
-        <sourceDirectory>src</sourceDirectory>
-        <testSourceDirectory>test</testSourceDirectory>
-      
-        <plugins>
-            <!-- Android Compiler -->
-            <plugin>
-                <groupId>com.jayway.maven.plugins.android.generation2</groupId>
-                <artifactId>android-maven-plugin</artifactId>
-                <version>3.8.0</version>
-                <configuration>
-                    <sdk>
-                        <platform>19</platform>
-                    </sdk>
-                    <deleteConflictingFiles>true</deleteConflictingFiles>
-                    <undeployBeforeDeploy>true</undeployBeforeDeploy>
-                </configuration>
-                <extensions>true</extensions>
-            </plugin>
-            
-            <!-- Report Generator -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-site-plugin</artifactId>
-                <version>3.3</version>
-                <configuration>
-                    <reportPlugins>
-                        <!-- Plugin om Javadoc te genereren -->
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-javadoc-plugin</artifactId>
-                            <version>2.9.1</version>
-                            <configuration>
-                                <!-- SAK-20961 exclude commented out test classes -->
-                                <excludePackageNames>org.sakaiproject.api.common.edu.person:org.sakaiproject.api.common.type</excludePackageNames>
-                            </configuration>
-                        </plugin>
-                        <!-- Plugin om overzicht testen te genereren -->
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-surefire-report-plugin</artifactId>
-                            <version>2.16</version>
-                        </plugin>
-                        <!-- Plugin om code coverage rapport van de testen te genereren -->
-                        <plugin>
-                            <groupId>org.codehaus.mojo</groupId>
-                            <artifactId>cobertura-maven-plugin</artifactId>
-                            <version>2.6</version>
-                         </plugin>
-                        <!-- Plugin om findbugs uit te voeren -->
-                        <plugin>
-                            <groupId>org.codehaus.mojo</groupId>
-                            <artifactId>findbugs-maven-plugin</artifactId>
-                            <version>2.5.3</version>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.codehaus.mojo</groupId>
-                            <artifactId>versions-maven-plugin</artifactId>
-                            <version>2.1</version>
-                            <reportSets>
-                                <reportSet>
-                                    <reports>
-                                        <report>dependency-updates-report</report>
-                                        <report>plugin-updates-report</report>
-                                        <report>property-updates-report</report>
-                                    </reports>
-                                </reportSet>
-                            </reportSets>
-                        </plugin>
-                    </reportPlugins>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>
