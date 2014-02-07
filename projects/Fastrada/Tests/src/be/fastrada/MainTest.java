@@ -3,6 +3,7 @@ package be.fastrada;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.ProgressBar;
+import be.fastrada.activities.Main;
 import junit.framework.Assert;
 
 /**

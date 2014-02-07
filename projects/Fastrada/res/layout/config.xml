@@ -19,6 +19,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/configuration"
                 android:textSize="30dp"
+                android:layout_marginLeft="1dp"
                 />
 
         <TableRow
@@ -115,11 +116,13 @@
         <TableRow
                android:layout_marginTop="30dp">
             <Button
+                    android:id="@+id/saveConfig"
                     android:layout_height="45dp"
                     android:layout_width="0dp"
                     android:text="Submit"
                     />
             <Button
+                    android:id="@+id/cancelConfig"
                     android:layout_height="45dp"
                     android:layout_width="150dp"
                     android:text="Cancel"
