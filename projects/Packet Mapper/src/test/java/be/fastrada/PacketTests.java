@@ -2,8 +2,6 @@ package be.fastrada;
 
 import org.junit.Test;
 
-import java.math.BigInteger;
-
 import static junit.framework.Assert.assertEquals;
 
 public class PacketTests {
@@ -21,80 +19,85 @@ public class PacketTests {
     }
 
     @Test
-    public void changePositionBy1ByteAndReset() {
+    public void readByteAndReset() {
         // Test reading a byte as test
-        assertEquals(0, packet.getPosition());
+        checkPosition(0);
         assertEquals(1, packet.readUint8());
-        assertEquals(2, packet.getPosition());
+        checkPosition(2);
 
         // Reset to 0 position
         packet.resetPosition();
-        assertEquals(0, packet.getPosition());
-
+        checkPosition(0);
     }
 
     @Test
     public void readByte() {
-        assertEquals(0, packet.getPosition());
+        checkPosition(0);
         assertEquals(1, packet.readUint8());
-        assertEquals(2, packet.getPosition());
+        checkPosition(2);
     }
 
     @Test
     public void readMaxByte() {
         packet.setContent("FF");
-        assertEquals(0, packet.getPosition());
+        checkPosition(0);
         assertEquals(255, packet.readUint8());
-        assertEquals(2, packet.getPosition());
+        checkPosition(2);
     }
 
     @Test
     public void readShort() {
-        assertEquals(0, packet.getPosition());
+        checkPosition(0);
         assertEquals(511, packet.readUint16()); // 01FF
-        assertEquals(4, packet.getPosition());
+        checkPosition(4);
     }
 
     @Test
     public void readMaxShort() {
         packet.setContent("FFFF");
-        assertEquals(0, packet.getPosition());
+        checkPosition(0);
         assertEquals(65535, packet.readUint16());
-        assertEquals(4, packet.getPosition());
+        checkPosition(4);
     }
 
     @Test
     public void readInt() {
-        assertEquals(0, packet.getPosition());
+        checkPosition(0);
         assertEquals(33554186, packet.readUint32());
-        assertEquals(8, packet.getPosition());
+        checkPosition(8);
     }
 
     @Test
     public void readMaxInt() {
         packet.setContent("FFFFFFFF");
-        assertEquals(0, packet.getPosition());
+        checkPosition(0);
         assertEquals(4294967295L, packet.readUint32());
-        assertEquals(8, packet.getPosition());
+        checkPosition(8);
     }
 
     @Test
     public void testByteAndShortAndInt() {
         // Read Byte
-        assertEquals(0, packet.getPosition());
-        assertEquals(1, packet.readUint8());
-        assertEquals(2, packet.getPosition());
+        readByte();
+        packet.resetPosition();
 
         // Read Short
-        assertEquals(2, packet.getPosition());
-        assertEquals(65535, packet.readUint16());
-        assertEquals(6, packet.getPosition());
+        readShort();
+        packet.resetPosition();
 
         // Read Int
-        assertEquals(6, packet.getPosition());
-        assertEquals(169279488, packet.readUint32());
-        assertEquals(14, packet.getPosition());
+        readInt();
+        packet.resetPosition();
     }
 
     // Test if we reached end of the hex!
+
+    /**
+     * private methods
+     */
+
+    private void checkPosition(int expected){
+        assertEquals(expected, packet.getPosition());
+    }
+
 }
