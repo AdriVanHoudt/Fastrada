@@ -11,26 +11,16 @@ import java.io.Serializable;
  */
 public class Dashboard implements Serializable{
     private double maxSpeed;
-    private double currentSpeed;
     private double maxTemperature;
-    private double currentTemperature;
     private int maxRPM;
-    private int currentRPM;
+    private int alarmingTemperature;
 
     public void setMaxSpeed(double maxSpeed) {
         this.maxSpeed = maxSpeed;
     }
 
-    public void setCurrentSpeed(double currentSpeed) {
-        this.currentSpeed = currentSpeed;
-    }
-
     public void setMaxTemperature(double maxTemperature) {
         this.maxTemperature = maxTemperature;
-    }
-
-    public void setCurrentTemperature(double currentTemperature) {
-        this.currentTemperature = currentTemperature;
     }
 
 
@@ -38,7 +28,23 @@ public class Dashboard implements Serializable{
         this.maxRPM = maxRPM;
     }
 
-    public void setCurrentRPM(int currentRPM) {
-        this.currentRPM = currentRPM;
+    public void setAlarmingTemperature(int alarmingTemperature) {
+        this.alarmingTemperature = alarmingTemperature;
+    }
+
+    public double getMaxSpeed() {
+        return maxSpeed;
+    }
+
+    public double getMaxTemperature() {
+        return maxTemperature;
+    }
+
+    public int getMaxRPM() {
+        return maxRPM;
+    }
+
+    public int getAlarmingTemperature() {
+        return alarmingTemperature;
     }
 }

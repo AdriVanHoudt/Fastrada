@@ -11,6 +11,7 @@ import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import be.fastrada.Dashboard;
 import be.fastrada.HoloCircularProgressBar;
 import be.fastrada.R;
 
@@ -19,10 +20,7 @@ public class Main extends Activity {
      * Called when the activity is first created.
      */
 
-    private int maxSpeed;
-    private int maxRPM;
-    private int maxTemperature;
-    private int alarmingTemperature;
+    private Dashboard dashboard;
     private ProgressBar rpmIndicator;
     private HoloCircularProgressBar speedMeter;
     private HoloCircularProgressBar tempMeter;
@@ -58,12 +56,13 @@ public class Main extends Activity {
 
     public void initialise() {
         final SharedPreferences sharedPreferences = getSharedPreferences("configuration", MODE_PRIVATE);
-        maxSpeed = sharedPreferences.getInt("maxSpeed", 300);
-        maxRPM = sharedPreferences.getInt("maxRPM", 6000);
-        maxTemperature = sharedPreferences.getInt("maxTemperature", 120);
-        alarmingTemperature = sharedPreferences.getInt("alarmingTemperature", 90);
+        dashboard = new Dashboard();
+        dashboard.setMaxSpeed(sharedPreferences.getInt("maxSpeed", 300));
+        dashboard.setMaxRPM(sharedPreferences.getInt("maxRPM", 6000));
+        dashboard.setMaxTemperature(sharedPreferences.getInt("maxTemperature", 120));
+        dashboard.setAlarmingTemperature(sharedPreferences.getInt("alarmingTemperature", 90));
 
-        rpmIndicator.setMax(maxRPM);
+        rpmIndicator.setMax(dashboard.getMaxRPM());
         /*voor percentage te berekenen in holoCircularProgressBar
             speedMeter.setProgress(currentSpeed / maxSpeed);
         */
@@ -74,14 +73,14 @@ public class Main extends Activity {
         int currentSpeed = 60;
         int currentTemp = 95;
         int currentRpm = 2000;
-        speedMeter.setProgress(((float) currentSpeed / maxSpeed));
-        tempMeter.setProgress(((float) currentTemp / maxTemperature));
+        speedMeter.setProgress((float) (currentSpeed / dashboard.getMaxSpeed()));
+        tempMeter.setProgress((float) (currentTemp / dashboard.getMaxTemperature()));
         rpmIndicator.setProgress(currentRpm);
 
         tvCurrentSpeed.setText(currentSpeed + "");
         tvCurrentTemp.setText(currentTemp + "");
 
-        if (currentTemp >= alarmingTemperature) {
+        if (currentTemp >= dashboard.getAlarmingTemperature()) {
             Animation anim = new AlphaAnimation(0.0f, 1.0f);
             anim.setDuration(800); //You can manage the time of the blink with this parameter
             anim.setStartOffset(20);
