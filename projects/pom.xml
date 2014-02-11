@@ -9,78 +9,79 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <name>Fastrada Project</name>
+    
+    <!-- Set UTF-8 -->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
 
+    <!-- Developers -->
+    <developers>
+        <developer>
+            <id>xaviergeerinck</id>
+            <name>Xavier Geerinck</name>
+            <email>xavier.geerinck@student.kdg.be</email>
+            <roles>
+                <role>Backend Developer</role>
+            </roles>
+            <timezone>0</timezone>
+        </developer>
+        <developer>
+            <id>adrivanhoudt</id>
+            <name>Adri Van Houdt</name>
+            <email>adri.vanhoudt@student.kdg.be</email>
+            <roles>
+                <role>ISM</role>
+            </roles>
+            <timezone>0</timezone>
+        </developer>
+        <developer>
+            <id>shanasteenssens</id>
+            <name>Shana Steenssens</name>
+            <email>shana.steenssens@student.kdg.be</email>
+            <roles>
+                <role>ISM</role>
+            </roles>
+            <timezone>0</timezone>
+        </developer>
+        <developer>
+            <id>bavodaniels</id>
+            <name>Bavo Daniels</name>
+            <email>bavo.daniels@student.kdg.be</email>
+            <roles>
+                <role>Backend Developer</role>
+            </roles>
+            <timezone>0</timezone>
+        </developer>
+        <developer>
+            <id>thomasducheyne</id>
+            <name>Thomas Ducheyne</name>
+            <email>thomas.ducheyne@student.kdg.be</email>
+            <roles>
+                <role>Front-End Developer</role>
+            </roles>
+            <timezone>0</timezone>
+        </developer>
+        <developer>
+            <id>mobinni</id>
+            <name>Mo Binni</name>
+            <email>mo.binni@student.kdg.be</email>
+            <roles>
+                <role>Front-End Developer</role>
+            </roles>
+            <timezone>0</timezone>
+        </developer>
+    </developers>
+    
+    <!-- Modules -->
     <modules>
+        <module>Packet Mapper</module>
         <module>Backend</module>
         <module>Fastrada</module>
     </modules>
-
-    <build>
-        <pluginManagement>
-            <plugins>
-                <!-- Maven compiler plugin -->
-                <plugin>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <configuration>
-                        <source>1.7</source> <!-- Is the java version -->
-                        <target>1.7</target>
-                    </configuration>
-                </plugin>
-                
-                <!-- Maven Tomcat Plugin -->
-                <plugin>
-                    <groupId>org.apache.tomcat.maven</groupId>
-                    <artifactId>tomcat7-maven-plugin</artifactId>
-                    <version>2.2</version>
-                    <configuration>
-                        <url>http://127.0.0.1:8080/manager/text</url>
-                        <server>TomcatServer</server>
-                        <path>/fastrada</path>
-                    </configuration>
-                    
-                    <!-- Do not execute this step in this pom.xml, use the module poms -->
-                    <executions>
-                        <execution>
-                            <phase>none</phase>
-                        </execution>
-                    </executions>
-                </plugin>
-                
-                <!-- Maven Android -->
-                <plugin>
-                    <groupId>com.jayway.maven.plugins.android.generation2</groupId>
-                    <artifactId>android-maven-plugin</artifactId>
-                    <version>3.8.0</version>
-                    <extensions>true</extensions>
-                    
-                    <!-- Do not execute this step in this pom.xml, use the module poms -->
-                    <executions>
-                        <execution>
-                            <phase>none</phase>
-                        </execution>
-                    </executions>
-                </plugin>
-                
-                <!-- Maven Surefire Plugin -->
-                <plugin>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <configuration>
-                        <includes>
-                            <include>**/*Tests.java</include>
-                        </includes>
-                    </configuration>
-                    
-                    <!-- Do not execute this step in this pom.xml, use the module poms -->
-                    <executions>
-                        <execution>
-                            <phase>none</phase>
-                        </execution>
-                    </executions>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
     
+    <!-- Dependencies -->
     <dependencies>
         <!-- JUnit -->
         <dependency>
@@ -97,5 +98,27 @@
             <version>4.1.1.4</version>
             <scope>provided</scope>
         </dependency>
+        
+        <!-- Android Test SDK -->
+        <dependency>
+            <groupId>com.google.android</groupId>
+            <artifactId>android-test</artifactId>
+            <version>4.1.1.4</version>
+            <scope>provided</scope>
+        </dependency>
+        
+        <!-- Android Compiler -->
+        <dependency>
+            <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+            <artifactId>android-maven-plugin</artifactId>
+            <version>3.8.0</version>
+        </dependency>
     </dependencies>
+    
+    <!-- Plugins -->
+    <build>
+        <plugins>
+            
+        </plugins>
+    </build>
 </project>
