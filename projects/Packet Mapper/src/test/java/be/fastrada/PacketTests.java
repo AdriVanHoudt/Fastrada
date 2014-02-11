@@ -33,4 +33,9 @@ public class PacketTests {
     public void getStructure()  {
         assertEquals(2, packet.getStructure().size());
     }
+
+    @Test
+    public void getDataFromConfig() {
+        assertEquals(8, packet.getSize("setGear"));
+    }
 }

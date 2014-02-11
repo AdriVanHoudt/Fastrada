@@ -29,13 +29,12 @@ public class PacketReader {
     }
 
     private long readHexPart(int byteHexLength) throws EOFException{
-        if((position + byteHexLength) > content.length()){
-            throw new EOFException();
-        } else {
+        if ((position + byteHexLength) <= content.length()){
             long result = Long.parseLong(content.substring(position, position + byteHexLength), 16);
             position += byteHexLength;
             return result;
         }
+            throw new EOFException();
     }
 
     public void setContent(String content) {

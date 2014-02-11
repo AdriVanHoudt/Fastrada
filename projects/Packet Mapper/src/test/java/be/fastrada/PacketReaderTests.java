@@ -33,7 +33,7 @@ public class PacketReaderTests {
             packetReader.resetPosition();
             checkPosition(0);
         } catch (EOFException e) {
-            fail("Went passes end of hex when it shouldn't have");
+            fail("Went passed end of hex when it shouldn't have");
         }
     }
 
@@ -44,7 +44,7 @@ public class PacketReaderTests {
             assertEquals(1, packetReader.readUint8()); // 01
             checkPosition(2);
         } catch (EOFException e) {
-            fail("Went passes end of hex when it shouldn't have");
+            fail("Went passed end of hex when it shouldn't have");
         }
     }
 
@@ -56,7 +56,7 @@ public class PacketReaderTests {
             assertEquals(255, packetReader.readUint8());
             checkPosition(2);
         } catch (EOFException e) {
-            fail("Went passes end of hex when it shouldn't have");
+            fail("Went passed end of hex when it shouldn't have");
         }
     }
 
@@ -67,7 +67,7 @@ public class PacketReaderTests {
             assertEquals(511, packetReader.readUint16()); // 01FF
             checkPosition(4);
         } catch (EOFException e) {
-            fail("Went passes end of hex when it shouldn't have");
+            fail("Went passed end of hex when it shouldn't have");
         }
     }
 
@@ -79,7 +79,7 @@ public class PacketReaderTests {
             assertEquals(65535, packetReader.readUint16());
             checkPosition(4);
         } catch (EOFException e) {
-            fail("Went passes end of hex when it shouldn't have");
+            fail("Went passed end of hex when it shouldn't have");
         }
     }
 
@@ -90,7 +90,7 @@ public class PacketReaderTests {
             assertEquals(33554186, packetReader.readUint32()); // 01FFFF0A
             checkPosition(8);
         } catch (EOFException e) {
-            fail("Went passes end of hex when it shouldn't have");
+            fail("Went passed end of hex when it shouldn't have");
         }
     }
 
@@ -102,7 +102,7 @@ public class PacketReaderTests {
             assertEquals(4294967295L, packetReader.readUint32());
             checkPosition(8);
         } catch (EOFException e) {
-            fail("Went passes end of hex when it shouldn't have");
+            fail("Went passed end of hex when it shouldn't have");
         }
     }
 
