@@ -1,5 +1,7 @@
 package be.fastrada;
 
+import java.io.EOFException;
+
 public class Packet {
 
     private String content;
@@ -10,31 +12,33 @@ public class Packet {
         this.position = 0;
     }
 
-
-
-    public long readUint8() {
-        int byteHexLength = 2;
-        return readLong(byteHexLength);
+    public long readUint8() throws EOFException {
+            int byteHexLength = 2;
+            return readHexPart(byteHexLength);
     }
 
-    public long readUint16() {
-        int byteHexLength = 4;
-        return readLong(byteHexLength);
+    public long readUint16() throws EOFException {
+            int byteHexLength = 4;
+            return readHexPart(byteHexLength);
     }
 
-    public long readUint32() {
-        int byteHexLength = 8;
-        return readLong(byteHexLength);
+    public long readUint32() throws EOFException {
+            int byteHexLength = 8;
+            return readHexPart(byteHexLength);
     }
 
     public void resetPosition() {
         this.position = 0;
     }
 
-    private long readLong(int byteHexLength) {
-        long result = Long.parseLong(content.substring(position, position + byteHexLength), 16);
-        position += byteHexLength;
-        return result;
+    private long readHexPart(int byteHexLength) throws EOFException{
+        if((position + byteHexLength) > content.length()){
+           throw new EOFException();
+        } else {
+            long result = Long.parseLong(content.substring(position, position + byteHexLength), 16);
+            position += byteHexLength;
+            return result;
+        }
     }
 
     public void setContent(String content) {
