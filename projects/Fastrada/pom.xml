@@ -1,16 +1,18 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
+<project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    
+
     <groupId>be.fastrada</groupId>
     <artifactId>Fastrada</artifactId>
     <packaging>apk</packaging>
     <version>1.0.0</version>
-    
+
     <name>Fastrada</name>
 
     <build>
+        <sourceDirectory>src</sourceDirectory>
+        <testSourceDirectory>test</testSourceDirectory>
         <finalName>${project.artifactId}</finalName>
         <plugins>
             <!-- Android Compiler -->
@@ -27,12 +29,12 @@
                 </configuration>
                 <extensions>true</extensions>
             </plugin>
-            
+
             <!-- Report Generator -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>3.3</version>
+                <version>3.0</version>
                 <configuration>
                     <reportPlugins>
                         <!-- Plugin om Javadoc te genereren -->
@@ -82,7 +84,7 @@
             </plugin>
         </plugins>
     </build>
-    
+
     <dependencies>
         <!-- JUnit -->
         <dependency>
@@ -91,15 +93,15 @@
             <version>4.11</version>
             <scope>test</scope>
         </dependency>
-        
+
         <!-- Android SDK -->
         <dependency>
             <groupId>com.google.android</groupId>
             <artifactId>android</artifactId>
-            <version>4.1.1.4</version>
+            <version>4.4.2</version>
             <scope>provided</scope>
         </dependency>
-        
+
         <!-- Android Test SDK -->
         <dependency>
             <groupId>com.google.android</groupId>
