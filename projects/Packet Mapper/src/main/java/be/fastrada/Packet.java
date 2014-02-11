@@ -1,60 +1,48 @@
 package be.fastrada;
 
-import java.io.EOFException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.io.FileReader;
+import java.io.IOException;
 
 public class Packet {
-
     private String content;
-    private int position;
+    private PacketReader reader;
+    private JSONObject configFile;
 
-    public Packet(String packetString) {
-        this.content = packetString.replace(" ", "");
-        this.position = 0;
-    }
+    public Packet(String content) {
+        this.content = content.replace(" ", "");
+        this.reader = new PacketReader(this.content);
 
-    public long readUint8() throws EOFException {
-            int byteHexLength = 2;
-            return readHexPart(byteHexLength);
-    }
-
-    public long readUint16() throws EOFException {
-            int byteHexLength = 4;
-            return readHexPart(byteHexLength);
-    }
-
-    public long readUint32() throws EOFException {
-            int byteHexLength = 8;
-            return readHexPart(byteHexLength);
-    }
-
-    public void resetPosition() {
-        this.position = 0;
-    }
-
-    private long readHexPart(int byteHexLength) throws EOFException{
-        if((position + byteHexLength) > content.length()){
-           throw new EOFException();
-        } else {
-            long result = Long.parseLong(content.substring(position, position + byteHexLength), 16);
-            position += byteHexLength;
-            return result;
+        try {
+            this.configFile = (JSONObject) new JSONParser().parse(new FileReader("res/packetStructure.json"));
+        } catch (IOException e) {
+        } catch (ParseException e) {
         }
     }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    @Override
-    public String toString() {
-        return content;
-    }
-
     public String getContent() {
-        return content;
+        return this.content;
     }
 
-    public int getPosition() {
-        return this.position;
+    public PacketReader getReader() {
+        return reader;
+    }
+
+    public JSONObject getConfigFile() {
+        return configFile;
+    }
+
+    public JSONArray getStructure() {
+        JSONObject packets = (JSONObject) configFile.get("packets");
+        JSONObject packet = (JSONObject) packets.get("" + this.getId());
+        return (JSONArray) packet.get("struct");
+    }
+
+    public int getId() {
+        return reader.getId();
     }
 }
