@@ -15,6 +15,10 @@ public class Dashboard implements Serializable{
     private int maxRPM;
     private int alarmingTemperature;
 
+    private int currentSpeed;
+    private int currentRPM;
+    private int currentTemperature;
+
     public void setMaxSpeed(double maxSpeed) {
         this.maxSpeed = maxSpeed;
     }
@@ -46,5 +50,17 @@ public class Dashboard implements Serializable{
 
     public int getAlarmingTemperature() {
         return alarmingTemperature;
+    }
+
+    public void setCurrentSpeed(int currentSpeed) {
+        this.currentSpeed = currentSpeed;
+    }
+
+    public void setCurrentRPM(int currentRPM) {
+        this.currentRPM = currentRPM;
+    }
+
+    public void setCurrentTemperature(int currentTemperature) {
+        this.currentTemperature = currentTemperature;
     }
 }
