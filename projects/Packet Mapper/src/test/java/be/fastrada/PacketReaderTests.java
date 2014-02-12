@@ -2,7 +2,10 @@ package be.fastrada;
 
 import org.junit.Test;
 
+import java.io.EOFException;
+
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 public class PacketReaderTests {
 
@@ -19,65 +22,88 @@ public class PacketReaderTests {
     }
 
     @Test
-    public void readId() {
-        assertEquals(1, packetReader.getId());
-    }
-
-    @Test
     public void readByteAndReset() {
         // Test reading a byte as test
-        checkPosition(0);
-        assertEquals(1, packetReader.readUint8());
-        checkPosition(2);
+        try {
+            checkPosition(0);
+            assertEquals(1, packetReader.readUint8());
+            checkPosition(2);
 
-        // Reset to 0 position
-        packetReader.resetPosition();
-        checkPosition(0);
+            // Reset to 0 position
+            packetReader.resetPosition();
+            checkPosition(0);
+        } catch (EOFException e) {
+            fail("Went passed end of hex when it shouldn't have");
+        }
     }
 
     @Test
     public void readByte() {
-        checkPosition(0);
-        assertEquals(1, packetReader.readUint8());
-        checkPosition(2);
+        try {
+            checkPosition(0);
+            assertEquals(1, packetReader.readUint8()); // 01
+            checkPosition(2);
+        } catch (EOFException e) {
+            fail("Went passed end of hex when it shouldn't have");
+        }
     }
 
     @Test
     public void readMaxByte() {
-        packetReader.setContent("FF");
-        checkPosition(0);
-        assertEquals(255, packetReader.readUint8());
-        checkPosition(2);
+        try{
+            packetReader.setContent("FF");
+            checkPosition(0);
+            assertEquals(255, packetReader.readUint8());
+            checkPosition(2);
+        } catch (EOFException e) {
+            fail("Went passed end of hex when it shouldn't have");
+        }
     }
 
     @Test
     public void readShort() {
-        checkPosition(0);
-        assertEquals(511, packetReader.readUint16()); // 01FF
-        checkPosition(4);
+        try{
+            checkPosition(0);
+            assertEquals(511, packetReader.readUint16()); // 01FF
+            checkPosition(4);
+        } catch (EOFException e) {
+            fail("Went passed end of hex when it shouldn't have");
+        }
     }
 
     @Test
     public void readMaxShort() {
-        packetReader.setContent("FFFF");
-        checkPosition(0);
-        assertEquals(65535, packetReader.readUint16());
-        checkPosition(4);
+        try{
+            packetReader.setContent("FFFF");
+            checkPosition(0);
+            assertEquals(65535, packetReader.readUint16());
+            checkPosition(4);
+        } catch (EOFException e) {
+            fail("Went passed end of hex when it shouldn't have");
+        }
     }
 
     @Test
     public void readInt() {
-        checkPosition(0);
-        assertEquals(33554186, packetReader.readUint32());
-        checkPosition(8);
+        try{
+            checkPosition(0);
+            assertEquals(33554186, packetReader.readUint32()); // 01FFFF0A
+            checkPosition(8);
+        } catch (EOFException e) {
+            fail("Went passed end of hex when it shouldn't have");
+        }
     }
 
     @Test
     public void readMaxInt() {
-        packetReader.setContent("FFFFFFFF");
-        checkPosition(0);
-        assertEquals(4294967295L, packetReader.readUint32());
-        checkPosition(8);
+        try{
+            packetReader.setContent("FFFFFFFF");
+            checkPosition(0);
+            assertEquals(4294967295L, packetReader.readUint32());
+            checkPosition(8);
+        } catch (EOFException e) {
+            fail("Went passed end of hex when it shouldn't have");
+        }
     }
 
     @Test
@@ -96,6 +122,17 @@ public class PacketReaderTests {
     }
 
     // Test if we reached end of the hex!
+    @Test
+    public void testEndOfHex() {
+        try{
+            packetReader.readUint32();
+            packetReader.readUint32();
+            packetReader.readUint16();
+            fail("Pasted end of hex without error");
+        } catch (EOFException ex) {
+            // test passes
+        }
+    }
 
     /**
      * private methods

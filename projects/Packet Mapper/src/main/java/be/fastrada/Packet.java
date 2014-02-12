@@ -7,13 +7,12 @@ import org.json.simple.parser.ParseException;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Packet {
     private String content;
     private PacketReader reader;
     private JSONObject configFile;
-    private int structureMethods;
 
     public Packet(String content) {
         this.content = content.replace(" ", "");
@@ -22,7 +21,9 @@ public class Packet {
         try {
             this.configFile = (JSONObject) new JSONParser().parse(new FileReader("res/packetStructure.json"));
         } catch (IOException e) {
+            e.printStackTrace();
         } catch (ParseException e) {
+            e.printStackTrace();
         }
     }
 
@@ -46,5 +47,15 @@ public class Packet {
 
     public int getId() {
         return reader.getId();
+    }
+
+    public int getSize(String name) {
+        for (Object o : this.getStructure()) {
+            JSONObject obj = (JSONObject) o;
+            if(obj.get("name").equals(name)) {
+                return ((Long) obj.get("size")).intValue();
+            }
+        }
+        return -1;
     }
 }

@@ -1,5 +1,8 @@
 package be.fastrada;
 
+
+import java.io.EOFException;
+
 public class PacketReader {
 
     private String content;
@@ -10,29 +13,28 @@ public class PacketReader {
         this.position = 0;
     }
 
-    public long readUint8() {
+    public long readUint8() throws EOFException {
         int byteHexLength = 2;
-        return readLong(byteHexLength);
+        return readHexPart(byteHexLength);
     }
 
-    public long readUint16() {
+    public long readUint16() throws EOFException {
         int byteHexLength = 4;
-        return readLong(byteHexLength);
+        return readHexPart(byteHexLength);
     }
 
-    public long readUint32() {
+    public long readUint32() throws EOFException {
         int byteHexLength = 8;
-        return readLong(byteHexLength);
+        return readHexPart(byteHexLength);
     }
 
-    public void resetPosition() {
-        this.position = 0;
-    }
-
-    private long readLong(int byteHexLength) {
-        long result = Long.parseLong(content.substring(position, position + byteHexLength), 16);
-        position += byteHexLength;
-        return result;
+    private long readHexPart(int byteHexLength) throws EOFException{
+        if ((position + byteHexLength) <= content.length()){
+            long result = Long.parseLong(content.substring(position, position + byteHexLength), 16);
+            position += byteHexLength;
+            return result;
+        }
+            throw new EOFException();
     }
 
     public void setContent(String content) {
@@ -53,7 +55,10 @@ public class PacketReader {
     }
 
     public int getId() {
-        int result = Integer.parseInt(content.substring(0, 2), 16);
-        return result;
+        return Integer.parseInt(content.substring(0, 2), 16);
+    }
+
+    public void resetPosition() {
+        this.position = 0;
     }
 }
