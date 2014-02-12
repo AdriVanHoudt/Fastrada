@@ -9,12 +9,29 @@
     <version>1.0.0</version>
 
     <name>Fastrada</name>
+	
+	<properties>
+        <java-version>1.6</java-version>
+		<google.android-version>4.4.2_r2</google.android-version>
+		<google.android-api>19</google.android-api>
+		<google.android_home>/usr/local/android-sdk/</google.android_home>
+	</properties>
 
     <build>
         <sourceDirectory>src</sourceDirectory>
         <testSourceDirectory>test</testSourceDirectory>
         <finalName>${project.artifactId}</finalName>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>${java-version}</source>
+                    <target>${java-version}</target>
+                </configuration>
+            </plugin>
+
             <!-- Android Compiler -->
             <plugin>
                 <groupId>com.jayway.maven.plugins.android.generation2</groupId>
@@ -22,10 +39,9 @@
                 <version>3.8.2</version>
                 <configuration>
                     <sdk>
-                        <platform>19</platform>
+                        <path>${google.android_home}</path>
+                        <platform>${google.android-api}</platform>
                     </sdk>
-                    <!--<deleteConflictingFiles>true</deleteConflictingFiles>-->
-                    <undeployBeforeDeploy>true</undeployBeforeDeploy>
                 </configuration>
                 <extensions>true</extensions>
             </plugin>
@@ -95,19 +111,21 @@
         </dependency>
 
         <!-- Android SDK -->
-        <!--<dependency>
-            <groupId>com.google.android</groupId>
+        <dependency>
+            <groupId>android</groupId>
             <artifactId>android</artifactId>
-            <version>4.4.2</version>
+            <version>${google.android-version}</version>
             <scope>provided</scope>
         </dependency>
-            -->
+           
         <!-- Android Test SDK -->
+<!--
         <dependency>
             <groupId>com.google.android</groupId>
             <artifactId>android-test</artifactId>
-            <version>4.1.1.4</version>
+            <version>${google.android-version}</version>
             <scope>provided</scope>
         </dependency>
+-->
     </dependencies>
 </project>
