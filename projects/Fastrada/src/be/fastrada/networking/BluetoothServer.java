@@ -21,10 +21,13 @@ public class BluetoothServer implements Runnable
     private BluetoothSocket socket;
     private BufferedReader in;
 
-    public BluetoothServer(UUID MY_UUID) {
+    private Handler handler;
+
+    public BluetoothServer(UUID MY_UUID, Handler handler) {
         this.MY_UUID = MY_UUID;
         adapter = BluetoothAdapter.getDefaultAdapter();
 
+        this.handler = handler;
         startConnection();
     }
 
@@ -39,6 +42,12 @@ public class BluetoothServer implements Runnable
     @Override
     public void run() {
         android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
+
+        Bundle b = new Bundle();
+        b.putString("msg", "trol");
+        Message msg = Message.obtain();
+        msg.setData(b);
+        handler.sendMessage(msg);
 
         while ( true)
         {
@@ -66,12 +75,20 @@ public class BluetoothServer implements Runnable
     }
 
     private void handleMessages() {
+        String input = "";
         try {
-            String input = in.readLine();
+            input = in.readLine();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        Bundle b = new Bundle();
+        b.putString("msg", input);
+        Message msg = Message.obtain();
+        msg.setData(b);
+        handler.sendMessage(msg);
         //todo mesages afhandelen
+
 
     }
 }

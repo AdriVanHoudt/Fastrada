@@ -5,6 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -14,6 +18,9 @@ import android.widget.TextView;
 import be.fastrada.Dashboard;
 import be.fastrada.HoloCircularProgressBar;
 import be.fastrada.R;
+import be.fastrada.networking.BluetoothServer;
+
+import java.util.UUID;
 
 public class Main extends Activity {
     /**
@@ -26,6 +33,8 @@ public class Main extends Activity {
     private HoloCircularProgressBar tempMeter;
     private TextView tvCurrentTemp;
     private TextView tvCurrentSpeed;
+
+    private Handler mHandler;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,7 +61,22 @@ public class Main extends Activity {
             }
         });
 
+        mHandler = new Handler(Looper.getMainLooper()){
+
+            @Override
+            public void handleMessage(Message msg) {
+                //TODO
+                Log.d("MESSAGE", "message ontvangen");
+                speedMeter.setMarkerProgress(0.6f);
+            }
+        };
+
+        BluetoothServer BTServer = new BluetoothServer(UUID.fromString("668c02e0-8e70-11e3-baa8-0800200c9a66"), mHandler);
+        Thread BT = new Thread(BTServer);
+        BT.start();
     }
+
+
 
     public void initialise() {
         final SharedPreferences sharedPreferences = getSharedPreferences("configuration", MODE_PRIVATE);

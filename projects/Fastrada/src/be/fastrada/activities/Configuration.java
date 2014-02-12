@@ -5,6 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,8 +23,6 @@ import be.fastrada.R;
  * To change this template use File | Settings | File Templates.
  */
 public class Configuration extends Activity {
-
-
     private SharedPreferences sharedPreferences;
     private EditText maxSpeed;
     private EditText maxTemperature;
