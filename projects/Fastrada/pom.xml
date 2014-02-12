@@ -24,7 +24,7 @@
                     <sdk>
                         <platform>19</platform>
                     </sdk>
-                    <deleteConflictingFiles>true</deleteConflictingFiles>
+                    <!--<deleteConflictingFiles>true</deleteConflictingFiles>-->
                     <undeployBeforeDeploy>true</undeployBeforeDeploy>
                 </configuration>
                 <extensions>true</extensions>
@@ -95,13 +95,13 @@
         </dependency>
 
         <!-- Android SDK -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.google.android</groupId>
             <artifactId>android</artifactId>
             <version>4.4.2</version>
             <scope>provided</scope>
         </dependency>
-
+            -->
         <!-- Android Test SDK -->
         <dependency>
             <groupId>com.google.android</groupId>

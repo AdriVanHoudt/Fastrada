@@ -28,7 +28,8 @@ public class PacketSender implements Runnable {
     }
 
     @Override
-    public void run() {
+    public void run()
+    {
         while (true) {
             if (packetQueue.peek() == null) continue;
 
