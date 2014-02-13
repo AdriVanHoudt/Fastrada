@@ -10,9 +10,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.UUID;
 
-/**
- * Created by bavo on 7-2-14.
- */
 public class BluetoothServer implements Runnable
 {
     private final UUID MY_UUID;
