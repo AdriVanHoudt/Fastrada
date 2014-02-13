@@ -1,5 +1,6 @@
 package be.fastrada.packetmapper;
 
+import be.fastrada.Dashboard;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -73,25 +74,36 @@ public class Packet {
         return methods;
     }
 
-    public boolean invokeMethod(String methodToInvoke, long value) {
+    public boolean invokeMethod(String methodToInvoke, Object value) {
         if (methodToInvoke == null || methodToInvoke.isEmpty()) {
             return false;
         }
 
         try {
-            Class<?> c = Class.forName("be.fastrada.Dashboard");
-            Class[] argTypes = new Class[] { Long.class };
-            Method m = c.getDeclaredMethod(methodToInvoke, argTypes);
-            m.invoke(null, (Object)value);
+            Class cls = Class.forName("be.fastrada.Dashboard");
+            Class[] argTypes = new Class[] { Object.class };
 
-            return true;
-        } catch (ClassNotFoundException e) {
+            Object obj = cls.newInstance();
+
+            for (Method m : cls.getMethods()) {
+                if (m.getName().equals(methodToInvoke)) {
+                    m.invoke(obj, value);
+                    return true;
+                }
+            }
+
             return false;
         } catch (InvocationTargetException e) {
-            return false;
-        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
             return false;
         } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            return false;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        } catch (InstantiationException e) {
+            e.printStackTrace();
             return false;
         }
     }

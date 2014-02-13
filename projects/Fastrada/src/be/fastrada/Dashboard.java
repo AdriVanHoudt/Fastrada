@@ -2,14 +2,7 @@ package be.fastrada;
 
 import java.io.Serializable;
 
-/**
- * Created with IntelliJ IDEA.
- * User: M
- * Date: 6/02/14
- * Time: 14:46
- * To change this template use File | Settings | File Templates.
- */
-public class Dashboard implements Serializable{
+public class Dashboard implements Serializable {
     private double maxSpeed;
     private double maxTemperature;
     private int maxRPM;
