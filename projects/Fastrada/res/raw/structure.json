@@ -1,0 +1,40 @@
+{
+    "packets": {
+        "0": {
+            "struct": [
+                {
+                    "name": "setMaxRPM",
+                    "size": 16
+                },
+                {
+                    "name": "setThrottlePos",
+                    "size": 16
+                },
+                {
+                    "name": "setCurrentTemperature",
+                    "size": 16
+                }
+            ]
+        },
+        "1": {
+            "struct": [
+                {
+                    "name": "setCurrentSpeed",
+                    "size": 16
+                },
+                {
+                    "name": "setGear",
+                    "size": 8
+                }
+            ]
+        },
+        "2": {
+            "struct": [
+                {
+                    "name": "setFuelMap",
+                    "size": 8
+                }
+            ]
+        }
+    }
+}

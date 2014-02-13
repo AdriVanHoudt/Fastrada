@@ -5,7 +5,8 @@
 angular.module('fastradaApp', [
   'ngRoute',
   'fastradaApp.services',
-  'fastradaApp.controllers'
+  'fastradaApp.controllers',
+  'dx'
 ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/home', {templateUrl: 'partials/home.html', controller: 'HomeCtrl'});
