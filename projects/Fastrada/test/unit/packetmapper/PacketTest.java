@@ -54,4 +54,10 @@ public class PacketTest {
         assertEquals(true, packet2.invokeMethod("setMaxRPM", maxRPM));
         assertEquals(true, packet2.invokeMethod("setMaxSpeed", maxSpeed));
     }
+
+    @Test
+    public void processPacket() {
+        assertTrue(packet.process());
+
+    }
 }

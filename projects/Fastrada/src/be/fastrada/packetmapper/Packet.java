@@ -6,10 +6,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.BitSet;
@@ -76,7 +73,7 @@ public class Packet {
 
     public boolean invokeMethod(String methodToInvoke, Object value) {
         if (methodToInvoke == null || methodToInvoke.isEmpty()) {
-            return false;
+            return true;
         }
 
         try {
@@ -92,7 +89,7 @@ public class Packet {
                 }
             }
 
-            return false;
+            return true;
         } catch (InvocationTargetException e) {
             e.printStackTrace();
             return false;
@@ -106,5 +103,43 @@ public class Packet {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public boolean process() {
+        JSONArray structure = getStructure();
+
+        for (int i = 0; i < structure.size(); i++) {
+            JSONObject jo = (JSONObject) structure.get(i);
+
+            String methodName = (String) jo.get("name");
+            int byteSize = Integer.parseInt((String) jo.get("size"));
+
+            Object valueFound;
+
+            try {
+                switch (byteSize) {
+                    case 8:
+                        valueFound = reader.readUint8();
+                        break;
+                    case 16:
+                        valueFound = reader.readUint16();
+                        break;
+                    case 32:
+                        valueFound = reader.readUint32();
+                        break;
+                    default:
+                        return false;
+                }
+            }
+            catch (EOFException e) {
+                return false;
+            }
+
+            if (!invokeMethod(methodName, valueFound)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
