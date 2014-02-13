@@ -3,7 +3,7 @@
         "0": {
             "struct": [
                 {
-                    "name": "setRPM",
+                    "name": "setMaxRPM",
                     "size": 16
                 },
                 {
@@ -11,7 +11,7 @@
                     "size": 16
                 },
                 {
-                    "name": "setEngineTemp",
+                    "name": "setCurrentTemperature",
                     "size": 16
                 }
             ]
@@ -19,7 +19,7 @@
         "1": {
             "struct": [
                 {
-                    "name": "setVehicleSpeed",
+                    "name": "setCurrentSpeed",
                     "size": 16
                 },
                 {

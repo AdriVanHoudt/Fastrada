@@ -1,5 +1,6 @@
-package be.fastrada;
+package unit.packetmapper;
 
+import be.fastrada.packetmapper.PacketReader;
 import org.junit.Test;
 
 import java.io.EOFException;
@@ -7,7 +8,7 @@ import java.io.EOFException;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
 
-public class PacketReaderTests {
+public class PacketReaderTest {
 
     private PacketReader packetReader = new PacketReader("01 FF FF 0A 17 00 00 00 00");
 

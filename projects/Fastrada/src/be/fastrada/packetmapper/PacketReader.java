@@ -1,4 +1,4 @@
-package be.fastrada;
+package be.fastrada.packetmapper;
 
 
 import java.io.EOFException;
