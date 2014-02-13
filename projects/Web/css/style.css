@@ -1,1 +1,126 @@
-body{padding-top:120px}.navbar{top:50px;background-color:#b1c609}.navbar .navbar-header .navbar-brand{color:white;font-size:25px;font-family:"Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif}.navbar .container>div>div{padding:8px}.navbar .container>div>div .searchbox{height:30px;padding:5px;width:200px;border:none;border-bottom:1px #26328c solid;background-color:#b1c609;color:#26328c}.navbar .container>div>div .searchbox.placeholder{color:#26328c}.navbar .container>div>div .searchbox:-moz-placeholder{color:#26328c}.navbar .container>div>div .searchbox::-moz-placeholder{color:#26328c}.navbar .container>div>div .searchbox:-ms-input-placeholder{color:#26328c}.navbar .container>div>div .searchbox::-webkit-input-placeholder{color:#26328c}.navbar .container>div>div .glyphicon{color:#26328c;font-size:21px;vertical-align:middle}@media (max-width: 768px){body{padding-top:70px}.navbar{top:0}}
+body {
+    padding-top: 120px
+}
+
+h1 {
+    color: #26328c;
+}
+
+.navbar {
+    background-color: #b1c609
+}
+
+.navbar .navbar-header .navbar-brand {
+    color: white;
+    font-size: 25px;
+    font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif
+}
+
+.navbar .container > div > div {
+    padding: 8px;
+}
+
+.navbar .container > div > div .searchbox {
+    height: 30px;
+    padding: 5px;
+    width: 200px;
+    border: none;
+    margin: 0 auto;
+    border-bottom: 1px #26328c solid;
+    background-color: #b1c609;
+    color: #26328c
+}
+
+.navbar .container > div > div .searchbox.placeholder {
+    color: #26328c
+}
+
+.navbar .container > div > div .searchbox:-moz-placeholder {
+    color: #26328c
+}
+
+.navbar .container > div > div .searchbox::-moz-placeholder {
+    color: #26328c
+}
+
+.navbar .container > div > div .searchbox:-ms-input-placeholder {
+    color: #26328c
+}
+
+.navbar .container > div > div .searchbox::-webkit-input-placeholder {
+    color: #26328c
+}
+
+.navbar .container > div > div .glyphicon {
+    color: #26328c;
+    font-size: 21px;
+    vertical-align: middle
+}
+
+.logo {
+    float: right;
+    display: inline;
+}
+
+.logo img {
+    display: inline;
+    width: 40px;
+    height: 40px;
+    margin-top: 4px;
+    margin-right: 15px;
+}
+
+.chart {
+    max-width: 1000px;
+    height: 400px;
+    margin: 0 auto;
+}
+
+@media (max-width: 800px) {
+    body {
+        padding-top: 70px
+    }
+
+    .navbar {
+        top: 0
+    }
+
+}
+@media(max-width: 1100px){
+    .logo {
+        display: none;
+    }
+}
+
+@media(max-width: 990px){
+    #left-arrow, #right-arrow{
+        display: none;
+    }
+}
+
+.navbar-toggle {
+    background-color: #b1c609;
+}
+
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+    background-color: #A1B319;
+}
+
+.fa-chevron-left, .fa-chevron-right{
+    color: #26328c;
+    display: inline;
+    vertical-align: middle;
+}
+
+.fa-chevron-left{
+    float: left;
+}
+
+.fa-chevron-right{
+    float: right;
+}
+
+#left-arrow, #right-arrow{
+    position: relative;
+    top: 50%;
+}
