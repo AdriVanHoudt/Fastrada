@@ -9,6 +9,7 @@ import org.json.simple.parser.ParseException;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Type;
 import java.util.BitSet;
 import java.util.Iterator;
 
@@ -82,6 +83,8 @@ public class Packet {
 
             Object obj = cls.newInstance();
 
+            //error met types van parameters van functies van dashboard
+
             for (Method m : cls.getMethods()) {
                 if (m.getName().equals(methodToInvoke)) {
                     m.invoke(obj, value);
@@ -112,7 +115,7 @@ public class Packet {
             JSONObject jo = (JSONObject) structure.get(i);
 
             String methodName = (String) jo.get("name");
-            int byteSize = Integer.parseInt((String) jo.get("size"));
+            int byteSize = Integer.parseInt(jo.get("size").toString());
 
             Object valueFound;
 
