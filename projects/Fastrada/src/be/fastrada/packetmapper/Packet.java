@@ -72,7 +72,10 @@ public class Packet {
         return methods;
     }
 
-    public boolean invokeMethod(String methodToInvoke, Object value) {
+    public boolean invokeMethod(JSONObject jo) {
+        String methodToInvoke = (String) jo.get("name");
+        int byteSize = Integer.parseInt(jo.get("size").toString());
+
         if (methodToInvoke == null || methodToInvoke.isEmpty()) {
             return true;
         }
@@ -87,7 +90,20 @@ public class Packet {
 
             for (Method m : cls.getMethods()) {
                 if (m.getName().equals(methodToInvoke)) {
-                    m.invoke(obj, value);
+                    switch (byteSize) {
+                        case 8:
+                            m.invoke(obj, reader.readUint8());
+                            break;
+                        case 16:
+                            m.invoke(obj, reader.readUint16());
+                            break;
+                        case 32:
+                            m.invoke(obj, reader.readUint32());
+                            break;
+                        default:
+                            return false;
+                    }
+
                     return true;
                 }
             }
@@ -105,6 +121,9 @@ public class Packet {
         } catch (InstantiationException e) {
             e.printStackTrace();
             return false;
+        } catch (EOFException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
@@ -114,31 +133,7 @@ public class Packet {
         for (int i = 0; i < structure.size(); i++) {
             JSONObject jo = (JSONObject) structure.get(i);
 
-            String methodName = (String) jo.get("name");
-            int byteSize = Integer.parseInt(jo.get("size").toString());
-
-            Object valueFound;
-
-            try {
-                switch (byteSize) {
-                    case 8:
-                        valueFound = reader.readUint8();
-                        break;
-                    case 16:
-                        valueFound = reader.readUint16();
-                        break;
-                    case 32:
-                        valueFound = reader.readUint32();
-                        break;
-                    default:
-                        return false;
-                }
-            }
-            catch (EOFException e) {
-                return false;
-            }
-
-            if (!invokeMethod(methodName, valueFound)) {
+            if (!invokeMethod(jo)) {
                 return false;
             }
         }
