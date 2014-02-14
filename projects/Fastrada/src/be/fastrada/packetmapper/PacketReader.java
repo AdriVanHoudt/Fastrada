@@ -13,19 +13,20 @@ public class PacketReader {
         this.position = 0;
     }
 
-    public long readUint8() throws EOFException {
+    public byte readUint8() throws EOFException {
         int byteHexLength = 2;
-        return readHexPart(byteHexLength);
+
+        return (byte)readHexPart(byteHexLength);
     }
 
-    public long readUint16() throws EOFException {
+    public short readUint16() throws EOFException {
         int byteHexLength = 4;
-        return readHexPart(byteHexLength);
+        return (short)readHexPart(byteHexLength);
     }
 
-    public long readUint32() throws EOFException {
+    public int readUint32() throws EOFException {
         int byteHexLength = 8;
-        return readHexPart(byteHexLength);
+        return (int)readHexPart(byteHexLength);
     }
 
     private long readHexPart(int byteHexLength) throws EOFException{

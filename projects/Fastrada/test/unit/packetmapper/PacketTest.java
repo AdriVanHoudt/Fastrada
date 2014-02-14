@@ -3,6 +3,7 @@ package unit.packetmapper;
 import be.fastrada.Dashboard;
 import be.fastrada.packetmapper.Packet;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -50,9 +51,15 @@ public class PacketTest {
         int vehicleSpeed = 60;
         int maxRPM = 7000;
         double maxSpeed = 150.00;
-        assertEquals(true, packet.invokeMethod("setCurrentSpeed", vehicleSpeed));
-        assertEquals(true, packet2.invokeMethod("setMaxRPM", maxRPM));
-        assertEquals(true, packet2.invokeMethod("setMaxSpeed", maxSpeed));
+
+        JSONArray arr = packet.getStructure();
+
+        JSONObject jsonObject = (JSONObject) arr.get(0);
+        JSONObject jsonObject2 = (JSONObject) arr.get(1);
+
+
+        assertEquals(true, packet.invokeMethod(jsonObject));
+        assertEquals(true, packet.invokeMethod(jsonObject2));
     }
 
     @Test
