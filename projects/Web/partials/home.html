@@ -1,12 +1,25 @@
-
 <div class="chart">
-    <div id="left-arrow">
-    <i class="fa fa-chevron-left fa-5x"></i>
-        </div>
-    <div id="right-arrow" >
-    <i class="fa fa-chevron-right fa-5x"></i>
+    <div id="left-arrow" ng-click="prevChart()">
+        <i class="fa fa-chevron-left fa-5x"></i>
     </div>
-    <h1>Speed</h1>
-    <div dx-chart="chartOptions" style="max-width:700px;height: 400px; margin: 0 auto;"></div>
+    <div id="right-arrow" ng-click="nextChart()">
+        <i class="fa fa-chevron-right fa-5x"></i>
+    </div>
+    <h1 id="chartTitle">Race X</h1>
+
+    <div id="speedChart" class="show-hide" ng-hide="counter != 1">
+        <h2 class="chartSubTitle">Speed</h2>
+        <div id="chartSpeed" style="max-width:700px;height: 400px; margin: 0 auto;"></div>
+    </div>
+
+    <div id="rpmChart" class="show-hide" ng-hide="counter != 2">
+        <h2 class="chartSubTitle">RPM</h2>
+        <div id="chartRPM" style="max-width:700px;height: 400px; margin: 0 auto;"></div>
+    </div>
+
+    <div id="temperatureChart" class="show-hide" ng-hide="counter != 3">
+        <h2 class="chartSubTitle">Temperature</h2>
+        <div id="chartOptions" style="max-width:700px;height: 400px; margin: 0 auto;"></div>
+    </div>
 
 </div>
