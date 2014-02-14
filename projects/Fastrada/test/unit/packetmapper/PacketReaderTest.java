@@ -1,5 +1,6 @@
 package unit.packetmapper;
 
+import be.fastrada.packetmapper.Packet;
 import be.fastrada.packetmapper.PacketReader;
 import org.junit.Test;
 
@@ -120,6 +121,21 @@ public class PacketReaderTest {
         // Read Int
         readInt();
         packetReader.resetPosition();
+    }
+
+    @Test
+    public void overflowTest()
+    {
+        Packet packet = new Packet("01 FF FF FF FF FF FF FF FF");
+
+        try{
+            assertEquals(1, packet.getReader().readUint8());
+            assertEquals(255, packet.getReader().readUint8());
+            assertEquals(65535, packet.getReader().readUint16());
+            assertEquals(4294967295L, packet.getReader().readUint32());
+        } catch (EOFException e) {
+            e.printStackTrace();
+        }
     }
 
     // Test if we reached end of the hex!
