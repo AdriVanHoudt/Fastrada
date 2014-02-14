@@ -76,7 +76,6 @@
     
     <!-- Modules -->
     <modules>
-        <module>Packet Mapper</module>
         <module>Backend</module>
         <module>Fastrada</module>
     </modules>
