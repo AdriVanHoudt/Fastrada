@@ -25,7 +25,7 @@ public class Server extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... voids) {
         while (true) {
             try {
-                Log.d("POGING2", Arrays.toString(receiveByte()));
+                receiveByte();
                 new WebRequest().start();
             } catch (IOException e) {
                 e.printStackTrace();
