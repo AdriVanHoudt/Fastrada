@@ -54,6 +54,7 @@ public class PacketReaderTest {
     public void readMaxByte() {
         try{
             packetReader.setContent("FF");
+
             checkPosition(0);
             assertEquals(255, packetReader.readUint8());
             checkPosition(2);
@@ -126,13 +127,13 @@ public class PacketReaderTest {
     @Test
     public void overflowTest()
     {
-        Packet packet = new Packet("01 FF FF FF FF FF FF FF FF");
+        Packet packet = new Packet("01 FF FF FF 7F FF FF FF FF", "res/raw/structure.json");
 
         try{
             assertEquals(1, packet.getReader().readUint8());
             assertEquals(255, packet.getReader().readUint8());
             assertEquals(65535, packet.getReader().readUint16());
-            assertEquals(4294967295L, packet.getReader().readUint32());
+            assertEquals(2147483647, packet.getReader().readUint32());
         } catch (EOFException e) {
             e.printStackTrace();
         }

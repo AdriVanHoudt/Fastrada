@@ -25,6 +25,10 @@
                 {
                     "name": "setGear",
                     "size": 8
+                },
+                {
+                    "name": "testfunctiedanietaangeroepenword",
+                    "size": 32
                 }
             ]
         },

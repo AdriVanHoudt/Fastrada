@@ -7,6 +7,8 @@ import org.json.simple.JSONObject;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import java.text.ParseException;
+
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
@@ -14,8 +16,8 @@ import static org.mockito.Mockito.mock;
 
 
 public class PacketTest {
-    private Packet packet = new Packet("01 FF FF 0A 17 00 00 00 00");
-    private Packet packet2 = new Packet("00 FF FF 0A 17 00 00 00 00");
+    private Packet packet = new Packet("01 FF FF 0A 17 00 00 00 00", "res/raw/structure.json");
+    private Packet packet2 = new Packet("00 FF FF 0A 17 00 00 00 00", "res/raw/structure.json");
 
     @Test
     public void createPacket() {
@@ -36,7 +38,7 @@ public class PacketTest {
 
     @Test
     public void getStructure()  {
-        assertEquals(2, packet.getStructure().size());
+        assertEquals(3, packet.getStructure().size());
     }
 
     @Test
@@ -67,4 +69,47 @@ public class PacketTest {
         assertTrue(packet.process());
 
     }
+
+    @Test(expected=Error.class)
+    public void parseExceptionTest() {
+        String error = "parse error";
+        assertEquals(error, new Packet("01 FF FF 0A 17 00 00 00 00", "res/raw/data.txt"));
+
+    }
+
+    @Test(expected = Error.class)
+    public void fileNotFoundException() {
+        String error = "file not found";
+        assertEquals(error, new Packet("01 FF FF 0A 17 00 00 00 00", "res/raw/structurcgsgsdge.json"));
+    }
+
+    @Test
+    public void invokeNullMethod() {
+        Packet packet = new Packet("01 FF FF 0A 17 00 00 00 00", "res/raw/structure.json");
+        assertTrue(packet.invokeMethod(null));
+    }
+
+    @Test
+    public void invokeTestUint8() {
+        Packet packet = new Packet("01 FF AF 0A 17 00 00 00 00", "res/raw/structure.json");
+
+        JSONObject put = new JSONObject();
+        put.put("name", "setCurrentSpeed");
+        put.put("size", 8);
+
+        assertTrue(packet.invokeMethod(put));
+    }
+
+    @Test
+    public void invokeTestUint32() {
+        Packet packet = new Packet("01 FF AF 0A 17 00 00 00 00", "res/raw/structure.json");
+
+        JSONObject put = new JSONObject();
+        put.put("name", "setMaxSpeed");
+        put.put("size", 32);
+
+        assertTrue(packet.invokeMethod(put));
+    }
+
+
 }

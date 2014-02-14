@@ -19,19 +19,19 @@ public class Packet {
     private JSONObject configFile;
     private JSONArray methods;
 
-    public Packet(String content) {
+    public Packet(String content, String packetMappingPath) {
         this.content = content.replace(" ", "");
         this.reader = new PacketReader(this.content);
 
         try {
-            FileReader fr = new FileReader("res/raw/structure.json");
+            FileReader fr = new FileReader(packetMappingPath);
             this.configFile = (JSONObject) new JSONParser().parse(fr);
         } catch (ParseException e) {
-            e.printStackTrace();
+            throw new Error("parse error");
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            throw new Error("file not found");
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new Error("IO exception");
         }
     }
 
@@ -67,22 +67,17 @@ public class Packet {
         return -1;
     }
 
-    public JSONArray getMethods() {
-        JSONArray structure = getStructure();
-        return methods;
-    }
-
     public boolean invokeMethod(JSONObject jo) {
-        String methodToInvoke = (String) jo.get("name");
-        int byteSize = Integer.parseInt(jo.get("size").toString());
-
-        if (methodToInvoke == null || methodToInvoke.isEmpty()) {
+        if (jo == null) {
             return true;
         }
 
+        String methodToInvoke = (String) jo.get("name");
+        int byteSize = Integer.parseInt(jo.get("size").toString());
+
         try {
             Class cls = Class.forName("be.fastrada.Dashboard");
-            Class[] argTypes = new Class[] { Object.class };
+
 
             Object obj = cls.newInstance();
 
@@ -92,16 +87,14 @@ public class Packet {
                 if (m.getName().equals(methodToInvoke)) {
                     switch (byteSize) {
                         case 8:
-                            m.invoke(obj, reader.readUint8());
+                            m.invoke(obj, (short)reader.readUint8());
                             break;
                         case 16:
-                            m.invoke(obj, reader.readUint16());
+                            m.invoke(obj, (int)reader.readUint16());
                             break;
                         case 32:
-                            m.invoke(obj, reader.readUint32());
+                            m.invoke(obj, (long)reader.readUint32());
                             break;
-                        default:
-                            return false;
                     }
 
                     return true;
