@@ -1,8 +1,13 @@
 package be.fastrada.activities;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.TextView;
+import android.widget.Toast;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -16,7 +21,7 @@ public class Server extends AsyncTask<Void, Void, Void> {
     private DatagramSocket socket;
     private byte[] buffer;
 
-    public Server() throws SocketException {
+    public Server(Context context) throws SocketException {
         this.socket = new DatagramSocket(PORT_NUMBER);
         this.buffer = new byte[10];
     }
@@ -24,16 +29,13 @@ public class Server extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
         while (true) {
-            try {
-                receiveByte();
-                new WebRequest().start();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            final byte[] bytes = receiveByte();
+
+            new WebRequest().start();
         }
     }
 
-    private byte[] receiveByte() throws IOException {
+    private byte[] receiveByte() {
         DatagramPacket packet = null;
         try {
             packet = new DatagramPacket(buffer, buffer.length);
