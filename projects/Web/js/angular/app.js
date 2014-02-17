@@ -6,7 +6,8 @@ angular.module('fastradaApp', [
         'ngRoute',
         'fastradaApp.services',
         'fastradaApp.controllers',
-        'ngAnimate'
+        'ngAnimate',
+        'ui.bootstrap'
     ]).
     config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/home', {templateUrl: 'partials/home.html', controller: 'HomeCtrl'});
