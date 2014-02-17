@@ -142,3 +142,11 @@ h2 {
 .glyphicon-search {
     cursor: pointer;
 }
+
+.dropdown-menu {
+    max-width: 190px;
+}
+
+.dropdown-menu>.active>a:focus, .dropdown-menu>.active>a:active, .dropdown-menu>.active>a:hover, .dropdown-menu>.active>a {
+    background-color: #A9BD0F;
+}

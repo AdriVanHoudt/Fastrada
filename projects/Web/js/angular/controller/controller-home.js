@@ -3,33 +3,57 @@
 /* Controllers */
 
 angular.module('fastradaApp.controllers').
-    controller('HomeCtrl', ['$scope', 'dataFetcher', '$timeout', function ($scope, dataFetcher, $timeout) {
+    controller('HomeCtrl', ['$scope', 'dataFetcher', 'queryHandler', function ($scope, dataFetcher, queryHandler) {
 
-        dataFetcher.getRaceData().then(function (data) {
-            // alert(data.race2[0].speed);
-            buildSpeedChart(data);
+        /*
+            Function that refreshes the data on the screen based on the currently selected race
+        */
+        function updateScreen() {
+            dataFetcher.getRaceData().then(function (data) {
+                var race = getRaceFromData(data);
+                $scope.race = race;
 
-            $scope.data = data;
+                /*
+                    Build all charts on load of the page
+                 */
+                buildSpeedChart(race);
+                buildRPMChart(race);
+                buildTemperatureChart(race);
 
-            $scope.openRPM = (function() {
-                buildRPMChart(data);
+                /*
+                    Methods that are invoked to build the charts when a user switches between tabs
+                 */
+                $scope.openRPM = (function () {
+                    buildRPMChart(race);
+                });
+
+                $scope.openSpeed = (function () {
+                    buildSpeedChart(race);
+                });
+
+                $scope.openTemperature = (function () {
+                    buildTemperatureChart(race);
+                });
             });
+        }
+        updateScreen();
 
-            $scope.openSpeed = (function() {
-                buildSpeedChart(data);
-            });
-
-            $scope.openTemperature = (function() {
-                buildTemperatureChart(data);
-            });
+        /*
+            Scope will invoke the updateScreen method when a user query's for a new race
+         */
+        $scope.$on('newRaceQuery', function () {
+            updateScreen();
         });
 
 
-        function buildRPMChart(data) {
+        /*
+            Methods that build charts
+         */
+        function buildRPMChart(race) {
             var rpmData = [];
 
-            for (var i = 0; i < data.race1.length; i++) {
-                rpmData.push({time: dateToTime(new Date(data.race1[i].timestamp)), rpm: data.race1[i].rpm});
+            for (var i = 0; i < race.data.length; i++) {
+                rpmData.push({time: dateToTime(new Date(race.data[i].timestamp)), rpm: race.data[i].rpm});
             }
 
             $("#chartRPM").dxChart({
@@ -43,16 +67,19 @@ angular.module('fastradaApp.controllers').
                 },
                 legend: {
                     visible: false
+                },
+                tooltip: {
+                    enabled: true
                 }
             });
 
         }
 
-        function buildSpeedChart(data) {
+        function buildSpeedChart(race) {
             var speedData = [];
 
-            for (var i = 0; i < data.race1.length; i++) {
-                speedData.push({time: dateToTime(new Date(data.race1[i].timestamp)), speed: data.race1[i].speed});
+            for (var i = 0; i < race.data.length; i++) {
+                speedData.push({time: dateToTime(new Date(race.data[i].timestamp)), speed: race.data[i].speed});
             }
 
             $("#chartSpeed").dxChart({
@@ -66,16 +93,18 @@ angular.module('fastradaApp.controllers').
                 },
                 legend: {
                     visible: false
+                },
+                tooltip: {
+                    enabled: true
                 }
             });
         }
 
-
-        function buildTemperatureChart(data) {
+        function buildTemperatureChart(race) {
             var tempData = [];
 
-            for (var i = 0; i < data.race1.length; i++) {
-                tempData.push({time: dateToTime(new Date(data.race1[i].timestamp)), temperature: data.race1[i].temperature});
+            for (var i = 0; i < race.data.length; i++) {
+                tempData.push({time: dateToTime(new Date(race.data[i].timestamp)), temperature: race.data[i].temperature});
             }
 
             $("#chartTemperature").dxChart({
@@ -89,12 +118,29 @@ angular.module('fastradaApp.controllers').
                 },
                 legend: {
                     visible: false
+                },
+                tooltip: {
+                    enabled: true
                 }
             });
         }
 
+        /*
+            Method to extract time from timestamp
+         */
         function dateToTime(date) {
             return date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + ":" + date.getMilliseconds();
+        }
+
+        /*
+            Method that retrieves the correct race from the data
+         */
+        function getRaceFromData(data) {
+            for (var i = 0; i < data.length; i++) {
+                if (queryHandler.getCurrentRace() === data[i].name) return data [i];
+            }
+            // return first race if none found
+            return data[0];
         }
     }])
 ;

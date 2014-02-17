@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Fastrada Portal</title>
+    <title>Fastrada Dashboard</title>
 
     <link href="./css/bootstrap.min.css" rel="stylesheet">
     <link href="./css/style.css" rel="stylesheet">
@@ -28,7 +28,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">Fastrada</a>
+        <a class="navbar-brand" href="#">Fastrada Dashboard</a>
     </div>
 
     <div class="logo"><img src="img/logo.png" alt="logo" /></div>
@@ -36,8 +36,8 @@
     <div class="container">
         <div class="navbar-collapse collapse">
             <div class="nav navbar-nav navbar-right">
-                <input type="text" placeholder="search..." class="searchbox" />
-                <span ng-model="searchIcon" class="glyphicon glyphicon-search"></span>
+                <input type="text" placeholder="search ..." class="searchbox" typeahead="race.name for race in getRaceData()" ng-model="query"/>
+                &nbsp<span ng-model="searchIcon" ng-click="search()" class="glyphicon glyphicon-search"></span>
             </div>
         </div>
     </div>

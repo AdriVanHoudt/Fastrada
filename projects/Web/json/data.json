@@ -1,90 +1,96 @@
-{
-    "race1": [
-        {
-            "speed" : 20,
-            "rpm" : 2000,
-            "temperature" : 80,
-            "gear" : 1,
-            "timestamp" : 1392385140
-        },
-        {
-            "speed" : 60,
-            "rpm" : 2500,
-            "temperature" : 70,
-            "gear" : 2,
-            "timestamp" : 1392385150
-        },
-        {
-            "speed" : 80,
-            "rpm" : 2700,
-            "temperature" : 85,
-            "gear" : 4,
-            "timestamp" : 1392385160
-        },
-        {
-            "speed" : 125,
-            "rpm" : 2400,
-            "temperature" : 90,
-            "gear" : 5,
-            "timestamp" : 1392385170
-        },
-        {
-            "speed" : 130,
-            "rpm" : 2200,
-            "temperature" : 80,
-            "gear" : 6,
-            "timestamp" : 1392385180
-        },
-        {
-            "speed" : 140,
-            "rpm" : 2400,
-            "temperature" : 70,
-            "gear" : 6,
-            "timestamp" : 1392385190
-        }
-    ],
-    "race2": [
-        {
-            "speed" : 20,
-            "rpm" : 4000,
-            "temperature" : 20,
-            "gear" : 1,
-            "timestamp" : 1392385140
-        },
-        {
-            "speed" : 60,
-            "rpm" : 6000,
-            "temperature" : 90,
-            "gear" : 2,
-            "timestamp" : 1392385150
-        },
-        {
-            "speed" : 80,
-            "rpm" : 8000,
-            "temperature" : 70,
-            "gear" : 4,
-            "timestamp" : 1392385160
-        },
-        {
-            "speed" : 125,
-            "rpm" : 2400,
-            "temperature" : 90,
-            "gear" : 5,
-            "timestamp" : 1392385170
-        },
-        {
-            "speed" : 130,
-            "rpm" : 2800,
-            "temperature" : 80,
-            "gear" : 6,
-            "timestamp" : 1392385180
-        },
-        {
-            "speed" : 140,
-            "rpm" : 2800,
-            "temperature" : 70,
-            "gear" : 6,
-            "timestamp" : 1392385190
-        }
-    ]
-}
+[
+    {
+        "name": "Race 1",
+        "data": [
+            {
+                "speed": 20,
+                "rpm": 2000,
+                "temperature": 80,
+                "gear": 1,
+                "timestamp": 1392385140
+            },
+            {
+                "speed": 60,
+                "rpm": 2500,
+                "temperature": 70,
+                "gear": 2,
+                "timestamp": 1392385150
+            },
+            {
+                "speed": 80,
+                "rpm": 2700,
+                "temperature": 85,
+                "gear": 4,
+                "timestamp": 1392385160
+            },
+            {
+                "speed": 125,
+                "rpm": 2400,
+                "temperature": 90,
+                "gear": 5,
+                "timestamp": 1392385170
+            },
+            {
+                "speed": 130,
+                "rpm": 2200,
+                "temperature": 80,
+                "gear": 6,
+                "timestamp": 1392385180
+            },
+            {
+                "speed": 140,
+                "rpm": 2400,
+                "temperature": 70,
+                "gear": 6,
+                "timestamp": 1392385190
+            }
+        ]
+    },
+    {
+        "name": "Race 2",
+        "data": [
+            {
+                "speed": 20,
+                "rpm": 4000,
+                "temperature": 20,
+                "gear": 1,
+                "timestamp": 1392385140
+            },
+            {
+                "speed": 60,
+                "rpm": 6000,
+                "temperature": 90,
+                "gear": 2,
+                "timestamp": 1392385150
+            },
+            {
+                "speed": 80,
+                "rpm": 8000,
+                "temperature": 70,
+                "gear": 4,
+                "timestamp": 1392385160
+            },
+            {
+                "speed": 125,
+                "rpm": 2400,
+                "temperature": 90,
+                "gear": 5,
+                "timestamp": 1392385170
+            },
+            {
+                "speed": 130,
+                "rpm": 2800,
+                "temperature": 80,
+                "gear": 6,
+                "timestamp": 1392385180
+            },
+            {
+                "speed": 140,
+                "rpm": 2800,
+                "temperature": 70,
+                "gear": 6,
+                "timestamp": 1392385190
+            }
+        ]
+    }
+]
