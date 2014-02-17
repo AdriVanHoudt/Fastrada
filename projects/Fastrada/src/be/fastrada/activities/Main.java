@@ -8,33 +8,29 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import be.fastrada.Dashboard;
 import be.fastrada.HoloCircularProgressBar;
 import be.fastrada.R;
-import be.fastrada.networking.BluetoothServer;
+import be.fastrada.networking.Server;
 
-import java.util.UUID;
+import java.net.SocketException;
+import java.util.Arrays;
 
 public class Main extends Activity {
-    /**
-     * Called when the activity is first created.
-     */
-
     private Dashboard dashboard;
     private ProgressBar rpmIndicator;
-    private HoloCircularProgressBar speedMeter;
-    private HoloCircularProgressBar tempMeter;
-    private TextView tvCurrentTemp;
-    private TextView tvCurrentSpeed;
+    private HoloCircularProgressBar speedMeter, tempMeter;
+    private TextView tvCurrentTemp, tvCurrentSpeed;
 
     private Handler mHandler;
+    private Server server;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,22 +56,23 @@ public class Main extends Activity {
                 finish();
             }
         });
-
-        mHandler = new Handler(Looper.getMainLooper()){
-
+        mHandler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message msg) {
+                final Bundle bundle = msg.getData();
+                final byte[] bytes = bundle.getByteArray(Server.BUNDLE_BYTES_KEY);
+
                 //TODO
-                Log.d("MESSAGE", "message ontvangen");
-                speedMeter.setMarkerProgress(0.6f);
+                Toast.makeText(context, Arrays.toString(bytes), Toast.LENGTH_SHORT).show();
             }
         };
 
-        BluetoothServer BTServer = new BluetoothServer(UUID.fromString("668c02e0-8e70-11e3-baa8-0800200c9a66"), mHandler);
-        Thread BT = new Thread(BTServer);
-        BT.start();
+        try {
+            server = new Server(mHandler);
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
     }
-
 
 
     public void initialise() {
@@ -101,11 +98,12 @@ public class Main extends Activity {
         tempMeter.setProgress((float) (currentTemp / dashboard.getMaxTemperature()));
         rpmIndicator.setProgress(currentRpm);
 
-        tvCurrentSpeed.setText(currentSpeed + "");
-        tvCurrentTemp.setText(currentTemp + "");
+        tvCurrentSpeed.setText(String.format("%d", currentSpeed));
+        tvCurrentTemp.setText(String.format("%d", currentTemp));
 
         if (currentTemp >= dashboard.getAlarmingTemperature()) {
-            Animation anim = new AlphaAnimation(0.0f, 1.0f);
+            final Animation anim = new AlphaAnimation(0.0f, 1.0f);
+
             anim.setDuration(800); //You can manage the time of the blink with this parameter
             anim.setStartOffset(20);
             anim.setRepeatMode(Animation.REVERSE);

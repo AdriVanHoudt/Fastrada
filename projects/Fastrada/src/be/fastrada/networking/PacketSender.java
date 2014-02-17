@@ -4,9 +4,6 @@ import java.io.IOException;
 import java.net.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-/**
- * Created by bavo on 7-2-14.
- */
 public class PacketSender implements Runnable {
     public static final int SERVER_PORT = 1234;
 
@@ -28,8 +25,7 @@ public class PacketSender implements Runnable {
     }
 
     @Override
-    public void run()
-    {
+    public void run() {
         while (true) {
             if (packetQueue.peek() == null) continue;
 

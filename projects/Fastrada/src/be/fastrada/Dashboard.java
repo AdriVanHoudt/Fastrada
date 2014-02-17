@@ -20,7 +20,6 @@ public class Dashboard implements Serializable {
         this.maxTemperature = maxTemperature;
     }
 
-
     public void setMaxRPM(int maxRPM) {
         this.maxRPM = maxRPM;
     }

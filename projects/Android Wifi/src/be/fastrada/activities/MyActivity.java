@@ -17,7 +17,7 @@ public class MyActivity extends Activity {
         this.serverStatus = (TextView) findViewById(R.id.tv_server_status);
 
         try {
-            final Server server = new Server();
+            final Server server = new Server(this);
             server.execute();
             serverStatus.setText("Running");
         } catch (SocketException e) {

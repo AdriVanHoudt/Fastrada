@@ -1,7 +1,5 @@
-package be.fastrada.activities;
+package be.fastrada.networking;
 
-import android.os.AsyncTask;
-import android.util.Log;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
@@ -13,6 +11,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 public class WebRequest extends Thread {
+    private int amount;
+
+    public WebRequest(int amount) {
+        this.amount = amount;
+    }
 
     @Override
     public void run() {
@@ -20,13 +23,14 @@ public class WebRequest extends Thread {
         HttpResponse httpResponse;
         StatusLine statusLine;
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < amount; i++) {
             try {
                 httpResponse = httpClient.execute(new HttpGet("http://google.com"));
                 statusLine = httpResponse.getStatusLine();
 
                 if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
-                    ByteArrayOutputStream out = new ByteArrayOutputStream();
+                    final ByteArrayOutputStream out = new ByteArrayOutputStream();
+
                     httpResponse.getEntity().writeTo(out);
                     out.close();
                 } else {
