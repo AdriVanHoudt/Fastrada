@@ -6,22 +6,22 @@ angular.module('fastradaApp.controllers').
     controller('HomeCtrl', ['$scope', 'dataFetcher', 'queryHandler', function ($scope, dataFetcher, queryHandler) {
 
         /*
-            Function that refreshes the data on the screen based on the currently selected race
-        */
+         Function that refreshes the data on the screen based on the currently selected race
+         */
         function updateScreen() {
             dataFetcher.getRaceData().then(function (data) {
                 var race = getRaceFromData(data);
                 $scope.race = race;
 
                 /*
-                    Build all charts on load of the page
+                 Build all charts on load of the page
                  */
                 buildSpeedChart(race);
                 buildRPMChart(race);
                 buildTemperatureChart(race);
 
                 /*
-                    Methods that are invoked to build the charts when a user switches between tabs
+                 Methods that are invoked to build the charts when a user switches between tabs
                  */
                 $scope.openRPM = (function () {
                     buildRPMChart(race);
@@ -36,10 +36,11 @@ angular.module('fastradaApp.controllers').
                 });
             });
         }
+
         updateScreen();
 
         /*
-            Scope will invoke the updateScreen method when a user query's for a new race
+         Scope will invoke the updateScreen method when a user query's for a new race
          */
         $scope.$on('newRaceQuery', function () {
             updateScreen();
@@ -47,20 +48,25 @@ angular.module('fastradaApp.controllers').
 
 
         /*
-            Methods that build charts
+         Methods that build charts
          */
         function buildRPMChart(race) {
             var rpmData = [];
 
             for (var i = 0; i < race.data.length; i++) {
-                rpmData.push({time: dateToTime(new Date(race.data[i].timestamp)), rpm: race.data[i].rpm});
+                rpmData.push({time: (new Date(race.data[i].timestamp)), rpm: race.data[i].rpm});
             }
+
+            var series = [
+                {
+                    argumentField: 'time',
+                    valueField: 'rpm'
+                }
+            ];
 
             $("#chartRPM").dxChart({
                 dataSource: rpmData,
-                series: [
-                    { valueField: 'rpm' }
-                ],
+                series: series,
                 commonSeriesSettings: {
                     argumentField: 'time',
                     type: 'line'
@@ -68,34 +74,102 @@ angular.module('fastradaApp.controllers').
                 legend: {
                     visible: false
                 },
+                argumentAxis: {
+                    label: { format: 'longTime'}
+                },
                 tooltip: {
                     enabled: true
-                }
+                },
+                adjustOnZoom: true
             });
 
+            $("#chartRPMRangeSelector").dxRangeSelector({
+                size: {
+                    height: 120
+                },
+                margin: {
+                    left: 10
+                },
+                scale: {
+                    divisionValue: 1,
+                    minRange: 1
+                },
+                selectedRange: {
+                    startValue: race.data[0].timestamp,
+                    endValue: race.data[race.data.length - 1].timestamp
+                },
+                dataSource: rpmData,
+                chart: {
+                    series: series
+                },
+                behavior: {
+                    callSelectedRangeChanged: "onMoving"
+                },
+                selectedRangeChanged: function (e) {
+                    var zoomChart = $("#chartRPM").dxChart('instance');
+                    zoomChart.zoomArgument(e.startValue, e.endValue);
+                }
+            });
         }
 
         function buildSpeedChart(race) {
             var speedData = [];
 
             for (var i = 0; i < race.data.length; i++) {
-                speedData.push({time: dateToTime(new Date(race.data[i].timestamp)), speed: race.data[i].speed});
+                speedData.push({ time: (new Date(race.data[i].timestamp)), speed: race.data[i].speed});
             }
+
+            var series = [
+                {
+                    argumentField: 'time',
+                    valueField: 'speed'
+                }
+            ];
 
             $("#chartSpeed").dxChart({
                 dataSource: speedData,
-                series: [
-                    { valueField: 'speed' }
-                ],
+                series: series,
                 commonSeriesSettings: {
                     argumentField: 'time',
                     type: 'line'
+                },
+                argumentAxis: {
+                    label: { format: 'longTime'}
                 },
                 legend: {
                     visible: false
                 },
                 tooltip: {
                     enabled: true
+                },
+                adjustOnZoom: true
+            });
+
+            $("#chartSpeedRangeSelector").dxRangeSelector({
+                size: {
+                    height: 120
+                },
+                margin: {
+                    left: 10
+                },
+                scale: {
+                    divisionValue: 1,
+                    minRange: 1
+                },
+                selectedRange: {
+                    startValue: race.data[0].timestamp,
+                    endValue: race.data[race.data.length - 1].timestamp
+                },
+                dataSource: speedData,
+                chart: {
+                    series: series
+                },
+                behavior: {
+                    callSelectedRangeChanged: "onMoving"
+                },
+                selectedRangeChanged: function (e) {
+                    var zoomChart = $("#chartSpeed").dxChart('instance');
+                    zoomChart.zoomArgument(e.startValue, e.endValue);
                 }
             });
         }
@@ -104,14 +178,19 @@ angular.module('fastradaApp.controllers').
             var tempData = [];
 
             for (var i = 0; i < race.data.length; i++) {
-                tempData.push({time: dateToTime(new Date(race.data[i].timestamp)), temperature: race.data[i].temperature});
+                tempData.push({time: (new Date(race.data[i].timestamp)), temperature: race.data[i].temperature});
             }
+
+            var series = [
+                {
+                    argumentField: 'time',
+                    valueField: 'temperature'
+                }
+            ];
 
             $("#chartTemperature").dxChart({
                 dataSource: tempData,
-                series: [
-                    { valueField: 'temperature' }
-                ],
+                series: series,
                 commonSeriesSettings: {
                     argumentField: 'time',
                     type: 'line'
@@ -121,23 +200,57 @@ angular.module('fastradaApp.controllers').
                 },
                 tooltip: {
                     enabled: true
+                },
+                argumentAxis: {
+                    label: { format: 'longTime'}
+                },
+                adjustOnZoom: true
+            });
+
+            $("#chartTemperatureRangeSelector").dxRangeSelector({
+                size: {
+                    height: 120
+                },
+                margin: {
+                    left: 10
+                },
+                scale: {
+                    divisionValue: 1,
+                    minRange: 1
+                },
+                selectedRange: {
+                    startValue: race.data[0].timestamp,
+                    endValue: race.data[race.data.length - 1].timestamp
+                },
+                dataSource: tempData,
+                chart: {
+                    series: series
+                },
+                behavior: {
+                    callSelectedRangeChanged: "onMoving"
+                },
+                selectedRangeChanged: function (e) {
+                    var zoomChart = $("#chartTemperature").dxChart('instance');
+                    zoomChart.zoomArgument(e.startValue, e.endValue);
                 }
             });
         }
 
         /*
-            Method to extract time from timestamp
+         Method to extract time from timestamp
          */
         function dateToTime(date) {
             return date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + ":" + date.getMilliseconds();
         }
 
         /*
-            Method that retrieves the correct race from the data
+         Method that retrieves the correct race from the data
          */
         function getRaceFromData(data) {
             for (var i = 0; i < data.length; i++) {
-                if (queryHandler.getCurrentRace() === data[i].name) return data [i];
+                if (queryHandler.getCurrentRace().toLowerCase() === data[i].name.toLowerCase()) {
+                    return data [i];
+                }
             }
             // return first race if none found
             return data[0];
