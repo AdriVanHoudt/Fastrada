@@ -1,38 +1,50 @@
 package be.fastrada;
 
+import android.util.Log;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
 import java.io.Serializable;
 
 public class Dashboard implements Serializable {
-    private double maxSpeed;
-    private double maxTemperature;
-    private int maxRPM;
-    private int alarmingTemperature;
+    private static int maxSpeed;
+    private static int maxTemperature;
+    private static int maxRPM;
+    private static int alarmingTemperature;
 
-    private int currentSpeed;
-    private int currentRPM;
-    private int currentTemperature;
+    private TextView tvCurrentTemp, tvCurrentSpeed;
+    private HoloCircularProgressBar tempMeter, speedMeter;
+    private ProgressBar rpmIndicator;
 
-    public void setMaxSpeed(double maxSpeed) {
-        this.maxSpeed = maxSpeed;
+    public Dashboard(TextView tvCurrentTemp, TextView tvCurrentSpeed, HoloCircularProgressBar tempMeter, HoloCircularProgressBar speedMeter, ProgressBar rpmIndicator) {
+        this.tvCurrentTemp = tvCurrentTemp;
+        this.tvCurrentSpeed = tvCurrentSpeed;
+        this.tempMeter = tempMeter;
+        this.speedMeter = speedMeter;
+        this.rpmIndicator = rpmIndicator;
     }
 
-    public void setMaxTemperature(double maxTemperature) {
-        this.maxTemperature = maxTemperature;
+    public static void setMaxSpeed(int maxSpeed) {
+        Dashboard.maxSpeed = maxSpeed;
     }
 
-    public void setMaxRPM(int maxRPM) {
-        this.maxRPM = maxRPM;
+    public static void setMaxTemperature(int maxTemperature) {
+        Dashboard.maxTemperature = maxTemperature;
     }
 
-    public void setAlarmingTemperature(int alarmingTemperature) {
-        this.alarmingTemperature = alarmingTemperature;
+    public static void setMaxRPM(int maxRPM) {
+        Dashboard.maxRPM = maxRPM;
     }
 
-    public double getMaxSpeed() {
+    public static void setAlarmingTemperature(int alarmingTemperature) {
+        Dashboard.alarmingTemperature = alarmingTemperature;
+    }
+
+    public int getMaxSpeed() {
         return maxSpeed;
     }
 
-    public double getMaxTemperature() {
+    public int getMaxTemperature() {
         return maxTemperature;
     }
 
@@ -45,14 +57,16 @@ public class Dashboard implements Serializable {
     }
 
     public void setCurrentSpeed(int currentSpeed) {
-        this.currentSpeed = currentSpeed;
+        speedMeter.setProgress(((float) currentSpeed / (float)getMaxSpeed()));
+        tvCurrentSpeed.setText(String.format("%d", currentSpeed));
     }
 
     public void setCurrentRPM(int currentRPM) {
-        this.currentRPM = currentRPM;
+        rpmIndicator.setProgress(currentRPM);
     }
 
     public void setCurrentTemperature(int currentTemperature) {
-        this.currentTemperature = currentTemperature;
+        tempMeter.setProgress( ((float)currentTemperature / (float)getMaxSpeed()));
+        tvCurrentTemp.setText(String.format("%d", currentTemperature));
     }
 }

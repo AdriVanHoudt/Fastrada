@@ -5,14 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import be.fastrada.Dashboard;
 import be.fastrada.R;
 
 /**
@@ -23,21 +20,27 @@ import be.fastrada.R;
  * To change this template use File | Settings | File Templates.
  */
 public class Configuration extends Activity {
+    public static final String PREFS_KEY = "be.fastrada.preferences";
+    public static final String PREFS_KEY_MAXSPEED = "maxSpeed";
+    public static final String PREFS_KEY_MAXTEMP = "maxTemp";
+    public static final String PREFS_KEY_MAXRPM = "maxRpm";
+    public static final String PREFS_KEY_TEMP_ALARM = "alarmTemp";
+
     private SharedPreferences sharedPreferences;
-    private EditText maxSpeed;
-    private EditText maxTemperature;
-    private EditText maxRPM;
-    private EditText alarmingTemp;
+    private EditText etMaxSpeed;
+    private EditText etMaxTemperature;
+    private EditText etMaxRPM;
+    private EditText etAlarmingTemp;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.config);
 
-        sharedPreferences = getSharedPreferences("configuration", MODE_PRIVATE);
-        maxSpeed = (EditText) findViewById(R.id.maxSpeed);
-        maxTemperature = (EditText) findViewById(R.id.maxTemp);
-        maxRPM = (EditText) findViewById(R.id.maxRPM);
-        alarmingTemp = (EditText) findViewById(R.id.alarmTemp);
+        sharedPreferences = getSharedPreferences(PREFS_KEY, MODE_PRIVATE);
+        etMaxSpeed = (EditText) findViewById(R.id.maxSpeed);
+        etMaxTemperature = (EditText) findViewById(R.id.maxTemp);
+        etMaxRPM = (EditText) findViewById(R.id.maxRPM);
+        etAlarmingTemp = (EditText) findViewById(R.id.alarmTemp);
 
         // initialise
         initialise();
@@ -67,22 +70,32 @@ public class Configuration extends Activity {
     }
 
     public void initialise() {
-        maxSpeed.setText(sharedPreferences.getInt("maxSpeed", 300) + "");
-        maxRPM.setText(sharedPreferences.getInt("maxRPM", 6000) + "");
-        maxTemperature.setText(sharedPreferences.getInt("maxTemperature", 120) + "");
-        alarmingTemp.setText(sharedPreferences.getInt("alarmingTemperature", 90) + "");
+        etMaxSpeed.setText(sharedPreferences.getInt(Configuration.PREFS_KEY_MAXSPEED, 300) + "");
+        etMaxRPM.setText(sharedPreferences.getInt(Configuration.PREFS_KEY_MAXRPM, 6000) + "");
+        etMaxTemperature.setText(sharedPreferences.getInt(Configuration.PREFS_KEY_MAXTEMP, 120) + "");
+        etAlarmingTemp.setText(sharedPreferences.getInt(Configuration.PREFS_KEY_TEMP_ALARM, 90) + "");
     }
 
     public void saveConfiguration() {
         final SharedPreferences.Editor editor = sharedPreferences.edit();
         final Context context = this.getBaseContext();
 
-        if(Integer.parseInt(alarmingTemp.getText().toString()) <= Integer.parseInt(maxTemperature.getText().toString())){
-            editor.putInt("maxSpeed", Integer.parseInt(maxSpeed.getText().toString()));
-            editor.putInt("maxRPM", Integer.parseInt(maxRPM.getText().toString()));
-            editor.putInt("maxTemperature", Integer.parseInt(maxTemperature.getText().toString()));
-            editor.putInt("alarmingTemperature", Integer.parseInt(alarmingTemp.getText().toString()));
+        final int alarmTemp = Integer.parseInt(etAlarmingTemp.getText().toString());
+        final int maxTemp = Integer.parseInt(etMaxTemperature.getText().toString());
+        final int maxSpeed = Integer.parseInt(etMaxSpeed.getText().toString());
+        final int maxRpm = Integer.parseInt(etMaxRPM.getText().toString());
+
+        if (alarmTemp <= maxTemp) {
+            editor.putInt(Configuration.PREFS_KEY_MAXSPEED, maxSpeed);
+            editor.putInt(Configuration.PREFS_KEY_MAXRPM, maxRpm);
+            editor.putInt(Configuration.PREFS_KEY_MAXTEMP, maxTemp);
+            editor.putInt(Configuration.PREFS_KEY_TEMP_ALARM, alarmTemp);
             editor.commit();
+
+            Dashboard.setAlarmingTemperature(alarmTemp);
+            Dashboard.setMaxTemperature(maxTemp);
+            Dashboard.setMaxSpeed(maxSpeed);
+            Dashboard.setMaxRPM(maxRpm);
 
             startActivity(new Intent(context, Main.class));
             finish();

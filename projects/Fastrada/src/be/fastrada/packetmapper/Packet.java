@@ -1,17 +1,16 @@
 package be.fastrada.packetmapper;
 
-import be.fastrada.Dashboard;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.*;
+import java.io.EOFException;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Type;
-import java.util.BitSet;
-import java.util.Iterator;
 
 public class Packet {
     private String content;
@@ -60,7 +59,7 @@ public class Packet {
     public int getSize(String name) {
         for (Object o : this.getStructure()) {
             JSONObject obj = (JSONObject) o;
-            if(obj.get("name").equals(name)) {
+            if (obj.get("name").equals(name)) {
                 return ((Long) obj.get("size")).intValue();
             }
         }
@@ -87,13 +86,13 @@ public class Packet {
                 if (m.getName().equals(methodToInvoke)) {
                     switch (byteSize) {
                         case 8:
-                            m.invoke(obj, (short)reader.readUint8());
+                            m.invoke(obj, (short) reader.readUint8());
                             break;
                         case 16:
-                            m.invoke(obj, (int)reader.readUint16());
+                            m.invoke(obj, (int) reader.readUint16());
                             break;
                         case 32:
-                            m.invoke(obj, (long)reader.readUint32());
+                            m.invoke(obj, (long) reader.readUint32());
                             break;
                     }
 

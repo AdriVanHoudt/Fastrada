@@ -28,7 +28,7 @@ public class Main extends Activity {
     private HoloCircularProgressBar speedMeter, tempMeter;
     private TextView tvCurrentTemp, tvCurrentSpeed;
 
-    private Handler mHandler;
+    public static Handler mHandler;
     private Server server;
 
     @Override
@@ -51,10 +51,22 @@ public class Main extends Activity {
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(context, Configuration.class));
-                finish();
+                final Intent intent = new Intent(context, Configuration.class);
+
+                startActivity(intent);
             }
         });
+
+        initHandler();
+
+        try {
+            server = new Server();
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initHandler() {
         mHandler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message msg) {
@@ -63,25 +75,22 @@ public class Main extends Activity {
 
                 //TODO
                 //Toast.makeText(context, Arrays.toString(bytes), Toast.LENGTH_SHORT).show();
-                tempMeter.setProgress(new Random().nextFloat());
+                dashboard.setCurrentSpeed(new Random().nextInt(200));
+                dashboard.setCurrentRPM(new Random().nextInt(5200));
+                dashboard.setCurrentTemperature(new Random().nextInt(dashboard.getMaxTemperature()));
             }
         };
-
-        try {
-            server = new Server(mHandler);
-        } catch (SocketException e) {
-            e.printStackTrace();
-        }
     }
 
 
     public void initialise() {
-        final SharedPreferences sharedPreferences = getSharedPreferences("configuration", MODE_PRIVATE);
-        dashboard = new Dashboard();
-        dashboard.setMaxSpeed(sharedPreferences.getInt("maxSpeed", 300));
-        dashboard.setMaxRPM(sharedPreferences.getInt("maxRPM", 6000));
-        dashboard.setMaxTemperature(sharedPreferences.getInt("maxTemperature", 120));
-        dashboard.setAlarmingTemperature(sharedPreferences.getInt("alarmingTemperature", 90));
+        final SharedPreferences sharedPreferences = getSharedPreferences(Configuration.PREFS_KEY, MODE_PRIVATE);
+
+        dashboard = new Dashboard(tvCurrentTemp, tvCurrentSpeed, tempMeter, speedMeter, rpmIndicator);
+        Dashboard.setMaxSpeed(sharedPreferences.getInt(Configuration.PREFS_KEY_MAXSPEED, 300));
+        Dashboard.setMaxRPM(sharedPreferences.getInt(Configuration.PREFS_KEY_MAXRPM, 6000));
+        Dashboard.setMaxTemperature(sharedPreferences.getInt(Configuration.PREFS_KEY_MAXTEMP, 120));
+        Dashboard.setAlarmingTemperature(sharedPreferences.getInt(Configuration.PREFS_KEY_TEMP_ALARM, 90));
 
         rpmIndicator.setMax(dashboard.getMaxRPM());
         /*voor percentage te berekenen in holoCircularProgressBar
@@ -91,9 +100,11 @@ public class Main extends Activity {
     }
 
     public void updateDashboard() {
-        int currentSpeed = 60;
-        int currentTemp = 95;
-        int currentRpm = 2000;
+        final SharedPreferences sharedPreferences = getSharedPreferences(Configuration.PREFS_KEY, MODE_PRIVATE);
+        final int currentSpeed = 60;
+        final int currentTemp = 95;
+        final int currentRpm = 2000;
+
         speedMeter.setProgress((float) (currentSpeed / dashboard.getMaxSpeed()));
         tempMeter.setProgress((float) (currentTemp / dashboard.getMaxTemperature()));
         rpmIndicator.setProgress(currentRpm);
@@ -110,5 +121,11 @@ public class Main extends Activity {
             anim.setRepeatCount(Animation.INFINITE);
             tempMeter.startAnimation(anim);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initHandler();
     }
 }

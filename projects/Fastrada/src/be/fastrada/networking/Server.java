@@ -3,6 +3,8 @@ package be.fastrada.networking;
 
 import android.os.*;
 import android.os.Process;
+import android.util.Log;
+import be.fastrada.activities.Main;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -11,26 +13,24 @@ import java.net.SocketException;
 
 import static android.os.Process.setThreadPriority;
 
-public class Server extends AsyncTask<Void, Void, Void> {
+public class Server extends Thread {
     public static final int PORT_NUMBER = 6666;
     public static final int BUFFER_SIZE = 10;
     public static final String BUNDLE_BYTES_KEY = "Server.Bytes";
 
     private DatagramSocket socket;
     private byte[] buffer;
-    private Handler handler;
 
-    public Server(Handler handler) throws SocketException {
+    public Server() throws SocketException {
         this.socket = new DatagramSocket(PORT_NUMBER);
         this.buffer = new byte[BUFFER_SIZE];
-        this.handler = handler;
 
-        execute();
+        start();
     }
 
     @Override
-    protected Void doInBackground(Void... voids) {
-        setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);
+    public void run() {
+        /*setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);*/
 
         while (true) {
             final byte[] bytes = receiveBytes();
@@ -65,6 +65,6 @@ public class Server extends AsyncTask<Void, Void, Void> {
 
         bundle.putByteArray(BUNDLE_BYTES_KEY, bytes);
         msg.setData(bundle);
-        handler.sendMessage(msg);
+        Main.mHandler.sendMessage(msg);
     }
 }
