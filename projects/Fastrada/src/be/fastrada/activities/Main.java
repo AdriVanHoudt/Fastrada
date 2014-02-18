@@ -14,14 +14,13 @@ import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import be.fastrada.Dashboard;
 import be.fastrada.HoloCircularProgressBar;
 import be.fastrada.R;
 import be.fastrada.networking.Server;
 
 import java.net.SocketException;
-import java.util.Arrays;
+import java.util.Random;
 
 public class Main extends Activity {
     private Dashboard dashboard;
@@ -63,7 +62,8 @@ public class Main extends Activity {
                 final byte[] bytes = bundle.getByteArray(Server.BUNDLE_BYTES_KEY);
 
                 //TODO
-                Toast.makeText(context, Arrays.toString(bytes), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, Arrays.toString(bytes), Toast.LENGTH_SHORT).show();
+                tempMeter.setProgress(new Random().nextFloat());
             }
         };
 
