@@ -39,7 +39,7 @@ public class PacketReader {
     }
 
     public void setContent(String content) {
-        this.content = content;
+        this.content = content.replaceAll(" ", "");
     }
 
     @Override
@@ -56,7 +56,9 @@ public class PacketReader {
     }
 
     public int getId() {
-        return Integer.parseInt(content.substring(0, 2), 16);
+        this.position = 4;
+        String id = content.substring(0,4);
+        return Integer.parseInt(id, 16);
     }
 
     public void resetPosition() {
