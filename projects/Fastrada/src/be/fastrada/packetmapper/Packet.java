@@ -133,4 +133,10 @@ public class Packet {
 
         return true;
     }
+
+    public void setContent(String content) {
+        this.content = content.replaceAll(" ", "");
+        this.reader.resetPosition();
+        this.reader.setContent(content);
+    }
 }

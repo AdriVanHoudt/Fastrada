@@ -77,7 +77,11 @@ public class Main extends Activity {
                 final byte[] bytes = bundle.getByteArray(Server.BUNDLE_BYTES_KEY);
 
                 InputStream res = context.getResources().openRawResource(R.raw.structure);
-                Packet packet = new Packet("01 FF FF F5 A8 00 00 00 00", res, dashboard);
+                Packet packet = new Packet("00 00 13 88", res, dashboard);
+                packet.process();
+                packet.setContent("00 01 00 78");
+                packet.process();
+                packet.setContent("00 02 00 64");
                 packet.process();
             }
         };
