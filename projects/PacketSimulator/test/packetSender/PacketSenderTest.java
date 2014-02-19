@@ -1,4 +1,4 @@
-
+package packetSender;
 
 import org.junit.Test;
 
@@ -66,7 +66,7 @@ public class PacketSenderTest {
         // read from file
 
 
-        BufferedReader br = new BufferedReader(new FileReader("src/main/resources/CANData"));
+        BufferedReader br = new BufferedReader(new FileReader("src/resources/CANData"));
         String line;
         String lines[] = new String[2];
 
@@ -91,7 +91,7 @@ public class PacketSenderTest {
     }
 
     private UdpServer getServer(String message, int port) {
-        System.out.println(port);
+        //System.out.println(port);
         UdpServer server = new UdpServer(message.getBytes().length, port);
         Thread serverThread = new Thread(server);
         serverThread.start();
