@@ -6,7 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.*;
 
-import static org.junit.Assert.assertEquals;
 
 public class PacketSender {
 
@@ -30,27 +29,10 @@ public class PacketSender {
     public static void main(String[] args) {
         int port = 6666;
         String url = "192.168.43.1";
-        BufferedReader br;
 
-        try {
-            br = new BufferedReader(new FileReader("src/resources/CANData"));
+        PacketSender sender = new PacketSender(url, port);
 
-            String line = br.readLine();
-
-            PacketSender sender = new PacketSender(url, port);
-
-            while(!line.equals("") || line != null) {
-                sender.sendByte(line.getBytes());
-                line = br.readLine();
-                if(line == null){break;}
-            }
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        sender.runSimulator();
     }
 
     public void sendByte(byte[] bytes) {
@@ -67,5 +49,34 @@ public class PacketSender {
 
     public int getSendPackets() {
         return sendPackets;
+    }
+
+    public int runSimulator() {
+
+        int linesRead = 0;
+
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader("src/resources/CANData"));
+            String line = br.readLine();
+
+
+            while(!line.equals("") || line != null) {
+                linesRead++;
+                this.sendByte(line.getBytes());
+                line = br.readLine();
+                if(line == null){break;}
+
+                //System.out.println(linesRead);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //System.out.println(linesRead);
+
+        return linesRead;
     }
 }

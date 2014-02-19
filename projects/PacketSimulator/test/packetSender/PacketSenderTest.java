@@ -23,7 +23,7 @@ public class PacketSenderTest {
 
         sender.sendByte(message.getBytes());
 
-        Thread.sleep(1000);
+        Thread.sleep(200);
 
         assertEquals(1, server.getPacketsReceived());
         assertEquals(1, sender.getSendPackets());
@@ -46,7 +46,7 @@ public class PacketSenderTest {
             sender.sendByte(message.getBytes());
         }
 
-        Thread.sleep(5000);
+        Thread.sleep(200);
 
         assertEquals(aantal, server.getPacketsReceived());
         assertEquals(aantal, sender.getSendPackets());
@@ -80,7 +80,7 @@ public class PacketSenderTest {
             sender.sendByte(lines[i].getBytes());
         }
 
-        Thread.sleep(5000);
+        Thread.sleep(200);
 
         // assert lines
         assertTrue(lines[1].equals(new String(server.getBuffer())));
@@ -92,21 +92,12 @@ public class PacketSenderTest {
         int linesRead = 0;
 
         BufferedReader br = new BufferedReader(new FileReader("src/resources/CANData"));
-
-        String line = br.readLine();
-
+        String line = br.readLine(); //voor de size om server te kunnen starten
 
         UdpServer server = getServer(line, port);
         PacketSender sender = new PacketSender(url, port);
 
-        while(!line.equals("") || line != null) {
-            linesRead++;
-            sender.sendByte(line.getBytes());
-            line = br.readLine();
-            if(line == null){break;}
-        }
-
-        System.out.println("Lines read: " + linesRead);
+        linesRead = sender.runSimulator();
 
         assertEquals(linesRead, server.getPacketsReceived());
     }
