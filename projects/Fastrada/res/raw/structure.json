@@ -3,15 +3,7 @@
         "0": {
             "struct": [
                 {
-                    "name": "setMaxRPM",
-                    "size": 16
-                },
-                {
-                    "name": "setThrottlePos",
-                    "size": 16
-                },
-                {
-                    "name": "setCurrentTemperature",
+                    "name": "setCurrentRPM",
                     "size": 16
                 }
             ]
@@ -21,22 +13,14 @@
                 {
                     "name": "setCurrentSpeed",
                     "size": 16
-                },
-                {
-                    "name": "setGear",
-                    "size": 8
-                },
-                {
-                    "name": "testfunctiedanietaangeroepenword",
-                    "size": 32
                 }
             ]
         },
         "2": {
             "struct": [
                 {
-                    "name": "setFuelMap",
-                    "size": 8
+                    "name": "setCurrentTemperature",
+                    "size": 16
                 }
             ]
         }
