@@ -5,20 +5,15 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 
-/**
- * Created by bavo on 18/02/14.
- */
 public class UdpServer implements Runnable {
-    private final int PORT;
     private DatagramSocket datagramSocket;
     private int packetsReceived;
     private int byteSize;
     private byte[] buffer;
 
     public UdpServer(int byteSize, int port) {
-        PORT = port;
         try {
-            datagramSocket = new DatagramSocket(PORT);
+            datagramSocket = new DatagramSocket(port);
         } catch (SocketException e) {
             e.printStackTrace();
         }

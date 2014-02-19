@@ -7,9 +7,6 @@ import java.io.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by bavo on 18/02/14.
- */
 public class PacketSenderTest {
     private static int portCounter = 1234;
     private String url = "127.0.0.1";
@@ -57,7 +54,7 @@ public class PacketSenderTest {
 
     @Test(expected=Error.class)
     public void testHostException(){
-        assertEquals("unknowhost", new PacketSender("blabla", getPort()));
+        new PacketSender("blabla", getPort());
     }
 
     @Test
@@ -67,7 +64,6 @@ public class PacketSenderTest {
 
 
         BufferedReader br = new BufferedReader(new FileReader("src/resources/CANData"));
-        String line;
         String lines[] = new String[2];
 
         for(int i = 0; i <= 1; i++){
@@ -88,6 +84,31 @@ public class PacketSenderTest {
 
         // assert lines
         assertTrue(lines[1].equals(new String(server.getBuffer())));
+    }
+
+    @Test
+    public void runSimulator() throws IOException {
+        int port = getPort();
+        int linesRead = 0;
+
+        BufferedReader br = new BufferedReader(new FileReader("src/resources/CANData"));
+
+        String line = br.readLine();
+
+
+        UdpServer server = getServer(line, port);
+        PacketSender sender = new PacketSender(url, port);
+
+        while(!line.equals("") || line != null) {
+            linesRead++;
+            sender.sendByte(line.getBytes());
+            line = br.readLine();
+            if(line == null){break;}
+        }
+
+        System.out.println("Lines read: " + linesRead);
+
+        assertEquals(linesRead, server.getPacketsReceived());
     }
 
     private UdpServer getServer(String message, int port) {
