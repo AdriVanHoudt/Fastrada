@@ -18,9 +18,10 @@ import be.fastrada.Dashboard;
 import be.fastrada.HoloCircularProgressBar;
 import be.fastrada.R;
 import be.fastrada.networking.Server;
+import be.fastrada.packetmapper.Packet;
 
+import java.io.InputStream;
 import java.net.SocketException;
-import java.util.Random;
 
 public class Main extends Activity {
     private Dashboard dashboard;
@@ -28,6 +29,7 @@ public class Main extends Activity {
     private HoloCircularProgressBar speedMeter, tempMeter;
     private TextView tvCurrentTemp, tvCurrentSpeed;
 
+    private Context context;
     public static Handler mHandler;
     private Server server;
 
@@ -36,6 +38,7 @@ public class Main extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
+        context = this.getApplicationContext();
         rpmIndicator = (ProgressBar) findViewById(R.id.rpmIndicator);
         speedMeter = (HoloCircularProgressBar) findViewById(R.id.speedIndicator);
         tempMeter = (HoloCircularProgressBar) findViewById(R.id.thermometer);
@@ -73,11 +76,9 @@ public class Main extends Activity {
                 final Bundle bundle = msg.getData();
                 final byte[] bytes = bundle.getByteArray(Server.BUNDLE_BYTES_KEY);
 
-                //TODO
-                //Toast.makeText(context, Arrays.toString(bytes), Toast.LENGTH_SHORT).show();
-                dashboard.setCurrentSpeed(new Random().nextInt(200));
-                dashboard.setCurrentRPM(new Random().nextInt(5200));
-                dashboard.setCurrentTemperature(new Random().nextInt(dashboard.getMaxTemperature()));
+                InputStream res = context.getResources().openRawResource(R.raw.structure);
+                Packet packet = new Packet("01 FF FF F5 A8 00 00 00 00", res, dashboard);
+                packet.process();
             }
         };
     }
@@ -93,14 +94,10 @@ public class Main extends Activity {
         Dashboard.setAlarmingTemperature(sharedPreferences.getInt(Configuration.PREFS_KEY_TEMP_ALARM, 90));
 
         rpmIndicator.setMax(dashboard.getMaxRPM());
-        /*voor percentage te berekenen in holoCircularProgressBar
-            speedMeter.setProgress(currentSpeed / maxSpeed);
-        */
 
     }
 
     public void updateDashboard() {
-        final SharedPreferences sharedPreferences = getSharedPreferences(Configuration.PREFS_KEY, MODE_PRIVATE);
         final int currentSpeed = 60;
         final int currentTemp = 95;
         final int currentRpm = 2000;

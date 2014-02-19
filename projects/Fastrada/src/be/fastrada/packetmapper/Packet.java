@@ -1,14 +1,13 @@
 package be.fastrada.packetmapper;
 
+
+import be.fastrada.Dashboard;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.EOFException;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -17,14 +16,15 @@ public class Packet {
     private PacketReader reader;
     private JSONObject configFile;
     private JSONArray methods;
+    private Dashboard dashboard;
 
-    public Packet(String content, String packetMappingPath) {
+    public Packet(String content, InputStream packetMappingPath, Dashboard dashboard) {
         this.content = content.replace(" ", "");
         this.reader = new PacketReader(this.content);
+        this.dashboard = dashboard;
 
         try {
-            FileReader fr = new FileReader(packetMappingPath);
-            this.configFile = (JSONObject) new JSONParser().parse(fr);
+            this.configFile = (JSONObject) new JSONParser().parse(new InputStreamReader(packetMappingPath));
         } catch (ParseException e) {
             throw new Error("parse error");
         } catch (FileNotFoundException e) {
@@ -77,8 +77,9 @@ public class Packet {
         try {
             Class cls = Class.forName("be.fastrada.Dashboard");
 
+           // Object obj = cls.newInstance();
+            Object obj = dashboard;
 
-            Object obj = cls.newInstance();
 
             //error met types van parameters van functies van dashboard
 
@@ -110,10 +111,10 @@ public class Packet {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
             return false;
-        } catch (InstantiationException e) {
+        } /*catch (InstantiationException e) {
             e.printStackTrace();
             return false;
-        } catch (EOFException e) {
+        }*/ catch (EOFException e) {
             e.printStackTrace();
             return false;
         }

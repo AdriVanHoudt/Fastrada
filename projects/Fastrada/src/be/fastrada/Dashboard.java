@@ -16,6 +16,9 @@ public class Dashboard implements Serializable {
     private HoloCircularProgressBar tempMeter, speedMeter;
     private ProgressBar rpmIndicator;
 
+    public Dashboard() {
+    }
+
     public Dashboard(TextView tvCurrentTemp, TextView tvCurrentSpeed, HoloCircularProgressBar tempMeter, HoloCircularProgressBar speedMeter, ProgressBar rpmIndicator) {
         this.tvCurrentTemp = tvCurrentTemp;
         this.tvCurrentSpeed = tvCurrentSpeed;
