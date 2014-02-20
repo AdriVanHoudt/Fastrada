@@ -15,7 +15,7 @@ import static android.os.Process.setThreadPriority;
 
 public class Server extends Thread {
     public static final int PORT_NUMBER = 6666;
-    public static final int BUFFER_SIZE = 10;
+    public static final int BUFFER_SIZE = 20;
     public static final String BUNDLE_BYTES_KEY = "Server.Bytes";
 
     private DatagramSocket socket;

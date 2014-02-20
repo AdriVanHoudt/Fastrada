@@ -21,6 +21,7 @@ import be.fastrada.networking.Server;
 import be.fastrada.packetmapper.Packet;
 
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.SocketException;
 
 public class Main extends Activity {
@@ -32,6 +33,8 @@ public class Main extends Activity {
     private Context context;
     public static Handler mHandler;
     private Server server;
+
+    protected final static char[] hexArray= "0123456789ABCDEF".toCharArray();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,17 +79,41 @@ public class Main extends Activity {
                 final Bundle bundle = msg.getData();
                 final byte[] bytes = bundle.getByteArray(Server.BUNDLE_BYTES_KEY);
 
+                String hex = null;
+                try {
+                    hex = new String(bytes, "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                }
                 InputStream res = context.getResources().openRawResource(R.raw.structure);
-                Packet packet = new Packet("00 00 13 88", res, dashboard);
+                Packet packet = new Packet(hex, res, dashboard);
+
                 packet.process();
-                packet.setContent("00 01 00 78");
+                /*packet.setContent("00 01 00 78");
                 packet.process();
                 packet.setContent("00 02 00 64");
-                packet.process();
+                packet.process();        */
             }
         };
     }
 
+
+    public static String byteArrayToString(byte[] ba){
+        char[] hexChars = new char[ba.length * 2];
+        for (int j = 0; j< ba.length; j++){
+            int v = ba[j] & 0xFF;
+            hexChars[j *2] = hexArray[v >>> 4];
+            hexChars[j *2 + 1] = hexArray[v & 0x0F];
+        }
+        return new String(hexChars);
+        /*StringBuilder hex = new StringBuilder(ba.length * 2);
+        for(byte b : ba){
+            hex.append(String.format("%02X",b));
+        }
+
+        String result = hex.toString();
+        return result;   */
+    }
 
     public void initialise() {
         final SharedPreferences sharedPreferences = getSharedPreferences(Configuration.PREFS_KEY, MODE_PRIVATE);
