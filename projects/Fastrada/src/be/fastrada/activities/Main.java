@@ -74,6 +74,7 @@ public class Main extends Activity {
                 final Bundle bundle = msg.getData();
                 final byte[] bytes = bundle.getByteArray(Server.BUNDLE_BYTES_KEY);
 
+
                 InputStream res = context.getResources().openRawResource(R.raw.structure);
                 Packet packet = new Packet("00 00 13 88", res, dashboard);
                 packet.process();
