@@ -1,5 +1,10 @@
 # Uitvoeren indien het niet werkt!
 
+## Run android deploy by vagrant
+1. adb kill-server
+2. sudo -i
+3. adb -d shell
+
 ## Vagrant
 cd ~ && git clone https://github.com/mosabua/maven-android-sdk-deployer.git && cd maven-android-sdk-deployer/ && mvn -pl com.simpligility.android.sdk-deployer:android-19 -am install
 
