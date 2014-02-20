@@ -35,7 +35,7 @@ public class PacketReader {
             position += byteHexLength;
             return result;
         }
-            throw new EOFException();
+        throw new EOFException();
     }
 
     public void setContent(String content) {

@@ -7,6 +7,15 @@ import org.json.simple.JSONObject;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import java.io.EOFException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.security.AccessController;
+import java.security.PrivilegedActionException;
+import java.security.PrivilegedExceptionAction;
 import java.text.ParseException;
 
 import static junit.framework.Assert.assertEquals;
@@ -16,19 +25,27 @@ import static org.mockito.Mockito.mock;
 
 
 public class PacketTest {
-   /* private Packet packet = new Packet("01 FF FF 0A 17 00 00 00 00", "res/raw/structure.json");
-    private Packet packet2 = new Packet("00 FF FF 0A 17 00 00 00 00", "res/raw/structure.json");
+    private Packet packet;
+    private Packet packet2;
+
+    public PacketTest() throws FileNotFoundException {
+        packet = new Packet("00 01 FF FF 0A 17 00 00 00 00", new FileInputStream(new File("res/raw/structure.json")), new Dashboard());
+        packet2 = new Packet("00 00 FF FF 0A 17 00 00 00 00", new FileInputStream(new File("res/raw/structure.json")), new Dashboard());
+    }
+
 
     @Test
     public void createPacket() {
-        assertEquals("01FFFF0A1700000000", packet.getContent());
-        assertEquals("01FFFF0A1700000000", packet.getReader().getContent());
+        assertEquals("0001FFFF0A1700000000", packet.getContent());
+        assertEquals("0001FFFF0A1700000000", packet.getReader().getContent());
     }
+
 
     @Test
     public void getId() {
         assertEquals(1, packet.getId());
     }
+
 
     @Test
     public void getConfiguration() {
@@ -36,17 +53,21 @@ public class PacketTest {
         assertTrue(packet.getConfigFile() != null);
     }
 
+
     @Test
     public void getStructure()  {
-        assertEquals(3, packet.getStructure().size());
+        assertEquals(1, packet.getStructure().size());
     }
+
 
     @Test
     public void getSizeByMethod() {
-        assertEquals(8, packet.getSize("setGear"));
-        assertEquals(-1, packet.getSize("setMaxRPM"));
         assertEquals(16, packet.getSize("setCurrentSpeed"));
+        assertEquals(16, packet2.getSize("setCurrentRPM"));
+        assertEquals(-1, packet2.getSize("setCurrentTemperature"));
+
     }
+
 
     @Test
     public void invokeMethod1() {
@@ -57,12 +78,13 @@ public class PacketTest {
         JSONArray arr = packet.getStructure();
 
         JSONObject jsonObject = (JSONObject) arr.get(0);
-        JSONObject jsonObject2 = (JSONObject) arr.get(1);
+
 
 
         assertEquals(true, packet.invokeMethod(jsonObject));
-        assertEquals(true, packet.invokeMethod(jsonObject2));
+
     }
+
 
     @Test
     public void processPacket() {
@@ -71,27 +93,22 @@ public class PacketTest {
     }
 
     @Test(expected=Error.class)
-    public void parseExceptionTest() {
+    public void parseExceptionTest() throws FileNotFoundException {
         String error = "parse error";
-        assertEquals(error, new Packet("01 FF FF 0A 17 00 00 00 00", "res/raw/data.txt"));
+        assertEquals(error, new Packet("01 FF FF 0A 17 00 00 00 00", new FileInputStream(new File("res/raw/data.txt")), new Dashboard()));
 
-    }
-
-    @Test(expected = Error.class)
-    public void fileNotFoundException() {
-        String error = "file not found";
-        assertEquals(error, new Packet("01 FF FF 0A 17 00 00 00 00", "res/raw/structurcgsgsdge.json"));
     }
 
     @Test
-    public void invokeNullMethod() {
-        Packet packet = new Packet("01 FF FF 0A 17 00 00 00 00", "res/raw/structure.json");
+    public void invokeNullMethod() throws FileNotFoundException {
+        Packet packet = new Packet("01 FF FF 0A 17 00 00 00 00", new FileInputStream(new File("res/raw/structure.json")), new Dashboard());
         assertTrue(packet.invokeMethod(null));
     }
 
+
     @Test
-    public void invokeTestUint8() {
-        Packet packet = new Packet("01 FF AF 0A 17 00 00 00 00", "res/raw/structure.json");
+    public void invokeTestUint8() throws FileNotFoundException {
+        Packet packet = new Packet("00 01 FF AF 0A 17 00 00 00 00", new FileInputStream(new File("res/raw/structure.json")), new Dashboard());
 
         JSONObject put = new JSONObject();
         put.put("name", "setCurrentSpeed");
@@ -101,15 +118,16 @@ public class PacketTest {
     }
 
     @Test
-    public void invokeTestUint32() {
-        Packet packet = new Packet("01 FF AF 0A 17 00 00 00 00", "res/raw/structure.json");
-
-        JSONObject put = new JSONObject();
-        put.put("name", "setMaxSpeed");
-        put.put("size", 32);
-
-        assertTrue(packet.invokeMethod(put));
+    public void setContectTest() throws FileNotFoundException {
+        Packet packet = new Packet("00 01 FF AF 0A 17 00 00 00 00", new FileInputStream(new File("res/raw/structure.json")), new Dashboard());
+        packet.setContent("00 04 FF AF 0A 17 00 00 00 00");
+        assertEquals("0004FFAF0A1700000000", packet.getContent());
     }
-                  */
+
+    @Test(expected = Error.class)
+    public void EOFExceptionTest() throws FileNotFoundException {
+        Packet packet = new Packet("FF FF FF AF 0A 17 00 00 00 00", new FileInputStream(new File("res/raw/structure.json")), new Dashboard());
+        packet.process();
+    }
 
 }
