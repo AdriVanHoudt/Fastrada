@@ -1,18 +1,9 @@
 package be.fastrada;
 
-import android.widget.TextView;
-
-/**
- * Created with IntelliJ IDEA.
- * User: M
- * Date: 5/02/14
- * Time: 8:58
- * To change this template use File | Settings | File Templates.
- */
-
 import android.content.Context;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.widget.TextView;
 
 public class DigitalTextView extends TextView {
     public DigitalTextView(Context context, AttributeSet attrs, int defStyle) {
@@ -31,8 +22,7 @@ public class DigitalTextView extends TextView {
     }
 
     private void init() {
-        Typeface tf = Typeface.createFromAsset(getContext().getAssets(),
-                "fonts/DS-DIGI.otf");
+        final Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/DS-DIGI.otf");
         setTypeface(tf);
     }
 }

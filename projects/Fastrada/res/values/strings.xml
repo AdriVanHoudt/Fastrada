@@ -8,4 +8,9 @@
     <string name="settings">settings</string>
     <string name="configuration">Configuration</string>
     <string name="alarmingTemp">Alarming temperature</string>
+    <string name="celcius">°C</string>
+    <string name="speed_unit">KM/H</string>
+    <string name="btn_submit">Submit</string>
+    <string name="alarmTempTooHigh">Your alarming temperature must not be higher than the maximum temperature</string>
+    <string name="serverStartError">Server could not start</string>
 </resources>

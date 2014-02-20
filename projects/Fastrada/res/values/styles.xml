@@ -1,5 +1,4 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-    
     <style name="CircularProgressBar">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
@@ -10,7 +9,6 @@
         <item name="marker_visible">true</item>
         <item name="thumb_visible">true</item>
     </style>
-    
     <style name="CircularProgressBarLight">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
@@ -21,15 +19,10 @@
         <item name="marker_visible">true</item>
         <item name="thumb_visible">true</item>
     </style>
-
-    <!-- Application theme. -->
     <style name="AppTheme" parent="android:Theme.Holo.NoActionBar">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
         <item name="circularProgressBarStyle">@style/CircularProgressBar</item>
     </style>
-
     <style name="AppThemeLight" parent="android:Theme.Holo.Light.NoActionBar">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
         <item name="circularProgressBarStyle">@style/CircularProgressBarLight</item>
     </style>
 </resources>

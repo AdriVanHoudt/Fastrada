@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="horizontal"
@@ -7,127 +6,98 @@
         android:layout_height="match_parent"
         android:background="@color/background"
         android:gravity="center"
-        >
-
+        android:paddingTop="15dp"
+        android:id="@+id/configLayout">
     <TableLayout
             android:gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
-
         <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/configuration"
-                android:textSize="30dp"
+                android:textSize="30sp"
                 android:layout_marginLeft="1dp"
-                />
+                android:gravity="center"
+                android:layout_marginBottom="15dp"/>
 
         <TableRow
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                >
-
+                android:layout_height="wrap_content">
             <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:paddingLeft="5dp"
                     android:text="@string/maximumrpm"
-                    />
-
+                    android:labelFor="@+id/maxRPM"/>
             <EditText
                     android:id="@+id/maxRPM"
                     android:layout_width="wrap_content"
                     android:height="80dp"
-                    android:text="2000"
                     android:inputType="number"
                     android:textAlignment="center"
-                    android:maxLength="4"
-                    />
+                    android:maxLength="4"/>
         </TableRow>
-
         <TableRow
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                >
-
+                android:layout_height="wrap_content">
             <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:paddingLeft="5dp"
                     android:text="@string/maximumspeed"
-                    />
-
+                    android:labelFor="@+id/maxSpeed"/>
             <EditText
                     android:id="@+id/maxSpeed"
                     android:layout_width="wrap_content"
                     android:height="80dp"
-                    android:text="200"
                     android:inputType="number"
                     android:textAlignment="center"
-                    android:maxLength="3"
-                    />
+                    android:maxLength="3"/>
         </TableRow>
-
         <TableRow
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                >
+                android:layout_height="wrap_content">
 
             <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:paddingLeft="5dp"
                     android:text="@string/maxtemp"
-                    />
-
+                    android:labelFor="@+id/maxTemp"/>
             <EditText
                     android:id="@+id/maxTemp"
                     android:layout_width="wrap_content"
                     android:height="80dp"
-                    android:text="300"
                     android:inputType="number"
                     android:textAlignment="center"
-                    android:maxLength="3"
-                    />
+                    android:maxLength="3"/>
         </TableRow>
-
         <TableRow
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                >
-
+                android:layout_height="wrap_content">
             <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:paddingLeft="5dp"
                     android:text="@string/alarmingTemp"
-                    />
-
+                    android:labelFor="@+id/alarmTemp"/>
             <EditText
                     android:id="@+id/alarmTemp"
                     android:layout_width="wrap_content"
                     android:height="80dp"
-                    android:text="300"
                     android:inputType="number"
                     android:textAlignment="center"
-                    android:maxLength="3"
-                    />
+                    android:maxLength="3"/>
         </TableRow>
         <TableRow
-               android:layout_marginTop="30dp">
+                android:layout_marginTop="15dp">
             <Button
                     android:id="@+id/saveConfig"
                     android:layout_height="45dp"
-                    android:layout_width="0dp"
-                    android:text="Submit"
-                    />
-            <Button
-                    android:id="@+id/cancelConfig"
-                    android:layout_height="45dp"
-                    android:layout_width="150dp"
-                    android:text="Cancel"
-                    />
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/btn_submit"/>
         </TableRow>
     </TableLayout>
-
 </RelativeLayout>

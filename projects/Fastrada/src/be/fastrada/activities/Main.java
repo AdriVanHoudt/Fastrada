@@ -14,6 +14,7 @@ import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import be.fastrada.Dashboard;
 import be.fastrada.HoloCircularProgressBar;
 import be.fastrada.R;
@@ -45,9 +46,9 @@ public class Main extends Activity {
         tvCurrentTemp = (TextView) findViewById(R.id.tvTemperature);
         tvCurrentSpeed = (TextView) findViewById(R.id.tvSpeed);
 
-        // initialise variables
         initialise();
         updateDashboard();
+        initHandler();
 
         final ImageView settings = (ImageView) findViewById(R.id.settings);
         final Context context = this.getBaseContext();
@@ -55,17 +56,14 @@ public class Main extends Activity {
             @Override
             public void onClick(View v) {
                 final Intent intent = new Intent(context, Configuration.class);
-
                 startActivity(intent);
             }
         });
 
-        initHandler();
-
         try {
             server = new Server();
         } catch (SocketException e) {
-            e.printStackTrace();
+            Toast.makeText(this, getString(R.string.serverStartError), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -116,7 +114,7 @@ public class Main extends Activity {
         if (currentTemp >= dashboard.getAlarmingTemperature()) {
             final Animation anim = new AlphaAnimation(0.0f, 1.0f);
 
-            anim.setDuration(800); //You can manage the time of the blink with this parameter
+            anim.setDuration(800);
             anim.setStartOffset(20);
             anim.setRepeatMode(Animation.REVERSE);
             anim.setRepeatCount(Animation.INFINITE);

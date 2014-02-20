@@ -4,14 +4,11 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:background="@color/background"
-                xmlns:app="http://schemas.android.com/apk/res/be.fastrada"
-        >
-
+                xmlns:app="http://schemas.android.com/apk/res/be.fastrada">
     <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/rpmMenu">
-
         <ProgressBar
                 android:id="@+id/rpmIndicator"
                 style="?android:attr/progressBarStyleHorizontal"
@@ -19,33 +16,27 @@
                 android:layout_height="35dp"
                 android:max="2000"
                 android:progress="900"
-                android:progressDrawable="@drawable/rpmindicator"
-                />
-
+                android:progressDrawable="@drawable/rpmindicator"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/RPM"
                 android:paddingRight="9dp"
                 android:textColor="@color/background"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="8dp"
                 android:layout_centerInParent="true"/>
-
     </RelativeLayout>
-
     <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/meterMenu"
             android:layout_below="@+id/rpmMenu">
-
         <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/speedMeter">
-
             <be.fastrada.HoloCircularProgressBar
                     android:id="@+id/speedIndicator"
                     android:layout_width="wrap_content"
@@ -55,39 +46,30 @@
                     app:marker_visible="false"
                     app:progress_color="@android:color/holo_red_dark"
                     app:progress_background_color="#cccccc"
-                    app:thumb_visible="false"
-                    />
-
+                    app:thumb_visible="false"/>
             <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    >
-
+                    android:layout_centerInParent="true">
                 <be.fastrada.DigitalTextView
                         android:id="@+id/tvSpeed"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="999"
-                        android:textSize="80dp"
-
+                        android:textSize="80sp"
                         />
-
                 <be.fastrada.DigitalTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="KM/H"
-                        android:textSize="20dp"
+                        android:text="@string/speed_unit"
+                        android:textSize="20sp"
                         android:layout_centerHorizontal="true"
                         android:layout_below="@+id/tvSpeed"/>
             </RelativeLayout>
         </RelativeLayout>
-
         <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true">
-
             <be.fastrada.HoloCircularProgressBar
                     android:id="@+id/thermometer"
                     android:layout_width="wrap_content"
@@ -97,51 +79,40 @@
                     app:marker_visible="false"
                     app:progress_color="@android:color/holo_red_dark"
                     app:progress_background_color="#cccccc"
-                    app:thumb_visible="false"
-                    />
-
+                    app:thumb_visible="false"/>
             <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    >
-
+                    android:layout_centerInParent="true">
                 <be.fastrada.DigitalTextView
                         android:id="@+id/tvTemperature"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="888"
-                        android:textSize="80dp"
-                        />
-
+                        android:textSize="80sp"/>
                 <be.fastrada.DigitalTextView
                         android:id="@+id/tvTempSign"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="°C"
-                        android:textSize="20dp"
+                        android:text="@string/celcius"
+                        android:textSize="20sp"
                         android:layout_centerHorizontal="true"
                         android:layout_below="@+id/tvTemperature"/>
             </RelativeLayout>
         </RelativeLayout>
-
         <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/speedMeter"
                 android:layout_alignBottom="@+id/speedMeter">
-
-                <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/settings"
-                        android:layout_alignParentRight="true"
-                        android:src="@android:drawable/ic_menu_preferences"
-                        android:contentDescription="@string/settings"
-                        android:padding="8dp"
-                        />
+            <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:paddingRight="5dp"
+                    android:id="@+id/settings"
+                    android:layout_alignParentRight="true"
+                    android:src="@android:drawable/ic_menu_preferences"
+                    android:contentDescription="@string/settings"
+                    android:padding="8dp"/>
         </RelativeLayout>
     </RelativeLayout>
-
 </RelativeLayout>
-
