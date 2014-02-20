@@ -27,10 +27,8 @@ public class Packet {
             this.configFile = (JSONObject) new JSONParser().parse(new InputStreamReader(packetMappingPath));
         } catch (ParseException e) {
             throw new Error("parse error");
-        } catch (FileNotFoundException e) {
-            throw new Error("file not found");
         } catch (IOException e) {
-            throw new Error("IO exception");
+            e.printStackTrace();
         }
     }
 
@@ -93,30 +91,32 @@ public class Packet {
                             m.invoke(obj, (int) reader.readUint16());
                             break;
                         case 32:
+                            //kan dit niet coveren omdat dashboard geen parameter voor double heeft
                             m.invoke(obj, (long) reader.readUint32());
                             break;
                     }
-
                     return true;
                 }
             }
 
             return true;
         } catch (InvocationTargetException e) {
+            //kan niet gecoverd word
             e.printStackTrace();
             return false;
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            //does not happen
             return false;
         } catch (ClassNotFoundException e) {
+            //does not happen
             e.printStackTrace();
             return false;
         } /*catch (InstantiationException e) {
             e.printStackTrace();
             return false;
         }*/ catch (EOFException e) {
-            e.printStackTrace();
-            return false;
+            throw new Error();
+
         }
     }
 

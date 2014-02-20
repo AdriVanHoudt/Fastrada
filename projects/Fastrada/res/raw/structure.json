@@ -23,6 +23,34 @@
                     "size": 16
                 }
             ]
+        },
+        "65535": {
+            "struct": [
+                {
+                    "name": "setCurrentSpeed",
+                    "size": 16
+                },
+                {
+                    "name": "setCurrentSpeed",
+                    "size": 16
+                },
+                {
+                    "name": "setCurrentSpeed",
+                    "size": 16
+                },
+                {
+                    "name": "setCurrentSpeed",
+                    "size": 16
+                },
+                {
+                    "name": "setCurrentSpeed",
+                    "size": 16
+                },
+                {
+                    "name": "setCurrentSpeed",
+                    "size": 16
+                }
+            ]
         }
     }
 }
