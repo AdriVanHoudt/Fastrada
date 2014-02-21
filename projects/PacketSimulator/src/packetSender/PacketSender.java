@@ -39,12 +39,11 @@ public class PacketSender {
         DatagramPacket packet = new DatagramPacket(bytes, bytes.length, adres, port);
         try {
             socket.send(packet);
-            Thread.sleep(100);
+            Thread.sleep(50);
         } catch (IOException e) {
             throw new Error("IOException");
-            //e.printStackTrace();
         } catch (InterruptedException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
         sendPackets++;
     }
@@ -58,21 +57,20 @@ public class PacketSender {
 
         int linesRead = 0;
 
-        BufferedReader br = null;
+        BufferedReader br;
         try {
             br = new BufferedReader(new FileReader("src/resources/CANData"));
             String line = br.readLine();
             line = line.replaceAll("\t", "");
 
-
-            while(!line.equals("") || line != null) {
+            while (!line.equals("") || line != null) {
                 linesRead++;
                 byte[] bytes = hexStringToByteArray(line);
                 this.sendByte(bytes);
                 line = br.readLine();
-                if(line == null){break;}
-
-                //System.out.println(linesRead);
+                if (line == null) {
+                    break;
+                }
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -90,7 +88,7 @@ public class PacketSender {
         byte[] data = new byte[len / 2];
         for (int i = 0; i < len; i += 2) {
             data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
-                    + Character.digit(s.charAt(i+1), 16));
+                    + Character.digit(s.charAt(i + 1), 16));
         }
         return data;
     }
