@@ -11,6 +11,9 @@ import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+/**
+ * Class that represents 
+ */
 public class Packet {
     private String content;
     private PacketReader reader;

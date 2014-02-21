@@ -10,6 +10,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+/**
+ *
+ */
 public class WebRequest extends Thread {
     private int amount;
 

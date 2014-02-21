@@ -26,6 +26,9 @@ import org.apache.commons.codec.binary.Hex;
 import java.io.InputStream;
 import java.net.SocketException;
 
+/**
+ * Activity that shows all the meters and data
+ */
 public class Main extends Activity {
     private Dashboard dashboard;
     private ProgressBar rpmIndicator;
@@ -34,7 +37,6 @@ public class Main extends Activity {
 
     private Context context;
     public static Handler mHandler;
-    private Server server;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,7 +65,7 @@ public class Main extends Activity {
         });
 
         try {
-            server = new Server();
+            new Server();
         } catch (SocketException e) {
             Toast.makeText(this, getString(R.string.serverStartError), Toast.LENGTH_LONG).show();
         }
@@ -89,7 +91,6 @@ public class Main extends Activity {
         };
     }
 
-
     public void initialise() {
         final SharedPreferences sharedPreferences = getSharedPreferences(Configuration.PREFS_KEY, MODE_PRIVATE);
 
@@ -100,7 +101,6 @@ public class Main extends Activity {
         Dashboard.setAlarmingTemperature(sharedPreferences.getInt(Configuration.PREFS_KEY_TEMP_ALARM, 90));
 
         rpmIndicator.setMax(dashboard.getMaxRPM());
-
     }
 
     public void updateDashboard() {

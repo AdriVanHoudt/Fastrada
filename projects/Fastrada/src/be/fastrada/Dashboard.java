@@ -6,6 +6,9 @@ import android.widget.TextView;
 
 import java.io.Serializable;
 
+/**
+ *
+ */
 public class Dashboard implements Serializable {
     private static int maxSpeed;
     private static int maxTemperature;

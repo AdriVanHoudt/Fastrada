@@ -5,6 +5,9 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
+/**
+ * TextView with custom Font
+ */
 public class DigitalTextView extends TextView {
     public DigitalTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);

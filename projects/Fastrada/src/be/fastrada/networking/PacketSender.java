@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.net.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+/**
+ *
+ */
 public class PacketSender implements Runnable {
     public static final int SERVER_PORT = 1234;
 
