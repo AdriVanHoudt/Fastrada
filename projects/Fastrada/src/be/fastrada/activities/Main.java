@@ -21,6 +21,8 @@ import be.fastrada.R;
 import be.fastrada.networking.Server;
 import be.fastrada.packetmapper.Packet;
 
+import org.apache.commons.codec.binary.Hex;
+
 import java.io.InputStream;
 import java.net.SocketException;
 
@@ -74,6 +76,7 @@ public class Main extends Activity {
                 final Bundle bundle = msg.getData();
                 final byte[] bytes = bundle.getByteArray(Server.BUNDLE_BYTES_KEY);
 
+                String content = Hex.encodeHexString(bytes); //hex string uit byte array van 10 groot
 
                 InputStream res = context.getResources().openRawResource(R.raw.structure);
                 Packet packet = new Packet("00 00 13 88", res, dashboard);

@@ -7,6 +7,8 @@ import java.io.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import org.apache.commons.codec.binary.Hex;
+
 public class PacketSenderTest {
     private static int portCounter = 1234;
     private String url = "127.0.0.1";
@@ -100,6 +102,17 @@ public class PacketSenderTest {
         linesRead = sender.runSimulator();
 
         assertEquals(linesRead, server.getPacketsReceived());
+    }
+
+    @Test
+    public void hexStringTest()
+    {
+        String hex = "00020300000000000000";
+        byte[] bytes = PacketSender.hexStringToByteArray(hex);
+
+        assertEquals(10, bytes.length);
+        String converted = Hex.encodeHexString(bytes);
+        assertEquals(hex, converted);
     }
 
     private UdpServer getServer(String message, int port) {
