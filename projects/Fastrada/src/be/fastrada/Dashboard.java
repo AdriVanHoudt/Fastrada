@@ -7,7 +7,7 @@ import android.widget.TextView;
 import java.io.Serializable;
 
 /**
- *
+ * Class that represents the dashboard.
  */
 public class Dashboard implements Serializable {
     private static int maxSpeed;

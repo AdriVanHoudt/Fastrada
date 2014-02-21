@@ -25,7 +25,7 @@ import java.io.InputStream;
 import java.net.SocketException;
 
 /**
- * Activity that shows all the meters and data
+ * Activity with all the visualized data.
  */
 public class Main extends Activity {
     private Dashboard dashboard;

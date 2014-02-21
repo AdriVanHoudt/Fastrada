@@ -11,7 +11,7 @@ import be.fastrada.Dashboard;
 import be.fastrada.R;
 
 /**
- * 
+ * Activity for configuration.
  */
 public class Configuration extends Activity {
     public static final String PREFS_KEY = "be.fastrada.preferences";

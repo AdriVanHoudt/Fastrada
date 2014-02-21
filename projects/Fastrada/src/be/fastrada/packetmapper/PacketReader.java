@@ -3,10 +3,9 @@ package be.fastrada.packetmapper;
 import java.io.EOFException;
 
 /**
- *
+ * Class that reads the bytes of a packet.
  */
 public class PacketReader {
-
     private String content;
     private int position;
 
@@ -17,7 +16,6 @@ public class PacketReader {
 
     public long readUint8() throws EOFException {
         int byteHexLength = 2;
-
         return readHexPart(byteHexLength);
     }
 
