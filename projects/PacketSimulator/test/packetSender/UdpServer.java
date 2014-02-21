@@ -25,7 +25,7 @@ public class UdpServer implements Runnable {
     @Override
     public void run() {
         while (true) {
-            DatagramPacket packet = null;
+            DatagramPacket packet;
             try {
                 packet = new DatagramPacket(buffer, byteSize);
                 datagramSocket.receive(packet);
@@ -39,11 +39,6 @@ public class UdpServer implements Runnable {
 
     public byte[] getBuffer() {
         return buffer;
-    }
-
-    public void closeConnection()
-    {
-        datagramSocket.close();
     }
 
     public int getPacketsReceived() {
