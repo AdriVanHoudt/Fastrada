@@ -48,7 +48,7 @@ public class Main extends Activity {
         tvCurrentSpeed = (TextView) findViewById(R.id.tvSpeed);
 
         initialise();
-        updateDashboard();
+        initDashboard();
         initHandler();
 
         final ImageView settings = (ImageView) findViewById(R.id.settings);
@@ -106,19 +106,13 @@ public class Main extends Activity {
         rpmIndicator.setMax(dashboard.getMaxRPM());
     }
 
-    public void updateDashboard() {
-        final int currentSpeed = 60;
-        final int currentTemp = 95;
-        final int currentRpm = 2000;
+    public void initDashboard() {
+        speedMeter.setProgress(0.0f);
+        tempMeter.setProgress(0.0f);
+        rpmIndicator.setProgress(0);
 
-        speedMeter.setProgress((float) (currentSpeed / dashboard.getMaxSpeed()));
-        tempMeter.setProgress((float) (currentTemp / dashboard.getMaxTemperature()));
-        rpmIndicator.setProgress(currentRpm);
-
-        tvCurrentSpeed.setText(String.format("%d", currentSpeed));
-        tvCurrentTemp.setText(String.format("%d", currentTemp));
-
-
+        tvCurrentSpeed.setText(String.format("%d", 0));
+        tvCurrentTemp.setText(String.format("%d", 0));
     }
 
     @Override
