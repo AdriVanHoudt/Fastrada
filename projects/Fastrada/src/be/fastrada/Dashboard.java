@@ -61,15 +61,18 @@ public class Dashboard implements Serializable {
 
     public void setCurrentSpeed(int currentSpeed) {
         if (speedMeter != null) speedMeter.setProgress(((float) currentSpeed / (float) getMaxSpeed()));
-        if (tvCurrentSpeed != null) tvCurrentSpeed.setText(String.format("%d", currentSpeed));
+        if (tvCurrentSpeed != null && currentSpeed <= maxSpeed) tvCurrentSpeed.setText(String.format("%d", currentSpeed));
+        else if(tvCurrentSpeed != null && currentSpeed > maxSpeed) tvCurrentSpeed.setText(String.format("%d", maxSpeed));
     }
 
     public void setCurrentRPM(int currentRPM) {
-        rpmIndicator.setProgress(currentRPM);
+        if(rpmIndicator != null && currentRPM <= maxRPM) rpmIndicator.setProgress(currentRPM);
+        else if (rpmIndicator != null && currentRPM > maxRPM) rpmIndicator.setProgress(maxRPM);
     }
 
     public void setCurrentTemperature(int currentTemperature) {
-        tempMeter.setProgress(((float) currentTemperature / (float) getMaxSpeed()));
-        tvCurrentTemp.setText(String.format("%d", currentTemperature));
+        if(tempMeter != null) tempMeter.setProgress(((float) currentTemperature / (float) getMaxSpeed()));
+        if(tvCurrentTemp != null && currentTemperature <= maxTemperature) tvCurrentTemp.setText(String.format("%d", currentTemperature));
+        else if(tvCurrentTemp != null && currentTemperature > maxTemperature)  tvCurrentTemp.setText(String.format("%d", maxTemperature));
     }
 }
