@@ -1,6 +1,5 @@
 package be.fastrada.packetmapper;
 
-
 import java.io.EOFException;
 
 public class PacketReader {

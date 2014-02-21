@@ -21,8 +21,6 @@ import be.fastrada.R;
 import be.fastrada.networking.Server;
 import be.fastrada.packetmapper.Packet;
 
-import org.apache.commons.codec.binary.Hex;
-
 import java.io.InputStream;
 import java.net.SocketException;
 
@@ -31,6 +29,7 @@ public class Main extends Activity {
     private ProgressBar rpmIndicator;
     private HoloCircularProgressBar speedMeter, tempMeter;
     private TextView tvCurrentTemp, tvCurrentSpeed;
+    final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
 
     private Context context;
     public static Handler mHandler;
@@ -76,19 +75,24 @@ public class Main extends Activity {
                 final Bundle bundle = msg.getData();
                 final byte[] bytes = bundle.getByteArray(Server.BUNDLE_BYTES_KEY);
 
-                String content = Hex.encodeHexString(bytes); //hex string uit byte array van 10 groot
+                String content = bytesToHex(bytes); //Hex.encodeHexString(bytes); //hex string uit byte array van 10 groot
 
                 InputStream res = context.getResources().openRawResource(R.raw.structure);
-                Packet packet = new Packet("00 00 13 88", res, dashboard);
-                packet.process();
-                packet.setContent("00 01 00 78");
-                packet.process();
-                packet.setContent("00 02 00 64");
+                Packet packet = new Packet(content, res, dashboard);
                 packet.process();
             }
         };
     }
 
+    public static String bytesToHex(byte[] bytes) {
+        char[] hexChars = new char[bytes.length * 2];
+        for (int j = 0; j < bytes.length; j++) {
+            int v = bytes[j] & 0xFF;
+            hexChars[j * 2] = hexArray[v >>> 4];
+            hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+        }
+        return new String(hexChars);
+    }
 
     public void initialise() {
         final SharedPreferences sharedPreferences = getSharedPreferences(Configuration.PREFS_KEY, MODE_PRIVATE);

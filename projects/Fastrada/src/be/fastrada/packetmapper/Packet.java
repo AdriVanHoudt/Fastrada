@@ -136,6 +136,7 @@ public class Packet {
 
     public void setContent(String content) {
         this.content = content.replaceAll(" ", "");
+        this.content = content.replaceAll("\t", "");
         this.reader.resetPosition();
         this.reader.setContent(content);
     }
