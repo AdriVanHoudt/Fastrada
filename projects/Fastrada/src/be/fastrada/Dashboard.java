@@ -20,12 +20,19 @@ public class Dashboard implements Serializable {
     private TextView tvCurrentTemp, tvCurrentSpeed;
     private HoloCircularProgressBar tempMeter, speedMeter;
     private ProgressBar rpmIndicator;
+    private Animation blinkAnimation;
     private boolean effectOn;
 
     public Dashboard() {
+        this.blinkAnimation = new AlphaAnimation(0.0f, 1.0f);
+        blinkAnimation.setDuration(800);
+        blinkAnimation.setStartOffset(20);
+        blinkAnimation.setRepeatMode(Animation.REVERSE);
+        blinkAnimation.setRepeatCount(Animation.INFINITE);
     }
 
     public Dashboard(TextView tvCurrentTemp, TextView tvCurrentSpeed, HoloCircularProgressBar tempMeter, HoloCircularProgressBar speedMeter, ProgressBar rpmIndicator) {
+        this();
         this.tvCurrentTemp = tvCurrentTemp;
         this.tvCurrentSpeed = tvCurrentSpeed;
         this.tempMeter = tempMeter;
@@ -53,7 +60,6 @@ public class Dashboard implements Serializable {
         return maxSpeed;
     }
 
-
     public int getMaxTemperature() {
         return maxTemperature;
     }
@@ -71,37 +77,44 @@ public class Dashboard implements Serializable {
     }
 
     public void setCurrentSpeed(int currentSpeed) {
-        if (speedMeter != null) speedMeter.setProgress(((float) currentSpeed / (float) getMaxSpeed()));
-        if (tvCurrentSpeed != null && currentSpeed <= maxSpeed)
+        if (speedMeter != null) {
+            speedMeter.setProgress(((float) currentSpeed / (float) getMaxSpeed()));
+        }
+        if (tvCurrentSpeed != null && currentSpeed <= maxSpeed) {
             tvCurrentSpeed.setText(String.format("%d", currentSpeed));
-        else if (tvCurrentSpeed != null && currentSpeed > maxSpeed)
+        } else if (tvCurrentSpeed != null && currentSpeed > maxSpeed) {
             tvCurrentSpeed.setText(String.format("%d", maxSpeed));
+        }
     }
 
     public void setCurrentRPM(int currentRPM) {
-        if (rpmIndicator != null && currentRPM <= maxRPM) rpmIndicator.setProgress(currentRPM);
-        else if (rpmIndicator != null && currentRPM > maxRPM) rpmIndicator.setProgress(maxRPM);
+        if (rpmIndicator != null && currentRPM <= maxRPM) {
+            rpmIndicator.setProgress(currentRPM);
+        } else if (rpmIndicator != null && currentRPM > maxRPM) {
+            rpmIndicator.setProgress(maxRPM);
+        }
     }
 
     public void setCurrentTemperature(int currentTemperature) {
         this.currentTemperature = currentTemperature;
-        if (tempMeter != null) tempMeter.setProgress(((float) currentTemperature / (float) getMaxSpeed()));
-        if (tvCurrentTemp != null && currentTemperature <= maxTemperature)
+
+        if (tempMeter != null) {
+            tempMeter.setProgress(((float) currentTemperature / (float) getMaxSpeed()));
+        }
+        if (tvCurrentTemp != null && currentTemperature <= maxTemperature) {
             tvCurrentTemp.setText(String.format("%d", currentTemperature));
-        else if (tvCurrentTemp != null && currentTemperature > maxTemperature)
+        } else if (tvCurrentTemp != null && currentTemperature > maxTemperature) {
             tvCurrentTemp.setText(String.format("%d", maxTemperature));
+        }
 
-        final Animation anim = new AlphaAnimation(0.0f, 1.0f);
+        checkForExceedingTemp();
+    }
 
+    public void checkForExceedingTemp() {
         if (getCurrentTemperature() >= getAlarmingTemperature() && !effectOn) {
             effectOn = true;
-
-            anim.setDuration(800);
-            anim.setStartOffset(20);
-            anim.setRepeatMode(Animation.REVERSE);
-            anim.setRepeatCount(Animation.INFINITE);
-            tempMeter.startAnimation(anim);
-        } else if(getCurrentTemperature() < getAlarmingTemperature()) {
+            tempMeter.startAnimation(blinkAnimation);
+        } else if (getCurrentTemperature() < getAlarmingTemperature()) {
             effectOn = false;
             tempMeter.clearAnimation();
         }

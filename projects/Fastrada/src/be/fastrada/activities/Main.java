@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -66,6 +67,8 @@ public class Main extends Activity {
         } catch (SocketException e) {
             Toast.makeText(this, getString(R.string.serverStartError), Toast.LENGTH_LONG).show();
         }
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     private void initHandler() {
