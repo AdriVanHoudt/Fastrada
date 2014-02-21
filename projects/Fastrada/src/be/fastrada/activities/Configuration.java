@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 import be.fastrada.Dashboard;
 import be.fastrada.R;
 
+/**
+ * Activity for configuration.
+ */
 public class Configuration extends Activity {
     public static final String PREFS_KEY = "be.fastrada.preferences";
     public static final String PREFS_KEY_MAXSPEED = "maxSpeed";
@@ -19,7 +21,6 @@ public class Configuration extends Activity {
     public static final String PREFS_KEY_TEMP_ALARM = "alarmTemp";
 
     private SharedPreferences sharedPreferences;
-    private RelativeLayout configLayout;
     private EditText etMaxSpeed;
     private EditText etMaxTemperature;
     private EditText etMaxRPM;
@@ -30,7 +31,6 @@ public class Configuration extends Activity {
         setContentView(R.layout.config);
 
         sharedPreferences = getSharedPreferences(PREFS_KEY, MODE_PRIVATE);
-        configLayout = (RelativeLayout) findViewById(R.id.configLayout);
         etMaxSpeed = (EditText) findViewById(R.id.maxSpeed);
         etMaxTemperature = (EditText) findViewById(R.id.maxTemp);
         etMaxRPM = (EditText) findViewById(R.id.maxRPM);

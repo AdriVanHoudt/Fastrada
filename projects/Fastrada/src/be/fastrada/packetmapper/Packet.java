@@ -11,6 +11,9 @@ import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+/**
+ * Class that represents a packet.
+ */
 public class Packet {
     private String content;
     private PacketReader reader;
@@ -74,12 +77,7 @@ public class Packet {
 
         try {
             Class cls = Class.forName("be.fastrada.Dashboard");
-
-           // Object obj = cls.newInstance();
             Object obj = dashboard;
-
-
-            //error met types van parameters van functies van dashboard
 
             for (Method m : cls.getMethods()) {
                 if (m.getName().equals(methodToInvoke)) {
@@ -91,8 +89,7 @@ public class Packet {
                             m.invoke(obj, (int) reader.readUint16());
                             break;
                         case 32:
-                            //kan dit niet coveren omdat dashboard geen parameter voor double heeft
-                            m.invoke(obj, (long) reader.readUint32());
+                            m.invoke(obj, (long) reader.readUint32()); //kan dit niet coveren omdat dashboard geen parameter voor double heeft
                             break;
                     }
                     return true;
@@ -116,7 +113,6 @@ public class Packet {
             return false;
         }*/ catch (EOFException e) {
             throw new Error();
-
         }
     }
 

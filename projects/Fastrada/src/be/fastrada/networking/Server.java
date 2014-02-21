@@ -13,6 +13,10 @@ import java.net.SocketException;
 
 import static android.os.Process.setThreadPriority;
 
+/**
+ * The server that receives the packets from the car.
+ * When it receives a packet it sends it to the handler for further processing.
+ */
 public class Server extends Thread {
     public static final int PORT_NUMBER = 6666;
     public static final int BUFFER_SIZE = 20;
@@ -30,8 +34,6 @@ public class Server extends Thread {
 
     @Override
     public void run() {
-        /*setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);*/
-
         while (true) {
             final byte[] bytes = receiveBytes();
 

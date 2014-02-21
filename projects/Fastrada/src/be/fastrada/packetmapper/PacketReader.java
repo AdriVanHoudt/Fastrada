@@ -2,8 +2,10 @@ package be.fastrada.packetmapper;
 
 import java.io.EOFException;
 
+/**
+ * Class that reads the bytes of a packet.
+ */
 public class PacketReader {
-
     private String content;
     private int position;
 
@@ -14,7 +16,6 @@ public class PacketReader {
 
     public long readUint8() throws EOFException {
         int byteHexLength = 2;
-
         return readHexPart(byteHexLength);
     }
 
@@ -28,8 +29,8 @@ public class PacketReader {
         return readHexPart(byteHexLength);
     }
 
-    private long readHexPart(int byteHexLength) throws EOFException{
-        if ((position + byteHexLength) <= content.length()){
+    private long readHexPart(int byteHexLength) throws EOFException {
+        if ((position + byteHexLength) <= content.length()) {
             long result = Long.parseLong(content.substring(position, position + byteHexLength), 16);
             position += byteHexLength;
             return result;
@@ -56,7 +57,7 @@ public class PacketReader {
 
     public int getId() {
         this.position = 4;
-        String id = content.substring(0,4);
+        String id = content.substring(0, 4);
         return Integer.parseInt(id, 16);
     }
 

@@ -1,5 +1,8 @@
-Welcome to the Fastrada project!
-Here are all the links to the wiki pages:
+# Welcome to the Fastrada repo! This is a readme so read me!
+
+ If provided, make sure to read the readme of all the projects!
+
+## ALL the wiki pages:
 
 [Vagrant & misc](https://github.com/AdriVanHoudt/Fastrada/wiki/Vagrant-&-misc)
 

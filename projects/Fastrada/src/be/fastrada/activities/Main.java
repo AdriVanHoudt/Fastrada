@@ -24,6 +24,9 @@ import be.fastrada.packetmapper.Packet;
 import java.io.InputStream;
 import java.net.SocketException;
 
+/**
+ * Activity with all the visualized data.
+ */
 public class Main extends Activity {
     private Dashboard dashboard;
     private ProgressBar rpmIndicator;
@@ -33,7 +36,6 @@ public class Main extends Activity {
 
     private Context context;
     public static Handler mHandler;
-    private Server server;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,7 +64,7 @@ public class Main extends Activity {
         });
 
         try {
-            server = new Server();
+            new Server();
         } catch (SocketException e) {
             Toast.makeText(this, getString(R.string.serverStartError), Toast.LENGTH_LONG).show();
         }
@@ -104,7 +106,6 @@ public class Main extends Activity {
         Dashboard.setAlarmingTemperature(sharedPreferences.getInt(Configuration.PREFS_KEY_TEMP_ALARM, 90));
 
         rpmIndicator.setMax(dashboard.getMaxRPM());
-
     }
 
     public void updateDashboard() {

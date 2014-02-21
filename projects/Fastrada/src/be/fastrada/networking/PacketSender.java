@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.net.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+/**
+ * Primitive class to send the packets to the backend server.
+ */
 public class PacketSender implements Runnable {
     public static final int SERVER_PORT = 1234;
 
