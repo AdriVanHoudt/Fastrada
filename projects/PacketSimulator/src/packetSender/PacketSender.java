@@ -59,11 +59,13 @@ public class PacketSender {
         try {
             br = new BufferedReader(new FileReader("src/resources/CANData"));
             String line = br.readLine();
+            line = line.replaceAll("\t", "");
 
 
             while(!line.equals("") || line != null) {
                 linesRead++;
-                this.sendByte(line.getBytes());
+                byte[] bytes = hexStringToByteArray(line);
+                this.sendByte(bytes);
                 line = br.readLine();
                 if(line == null){break;}
 
@@ -78,5 +80,15 @@ public class PacketSender {
         //System.out.println(linesRead);
 
         return linesRead;
+    }
+
+    public static byte[] hexStringToByteArray(String s) {
+        int len = s.length();
+        byte[] data = new byte[len / 2];
+        for (int i = 0; i < len; i += 2) {
+            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
+                    + Character.digit(s.charAt(i+1), 16));
+        }
+        return data;
     }
 }
