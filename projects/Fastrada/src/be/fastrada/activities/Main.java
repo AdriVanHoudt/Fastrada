@@ -9,8 +9,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -120,15 +118,7 @@ public class Main extends Activity {
         tvCurrentSpeed.setText(String.format("%d", currentSpeed));
         tvCurrentTemp.setText(String.format("%d", currentTemp));
 
-        if (currentTemp >= dashboard.getAlarmingTemperature()) {
-            final Animation anim = new AlphaAnimation(0.0f, 1.0f);
 
-            anim.setDuration(800);
-            anim.setStartOffset(20);
-            anim.setRepeatMode(Animation.REVERSE);
-            anim.setRepeatCount(Animation.INFINITE);
-            tempMeter.startAnimation(anim);
-        }
     }
 
     @Override
