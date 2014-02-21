@@ -29,8 +29,8 @@ public class PacketTest {
     private Packet packet2;
 
     public PacketTest() throws FileNotFoundException {
-        packet = new Packet("00 01 FF FF 0A 17 00 00 00 00", new FileInputStream(new File("res/raw/structure.json")), new Dashboard());
-        packet2 = new Packet("00 00 FF FF 0A 17 00 00 00 00", new FileInputStream(new File("res/raw/structure.json")), new Dashboard());
+        packet = new Packet("0001FFFF0A1700000000", new FileInputStream(new File("res/raw/structure.json")), new Dashboard());
+        packet2 = new Packet("0000FFFF0A1700000000", new FileInputStream(new File("res/raw/structure.json")), new Dashboard());
     }
 
 
@@ -119,14 +119,14 @@ public class PacketTest {
 
     @Test
     public void setContectTest() throws FileNotFoundException {
-        Packet packet = new Packet("00 01 FF AF 0A 17 00 00 00 00", new FileInputStream(new File("res/raw/structure.json")), new Dashboard());
-        packet.setContent("00 04 FF AF 0A 17 00 00 00 00");
+        Packet packet = new Packet("0001FFAF0A1700000000", new FileInputStream(new File("res/raw/structure.json")), new Dashboard());
+        packet.setContent("0004FFAF0A1700000000");
         assertEquals("0004FFAF0A1700000000", packet.getContent());
     }
 
     @Test(expected = Error.class)
     public void EOFExceptionTest() throws FileNotFoundException {
-        Packet packet = new Packet("FF FF FF AF 0A 17 00 00 00 00", new FileInputStream(new File("res/raw/structure.json")), new Dashboard());
+        Packet packet = new Packet("FFFFFFAF0A1700000000", new FileInputStream(new File("res/raw/structure.json")), new Dashboard());
         packet.process();
     }
 
