@@ -63,7 +63,7 @@ public class PacketSender {
 
             while(!line.equals("") || line != null) {
                 linesRead++;
-                this.sendByte(line.getBytes());
+                this.sendByte(line.replaceAll(" ","").getBytes());
                 line = br.readLine();
                 if(line == null){break;}
 
