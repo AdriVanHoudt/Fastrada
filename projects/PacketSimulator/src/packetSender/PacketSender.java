@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.*;
 
 
+
 public class PacketSender {
 
     private InetAddress adres;
@@ -39,7 +40,7 @@ public class PacketSender {
         DatagramPacket packet = new DatagramPacket(bytes, bytes.length, adres, port);
         try {
             socket.send(packet);
-            Thread.sleep(100);
+            Thread.sleep(1000 / 30);
         } catch (IOException e) {
             throw new Error("IOException");
             //e.printStackTrace();
