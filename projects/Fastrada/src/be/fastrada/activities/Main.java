@@ -13,15 +13,14 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import be.fastrada.Dashboard;
 import be.fastrada.HoloCircularProgressBar;
 import be.fastrada.R;
-import be.fastrada.networking.Server;
+import be.fastrada.networking.PacketListener;
+import be.fastrada.networking.PacketListenerService;
 import be.fastrada.packetmapper.Packet;
 
 import java.io.InputStream;
-import java.net.SocketException;
 
 /**
  * Activity with all the visualized data.
@@ -62,11 +61,7 @@ public class Main extends Activity {
             }
         });
 
-        try {
-            new Server();
-        } catch (SocketException e) {
-            Toast.makeText(this, getString(R.string.serverStartError), Toast.LENGTH_LONG).show();
-        }
+        startService(new Intent(this, PacketListenerService.class));
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
@@ -76,7 +71,7 @@ public class Main extends Activity {
             @Override
             public void handleMessage(Message msg) {
                 final Bundle bundle = msg.getData();
-                final byte[] bytes = bundle.getByteArray(Server.BUNDLE_BYTES_KEY);
+                final byte[] bytes = bundle.getByteArray(PacketListener.BUNDLE_BYTES_KEY);
 
                 String content = bytesToHex(bytes); //Hex.encodeHexString(bytes); //hex string uit byte array van 10 groot
 
