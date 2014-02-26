@@ -19,11 +19,16 @@ import java.io.InputStreamReader;
 public class PacketConfiguration {
     private JSONObject configFile;
     private String classPath;
-    private Dashboard classObject;
+    private PacketInterface classObject;
 
-    public PacketConfiguration(InputStream packetMappingPath, String classPath, Dashboard classObject) {
+    public PacketConfiguration(InputStream packetMappingPath, String classPath, PacketInterface classObject) {
         this.classPath = classPath;
         this.classObject = classObject;
+
+        // Validate
+        if (this.classObject == null) {
+            throw new NullPointerException("ClassObject can not be null!");
+        }
 
         try {
             this.configFile = (JSONObject) new JSONParser().parse(new InputStreamReader(packetMappingPath));
@@ -35,6 +40,7 @@ public class PacketConfiguration {
     }
 
     public JSONObject getConfigFile() {
+
         return configFile;
     }
 
@@ -42,7 +48,7 @@ public class PacketConfiguration {
         return classPath;
     }
 
-    public Object getClassObject() {
+    public PacketInterface getClassObject() {
         return classObject;
     }
 }

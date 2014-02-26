@@ -2,6 +2,7 @@ package unit.packetmapper;
 
 import be.fastrada.Dashboard;
 import be.fastrada.packetmapper.Packet;
+import be.fastrada.packetmapper.PacketConfiguration;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.junit.Test;
@@ -27,10 +28,12 @@ import static org.mockito.Mockito.mock;
 public class PacketTest {
     private Packet packet;
     private Packet packet2;
+    private PacketConfiguration configuration;
 
     public PacketTest() throws FileNotFoundException {
-        packet = new Packet("0001FFFF0A1700000000", new FileInputStream(new File("res/raw/structure.json")), new Dashboard());
-        packet2 = new Packet("0000FFFF0A1700000000", new FileInputStream(new File("res/raw/structure.json")), new Dashboard());
+        configuration = new PacketConfiguration(new FileInputStream(new File("res/raw/structure.json")), "be.fastrada.Dashboard", new Dashboard());
+        packet = new Packet("0001FFFF0A1700000000", configuration);
+        packet2 = new Packet("0000FFFF0A1700000000", configuration);
     }
 
 
@@ -49,8 +52,8 @@ public class PacketTest {
 
     @Test
     public void getConfiguration() {
-        assertFalse(packet.getConfigFile() == null);
-        assertTrue(packet.getConfigFile() != null);
+        assertFalse(configuration.getConfigFile() == null);
+        assertTrue(configuration.getConfigFile() != null);
     }
 
 
@@ -95,20 +98,20 @@ public class PacketTest {
     @Test(expected=Error.class)
     public void parseExceptionTest() throws FileNotFoundException {
         String error = "parse error";
-        assertEquals(error, new Packet("01 FF FF 0A 17 00 00 00 00", new FileInputStream(new File("res/raw/data.txt")), new Dashboard()));
+        assertEquals(error, new Packet("01 FF FF 0A 17 00 00 00 00",configuration));
 
     }
 
     @Test
     public void invokeNullMethod() throws FileNotFoundException {
-        Packet packet = new Packet("01 FF FF 0A 17 00 00 00 00", new FileInputStream(new File("res/raw/structure.json")), new Dashboard());
+        Packet packet = new Packet("01 FF FF 0A 17 00 00 00 00", configuration);
         assertTrue(packet.invokeMethod(null));
     }
 
 
     @Test
     public void invokeTestUint8() throws FileNotFoundException {
-        Packet packet = new Packet("00 01 FF AF 0A 17 00 00 00 00", new FileInputStream(new File("res/raw/structure.json")), new Dashboard());
+        Packet packet = new Packet("00 01 FF AF 0A 17 00 00 00 00", configuration);
 
         JSONObject put = new JSONObject();
         put.put("name", "setCurrentSpeed");
@@ -119,14 +122,14 @@ public class PacketTest {
 
     @Test
     public void setContectTest() throws FileNotFoundException {
-        Packet packet = new Packet("0001FFAF0A1700000000", new FileInputStream(new File("res/raw/structure.json")), new Dashboard());
+        Packet packet = new Packet("0001FFAF0A1700000000",configuration);
         packet.setContent("0004FFAF0A1700000000");
         assertEquals("0004FFAF0A1700000000", packet.getContent());
     }
 
     @Test(expected = Error.class)
     public void EOFExceptionTest() throws FileNotFoundException {
-        Packet packet = new Packet("FFFFFFAF0A1700000000", new FileInputStream(new File("res/raw/structure.json")), new Dashboard());
+        Packet packet = new Packet("FFFFFFAF0A1700000000", configuration);
         packet.process();
     }
 

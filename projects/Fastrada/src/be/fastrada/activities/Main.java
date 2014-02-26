@@ -19,6 +19,7 @@ import be.fastrada.R;
 import be.fastrada.networking.PacketListener;
 import be.fastrada.networking.PacketListenerService;
 import be.fastrada.packetmapper.Packet;
+import be.fastrada.packetmapper.PacketConfiguration;
 
 import java.io.InputStream;
 
@@ -30,6 +31,7 @@ public class Main extends Activity {
     private ProgressBar rpmIndicator;
     private HoloCircularProgressBar speedMeter, tempMeter;
     private TextView tvCurrentTemp, tvCurrentSpeed;
+    private PacketConfiguration packetConfiguration;
     final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
 
     private Context context;
@@ -50,6 +52,15 @@ public class Main extends Activity {
         initialise();
         initDashboard();
         initHandler();
+
+        /*
+         * Initialise packetConfiguration for each packet to be received
+         * Make sure that dashboard is initialised ( see initialise() )
+         */
+        InputStream res = context.getResources().openRawResource(R.raw.structure);
+        packetConfiguration = new PacketConfiguration(res, "be.fastrada.packetmapper.PacketInterface", dashboard);  // Maar gij roept nu packetConfiguration aan e? ja
+
+
 
         final ImageView settings = (ImageView) findViewById(R.id.settings);
         final Context context = this.getBaseContext();
@@ -75,8 +86,7 @@ public class Main extends Activity {
 
                 String content = bytesToHex(bytes); //Hex.encodeHexString(bytes); //hex string uit byte array van 10 groot
 
-                InputStream res = context.getResources().openRawResource(R.raw.structure);
-                Packet packet = new Packet(content, res, dashboard);
+                Packet packet = new Packet(content, packetConfiguration);
                 packet.process();
             }
         };
