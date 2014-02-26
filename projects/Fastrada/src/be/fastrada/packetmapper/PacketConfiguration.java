@@ -21,10 +21,15 @@ public class PacketConfiguration {
     private String classPath;
     private PacketInterface classObject;
 
-    public PacketConfiguration(InputStream packetMappingPath, String classPath, Dashboard classObject) {
+    public PacketConfiguration(InputStream packetMappingPath, String classPath, PacketInterface classObject) {
         this.classPath = classPath;
-
         this.classObject = classObject;
+
+        // Validate
+        if (this.classObject == null) {
+            throw new NullPointerException("ClassObject can not be null!");
+        }
+
         try {
             this.configFile = (JSONObject) new JSONParser().parse(new InputStreamReader(packetMappingPath));
         } catch (ParseException e) {

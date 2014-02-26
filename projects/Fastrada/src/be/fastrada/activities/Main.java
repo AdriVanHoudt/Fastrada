@@ -49,13 +49,18 @@ public class Main extends Activity {
         tvCurrentTemp = (TextView) findViewById(R.id.tvTemperature);
         tvCurrentSpeed = (TextView) findViewById(R.id.tvSpeed);
 
-        /* Initialise packetConfiguration for each packet to be received */
-        InputStream res = context.getResources().openRawResource(R.raw.structure);
-        packetConfiguration = new PacketConfiguration(res, "be.fastrada.packetmapper.PacketInterface", dashboard);  // Maar gij roept nu packetConfiguration aan e? ja
-
         initialise();
         initDashboard();
         initHandler();
+
+        /*
+         * Initialise packetConfiguration for each packet to be received
+         * Make sure that dashboard is initialised ( see initialise() )
+         */
+        InputStream res = context.getResources().openRawResource(R.raw.structure);
+        packetConfiguration = new PacketConfiguration(res, "be.fastrada.packetmapper.PacketInterface", dashboard);  // Maar gij roept nu packetConfiguration aan e? ja
+
+
 
         final ImageView settings = (ImageView) findViewById(R.id.settings);
         final Context context = this.getBaseContext();

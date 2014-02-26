@@ -65,7 +65,7 @@ public class Packet {
         int byteSize = Integer.parseInt(jo.get("size").toString());
 
         try {
-            Class cls = Class.forName(packetConfiguration.getClassObject().getClass().toString()); // Probeer da eens :D
+            Class cls = Class.forName(packetConfiguration.getClassPath()); // Probeer da eens :D
             Object obj = packetConfiguration.getClassObject(); // Run eens in debug
 
             for (Method m : cls.getMethods()) {
