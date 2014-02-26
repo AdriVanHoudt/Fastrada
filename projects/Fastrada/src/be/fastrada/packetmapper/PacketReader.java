@@ -1,6 +1,7 @@
 package be.fastrada.packetmapper;
 
 import java.io.EOFException;
+import java.util.Arrays;
 
 /**
  * Class that reads the bytes of a packet.
@@ -9,8 +10,7 @@ public class PacketReader {
     private String content;
     private int position;
 
-    public PacketReader(String packetString) {
-        this.content = packetString.replace(" ", "");
+    public PacketReader(byte[] bytes) {
         this.position = 0;
     }
 
@@ -32,6 +32,7 @@ public class PacketReader {
     private long readHexPart(int byteHexLength) throws EOFException {
         if ((position + byteHexLength) <= content.length()) {
             long result = Long.parseLong(content.substring(position, position + byteHexLength), 16);
+
             position += byteHexLength;
             return result;
         }
@@ -63,5 +64,17 @@ public class PacketReader {
 
     public void resetPosition() {
         this.position = 0;
+    }
+
+    /**
+     * This methods performs an AND operation on every byte in the bytearray,
+     * except the first 2 (The ID).
+     */
+    public byte[] andAllExceptId(byte[] bytes) {
+        final byte[] copyOfBytes = Arrays.copyOf(bytes, bytes.length);
+
+        for (int i = 2; i < bytes.length; i++) {
+            copyOfBytes[i] = bytes[i] & 0xFF;
+        }
     }
 }

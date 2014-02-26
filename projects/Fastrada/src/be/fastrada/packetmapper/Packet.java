@@ -15,14 +15,13 @@ import java.lang.reflect.Method;
  * Class that represents a packet.
  */
 public class Packet {
-    private String content;
+    private byte[] content;
     private PacketReader reader;
     private JSONObject configFile;
     private JSONArray methods;
     private Dashboard dashboard;
 
-    public Packet(String content, InputStream packetMappingPath, Dashboard dashboard) {
-        this.content = content.replace(" ", "");
+    public Packet(byte[] bytes, InputStream packetMappingPath, Dashboard dashboard) {
         this.reader = new PacketReader(this.content);
         this.dashboard = dashboard;
 
@@ -35,7 +34,7 @@ public class Packet {
         }
     }
 
-    public String getContent() {
+    public byte[] getContent() {
         return this.content;
     }
 
@@ -131,8 +130,6 @@ public class Packet {
     }
 
     public void setContent(String content) {
-        this.content = content.replaceAll(" ", "");
-        this.content = content.replaceAll("\t", "");
         this.reader.resetPosition();
         this.reader.setContent(content);
     }

@@ -13,4 +13,8 @@
     <string name="btn_submit">Submit</string>
     <string name="alarmTempTooHigh">Your alarming temperature must not be higher than the maximum temperature</string>
     <string name="serverStartError">Server could not start</string>
+    <string name="dialogTitle">Race Name</string>
+    <string name="dialogMessage">Fill in a name for this race!</string>
+    <string name="dialogPosButton">Ok</string>
+    <string name="dialogNegButton">Cancel</string>
 </resources>

@@ -1,7 +1,6 @@
 package unit.communication;
 
-import be.fastrada.networking.PacketSender;
-import junit.framework.Assert;
+import be.fastrada.tryouts.PacketSender;
 import org.junit.Test;
 
 import java.net.SocketException;
