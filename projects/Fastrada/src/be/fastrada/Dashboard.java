@@ -24,15 +24,18 @@ public class Dashboard implements Serializable {
     private boolean effectOn;
 
     public Dashboard() {
+
+    }
+
+
+    public Dashboard(TextView tvCurrentTemp, TextView tvCurrentSpeed, HoloCircularProgressBar tempMeter, HoloCircularProgressBar speedMeter, ProgressBar rpmIndicator) {
+        this();
         this.blinkAnimation = new AlphaAnimation(0.0f, 1.0f);
         blinkAnimation.setDuration(800);
         blinkAnimation.setStartOffset(20);
         blinkAnimation.setRepeatMode(Animation.REVERSE);
         blinkAnimation.setRepeatCount(Animation.INFINITE);
-    }
 
-    public Dashboard(TextView tvCurrentTemp, TextView tvCurrentSpeed, HoloCircularProgressBar tempMeter, HoloCircularProgressBar speedMeter, ProgressBar rpmIndicator) {
-        this();
         this.tvCurrentTemp = tvCurrentTemp;
         this.tvCurrentSpeed = tvCurrentSpeed;
         this.tempMeter = tempMeter;
