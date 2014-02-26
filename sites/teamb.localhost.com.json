@@ -3,7 +3,7 @@
 	"description": "School vagrant cobol",
 	"run_list": [
 		"recipe[common-packages]",
-		"recipe[java::default]",
+		"recipe[java]",
 		"recipe[maven]",
 		"recipe[tomcat::default]"
 	]
