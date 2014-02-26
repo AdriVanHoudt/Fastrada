@@ -1,0 +1,64 @@
+{
+    "packets": {
+        "0": {
+            "struct": [
+                {
+                    "name": "setCurrentRPM",
+                    "size": 16
+                }
+            ]
+        },
+        "1": {
+            "struct": [
+                {
+                    "name": "setCurrentSpeed",
+                    "size": 16
+                }
+            ]
+        },
+        "2": {
+            "struct": [
+                {
+                    "name": "setCurrentTemperature",
+                    "size": 16
+                }
+            ]
+        },
+        "4": {
+          "struct": [
+              {
+                  "name":"setGear",
+                  "size":16
+              }
+          ]
+        },
+        "65535": {
+            "struct": [
+                {
+                    "name": "setCurrentSpeed",
+                    "size": 16
+                },
+                {
+                    "name": "setCurrentSpeed",
+                    "size": 16
+                },
+                {
+                    "name": "setCurrentSpeed",
+                    "size": 16
+                },
+                {
+                    "name": "setCurrentSpeed",
+                    "size": 16
+                },
+                {
+                    "name": "setCurrentSpeed",
+                    "size": 16
+                },
+                {
+                    "name": "setCurrentSpeed",
+                    "size": 16
+                }
+            ]
+        }
+    }
+}

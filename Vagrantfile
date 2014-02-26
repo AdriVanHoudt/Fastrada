@@ -14,16 +14,17 @@ Vagrant.configure("2") do |config|
 
             nfs_setting = RUBY_PLATFORM =~ /darwin/ || RUBY_PLATFORM =~ /linux/
 
-            # IF NO NFS: node_config.vm.synced_folder "www", "/var/www", :owner => "www-data", :group => "www-data"
-            node_config.vm.synced_folder "www", "/var/www", :nfs => true
-            
+            # IF NO NFS: node_config.vm.synced_folder "projects", "/home/vagrant/projects", :owner => "www-data", :group => "www-data"
+            node_config.vm.synced_folder "projects", "/home/vagrant/projects", :nfs => true
+
+
             node_config.vm.box = node[:box]
             node_config.vm.box_url = node[:url]
             node_config.vm.hostname = node[:hostname]
 
             config.ssh.forward_agent = true
             node_config.vm.network :private_network, ip: node[:ip]
-   
+
             # Virtualbox provider
             memory = node[:ram] ? node[:ram] : 256;
             node_config.vm.provider :virtualbox do |vb|
