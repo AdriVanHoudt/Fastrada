@@ -4,13 +4,14 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import be.fastrada.packetmapper.PacketInterface;
 
 import java.io.Serializable;
 
 /**
  * Class that represents the dashboard.
  */
-public class Dashboard implements Serializable {
+public class Dashboard implements Serializable, PacketInterface{
     private static int maxSpeed;
     private static int maxTemperature;
     private static int maxRPM;

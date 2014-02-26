@@ -19,12 +19,12 @@ import java.io.InputStreamReader;
 public class PacketConfiguration {
     private JSONObject configFile;
     private String classPath;
-    private Dashboard classObject;
+    private PacketInterface classObject;
 
     public PacketConfiguration(InputStream packetMappingPath, String classPath, Dashboard classObject) {
         this.classPath = classPath;
-        this.classObject = classObject;
 
+        this.classObject = classObject;
         try {
             this.configFile = (JSONObject) new JSONParser().parse(new InputStreamReader(packetMappingPath));
         } catch (ParseException e) {
@@ -35,6 +35,7 @@ public class PacketConfiguration {
     }
 
     public JSONObject getConfigFile() {
+
         return configFile;
     }
 
@@ -42,7 +43,7 @@ public class PacketConfiguration {
         return classPath;
     }
 
-    public Object getClassObject() {
+    public PacketInterface getClassObject() {
         return classObject;
     }
 }

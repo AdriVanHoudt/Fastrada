@@ -1,6 +1,7 @@
 package be.fastrada.packetmapper;
 
 
+import android.util.Log;
 import be.fastrada.Dashboard;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -17,22 +18,13 @@ import java.lang.reflect.Method;
 public class Packet {
     private String content;
     private PacketReader reader;
-    private JSONObject configFile;
     private JSONArray methods;
-    private Dashboard dashboard;
+    private PacketConfiguration packetConfiguration;
 
-    public Packet(String content, InputStream packetMappingPath, Dashboard dashboard) {
+    public Packet(String content, PacketConfiguration packetConfiguration) {
+        this.packetConfiguration = packetConfiguration;
         this.content = content.replace(" ", "");
         this.reader = new PacketReader(this.content);
-        this.dashboard = dashboard;
-
-        try {
-            this.configFile = (JSONObject) new JSONParser().parse(new InputStreamReader(packetMappingPath));
-        } catch (ParseException e) {
-            throw new Error("parse error");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public String getContent() {
@@ -43,12 +35,9 @@ public class Packet {
         return reader;
     }
 
-    public JSONObject getConfigFile() {
-        return configFile;
-    }
 
     public JSONArray getStructure() {
-        JSONObject packets = (JSONObject) configFile.get("packets");
+        JSONObject packets = (JSONObject) packetConfiguration.getConfigFile().get("packets");
         JSONObject packet = (JSONObject) packets.get("" + this.getId());
         return (JSONArray) packet.get("struct");
     }
@@ -76,8 +65,8 @@ public class Packet {
         int byteSize = Integer.parseInt(jo.get("size").toString());
 
         try {
-            Class cls = Class.forName("be.fastrada.Dashboard");
-            Object obj = dashboard;
+            Class cls = Class.forName(packetConfiguration.getClassObject().getClass().toString()); // Probeer da eens :D
+            Object obj = packetConfiguration.getClassObject(); // Run eens in debug
 
             for (Method m : cls.getMethods()) {
                 if (m.getName().equals(methodToInvoke)) {
@@ -86,7 +75,7 @@ public class Packet {
                             m.invoke(obj, (short) reader.readUint8());
                             break;
                         case 16:
-                            m.invoke(obj, (int) reader.readUint16());
+                            m.invoke(obj, (int) reader.readUint16());    // hier crasht em
                             break;
                         case 32:
                             m.invoke(obj, (long) reader.readUint32()); //kan dit niet coveren omdat dashboard geen parameter voor double heeft
