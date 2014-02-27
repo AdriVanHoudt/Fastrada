@@ -91,6 +91,7 @@ public class PacketSender {
         for (int i = 0; i < array.length; i ++) {
             int startIndex = i * byteLength + 1;
             int endIndex = startIndex + byteLength - 1;
+
             array[i] = Byte.parseByte(s.substring(startIndex, endIndex), 16);
         }
 
