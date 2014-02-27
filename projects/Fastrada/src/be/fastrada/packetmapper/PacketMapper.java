@@ -16,13 +16,12 @@ import java.nio.ByteBuffer;
 /**
  * Class that represents a packet.
  */
-public class Packet {
+public class PacketMapper {
     private ByteBuffer byteBuffer;
     private PacketConfiguration packetConfiguration;
 
-    public Packet(byte[] content, PacketConfiguration packetConfiguration) {
+    public PacketMapper(PacketConfiguration packetConfiguration) {
         this.packetConfiguration = packetConfiguration;
-        this.byteBuffer = ByteBuffer.wrap(content); // Wrap the byte array in the buffer, BIG ENDIAN!
     }
 
     public JSONArray getStructure() {
@@ -62,13 +61,13 @@ public class Packet {
                 if (m.getName().equals(methodToInvoke)) {
                     switch (byteSize) {
                         case 8:
-                            m.invoke(obj, (short) byteBuffer.get());
+                            m.invoke(obj, (short) (byteBuffer.get() & 0xff));
                             break;
                         case 16:
-                            m.invoke(obj, (int) byteBuffer.getShort());
+                            m.invoke(obj, (int) (byteBuffer.getShort() & 0xffff));
                             break;
                         case 32:
-                            m.invoke(obj, (long) byteBuffer.getInt()); //kan dit niet coveren omdat dashboard geen parameter voor double heeft
+                            m.invoke(obj, (long) (byteBuffer.getInt() & 0xffffffffL)); //kan dit niet coveren omdat dashboard geen parameter voor double heeft
                             break;
                     }
                     return true;
@@ -106,5 +105,9 @@ public class Packet {
 
     public ByteBuffer getBuffer() {
         return byteBuffer;
+    }
+
+    public void setContent(byte[] content) {
+        this.byteBuffer = ByteBuffer.wrap(content); // Wrap the byte array in the buffer, BIG ENDIAN!
     }
 }

@@ -89,10 +89,30 @@ public class PacketSender {
         byte[] array = new byte[s.length() / byteLength];
 
         for (int i = 0; i < array.length; i ++) {
-            int startIndex = i * byteLength + 1;
-            int endIndex = startIndex + byteLength - 1;
+            int startIndex = i * byteLength;
+            int endIndex = startIndex + byteLength;
 
-            array[i] = Byte.parseByte(s.substring(startIndex, endIndex), 16);
+            String subString = s.substring(startIndex, endIndex);
+
+            try {
+                // Set to short first, else we can't check what the value is
+                short value = Short.parseShort(subString, 16);
+
+                // If value is smaller then send it directly parsed as byte
+                if (value < 128) {
+                    array[i] = Byte.parseByte(subString, 16);
+                } else {
+                    // Else we need to set it to negative - cap of byte
+                    // Example, we want to send 129, this is bigger then 128, so we send -1
+                    // Binary: 129 (unsigned) == 10000001 == -1 (signed)
+                    // @todo: Temporary solution, we need to be able to send integers, shorts, ...
+                    array[i] = (byte)(128 - value);
+                }
+
+            } catch (NumberFormatException e) {
+                // Overflow? (0x80 --> 128, cap decimal byte signed)
+
+            }
         }
 
         return array;
