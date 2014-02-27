@@ -85,10 +85,11 @@ public class PacketSender {
     }
 
     public static byte[] hexStringToByteArray(String s) {
-        byte[] array = {};
-        int byteLength = 2; // A byte is 2 chars long
 
-        for (int i = 0; i < s.length(); i ++) {
+        int byteLength = 2; // A byte is 2 chars long
+        byte[] array = new byte[s.length() / byteLength];
+
+        for (int i = 0; i < array.length; i ++) {
             int startIndex = i * byteLength;
             int endIndex = startIndex + byteLength;
             array[i] = Byte.parseByte(s.substring(startIndex, endIndex), 16);
