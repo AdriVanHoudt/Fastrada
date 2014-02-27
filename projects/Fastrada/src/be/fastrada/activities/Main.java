@@ -9,20 +9,19 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import be.fastrada.Dashboard;
 import be.fastrada.HoloCircularProgressBar;
 import be.fastrada.R;
-import be.fastrada.networking.Server;
+import be.fastrada.networking.PacketListener;
+import be.fastrada.networking.PacketListenerService;
 import be.fastrada.packetmapper.Packet;
+import be.fastrada.packetmapper.PacketConfiguration;
 
 import java.io.InputStream;
-import java.net.SocketException;
 
 /**
  * Activity with all the visualized data.
@@ -32,6 +31,7 @@ public class Main extends Activity {
     private ProgressBar rpmIndicator;
     private HoloCircularProgressBar speedMeter, tempMeter;
     private TextView tvCurrentTemp, tvCurrentSpeed;
+    private PacketConfiguration packetConfiguration;
     final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
 
     private Context context;
@@ -50,8 +50,17 @@ public class Main extends Activity {
         tvCurrentSpeed = (TextView) findViewById(R.id.tvSpeed);
 
         initialise();
-        updateDashboard();
+        initDashboard();
         initHandler();
+
+        /*
+         * Initialise packetConfiguration for each packet to be received
+         * Make sure that dashboard is initialised ( see initialise() )
+         */
+        InputStream res = context.getResources().openRawResource(R.raw.structure);
+        packetConfiguration = new PacketConfiguration(res, "be.fastrada.packetmapper.PacketInterface", dashboard);  // Maar gij roept nu packetConfiguration aan e? ja
+
+
 
         final ImageView settings = (ImageView) findViewById(R.id.settings);
         final Context context = this.getBaseContext();
@@ -63,11 +72,9 @@ public class Main extends Activity {
             }
         });
 
-        try {
-            new Server();
-        } catch (SocketException e) {
-            Toast.makeText(this, getString(R.string.serverStartError), Toast.LENGTH_LONG).show();
-        }
+        startService(new Intent(this, PacketListenerService.class));
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     private void initHandler() {
@@ -75,12 +82,11 @@ public class Main extends Activity {
             @Override
             public void handleMessage(Message msg) {
                 final Bundle bundle = msg.getData();
-                final byte[] bytes = bundle.getByteArray(Server.BUNDLE_BYTES_KEY);
+                final byte[] bytes = bundle.getByteArray(PacketListener.BUNDLE_BYTES_KEY);
 
                 String content = bytesToHex(bytes); //Hex.encodeHexString(bytes); //hex string uit byte array van 10 groot
 
-                InputStream res = context.getResources().openRawResource(R.raw.structure);
-                Packet packet = new Packet(content, res, dashboard);
+                Packet packet = new Packet(content, packetConfiguration);
                 packet.process();
             }
         };
@@ -108,27 +114,13 @@ public class Main extends Activity {
         rpmIndicator.setMax(dashboard.getMaxRPM());
     }
 
-    public void updateDashboard() {
-        final int currentSpeed = 60;
-        final int currentTemp = 95;
-        final int currentRpm = 2000;
+    public void initDashboard() {
+        speedMeter.setProgress(0.0f);
+        tempMeter.setProgress(0.0f);
+        rpmIndicator.setProgress(0);
 
-        speedMeter.setProgress((float) (currentSpeed / dashboard.getMaxSpeed()));
-        tempMeter.setProgress((float) (currentTemp / dashboard.getMaxTemperature()));
-        rpmIndicator.setProgress(currentRpm);
-
-        tvCurrentSpeed.setText(String.format("%d", currentSpeed));
-        tvCurrentTemp.setText(String.format("%d", currentTemp));
-
-        if (currentTemp >= dashboard.getAlarmingTemperature()) {
-            final Animation anim = new AlphaAnimation(0.0f, 1.0f);
-
-            anim.setDuration(800);
-            anim.setStartOffset(20);
-            anim.setRepeatMode(Animation.REVERSE);
-            anim.setRepeatCount(Animation.INFINITE);
-            tempMeter.startAnimation(anim);
-        }
+        tvCurrentSpeed.setText(String.format("%d", 0));
+        tvCurrentTemp.setText(String.format("%d", 0));
     }
 
     @Override

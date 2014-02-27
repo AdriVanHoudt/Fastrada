@@ -91,7 +91,7 @@ public class PacketSenderTest {
     @Test
     public void runSimulator() throws IOException {
         int port = getPort();
-        int linesRead = 0;
+        int linesRead;
 
         BufferedReader br = new BufferedReader(new FileReader("src/resources/CANData"));
         String line = br.readLine(); //voor de size om server te kunnen starten
