@@ -26,21 +26,21 @@ import static org.mockito.Mockito.mock;
 
 
 public class PacketTest {
+    private byte[] byteArray1 = { 0x00, 0x02, 0x00, 0x28 };
     private Packet packet;
     private Packet packet2;
     private PacketConfiguration configuration;
 
     public PacketTest() throws FileNotFoundException {
         configuration = new PacketConfiguration(new FileInputStream(new File("res/raw/structure.json")), "be.fastrada.Dashboard", new Dashboard());
-        packet = new Packet("0001FFFF0A1700000000", configuration);
-        packet2 = new Packet("0000FFFF0A1700000000", configuration);
+        packet = new Packet(byteArray1, configuration);
+        packet2 = new Packet(byteArray1, configuration);
     }
 
 
     @Test
     public void createPacket() {
-        assertEquals("0001FFFF0A1700000000", packet.getContent());
-        assertEquals("0001FFFF0A1700000000", packet.getReader().getContent());
+        assertEquals(byteArray1, packet.getBuffer());
     }
 
 
@@ -82,36 +82,24 @@ public class PacketTest {
 
         JSONObject jsonObject = (JSONObject) arr.get(0);
 
-
-
         assertEquals(true, packet.invokeMethod(jsonObject));
-
     }
 
 
     @Test
     public void processPacket() {
         assertTrue(packet.process());
-
-    }
-
-    @Test(expected=Error.class)
-    public void parseExceptionTest() throws FileNotFoundException {
-        String error = "parse error";
-        assertEquals(error, new Packet("01 FF FF 0A 17 00 00 00 00",configuration));
-
     }
 
     @Test
     public void invokeNullMethod() throws FileNotFoundException {
-        Packet packet = new Packet("01 FF FF 0A 17 00 00 00 00", configuration);
+        Packet packet = new Packet(byteArray1, configuration);
         assertTrue(packet.invokeMethod(null));
     }
 
-
     @Test
     public void invokeTestUint8() throws FileNotFoundException {
-        Packet packet = new Packet("00 01 FF AF 0A 17 00 00 00 00", configuration);
+        Packet packet = new Packet(byteArray1, configuration);
 
         JSONObject put = new JSONObject();
         put.put("name", "setCurrentSpeed");
@@ -120,16 +108,9 @@ public class PacketTest {
         assertTrue(packet.invokeMethod(put));
     }
 
-    @Test
-    public void setContectTest() throws FileNotFoundException {
-        Packet packet = new Packet("0001FFAF0A1700000000",configuration);
-        packet.setContent("0004FFAF0A1700000000");
-        assertEquals("0004FFAF0A1700000000", packet.getContent());
-    }
-
     @Test(expected = Error.class)
     public void EOFExceptionTest() throws FileNotFoundException {
-        Packet packet = new Packet("FFFFFFAF0A1700000000", configuration);
+        Packet packet = new Packet(byteArray1, configuration);
         packet.process();
     }
 

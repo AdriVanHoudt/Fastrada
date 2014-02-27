@@ -11,39 +11,29 @@ import org.json.simple.parser.ParseException;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.nio.ByteBuffer;
 
 /**
  * Class that represents a packet.
  */
 public class Packet {
-    private String content;
-    private PacketReader reader;
-    private JSONArray methods;
+    private ByteBuffer byteBuffer;
     private PacketConfiguration packetConfiguration;
 
-    public Packet(String content, PacketConfiguration packetConfiguration) {
+    public Packet(byte[] content, PacketConfiguration packetConfiguration) {
         this.packetConfiguration = packetConfiguration;
-        this.content = content.replace(" ", "");
-        this.reader = new PacketReader(this.content);
+        this.byteBuffer = ByteBuffer.wrap(content); // Wrap the byte array in the buffer, BIG ENDIAN!
     }
-
-    public String getContent() {
-        return this.content;
-    }
-
-    public PacketReader getReader() {
-        return reader;
-    }
-
 
     public JSONArray getStructure() {
+        int id = this.getId();
         JSONObject packets = (JSONObject) packetConfiguration.getConfigFile().get("packets");
-        JSONObject packet = (JSONObject) packets.get("" + this.getId());
+        JSONObject packet = (JSONObject) packets.get("" + id);
         return (JSONArray) packet.get("struct");
     }
 
     public int getId() {
-        return reader.getId();
+        return byteBuffer.getShort();
     }
 
     public int getSize(String name) {
@@ -65,20 +55,20 @@ public class Packet {
         int byteSize = Integer.parseInt(jo.get("size").toString());
 
         try {
-            Class cls = Class.forName(packetConfiguration.getClassPath()); // Probeer da eens :D
-            Object obj = packetConfiguration.getClassObject(); // Run eens in debug
+            Class cls = Class.forName(packetConfiguration.getClassPath());
+            Object obj = packetConfiguration.getClassObject();
 
             for (Method m : cls.getMethods()) {
                 if (m.getName().equals(methodToInvoke)) {
                     switch (byteSize) {
                         case 8:
-                            m.invoke(obj, (short) reader.readUint8());
+                            m.invoke(obj, (short) byteBuffer.get());
                             break;
                         case 16:
-                            m.invoke(obj, (int) reader.readUint16());    // hier crasht em
+                            m.invoke(obj, (int) byteBuffer.getShort());
                             break;
                         case 32:
-                            m.invoke(obj, (long) reader.readUint32()); //kan dit niet coveren omdat dashboard geen parameter voor double heeft
+                            m.invoke(obj, (long) byteBuffer.getInt()); //kan dit niet coveren omdat dashboard geen parameter voor double heeft
                             break;
                     }
                     return true;
@@ -97,11 +87,6 @@ public class Packet {
             //does not happen
             e.printStackTrace();
             return false;
-        } /*catch (InstantiationException e) {
-            e.printStackTrace();
-            return false;
-        }*/ catch (EOFException e) {
-            throw new Error();
         }
     }
 
@@ -119,10 +104,7 @@ public class Packet {
         return true;
     }
 
-    public void setContent(String content) {
-        this.content = content.replaceAll(" ", "");
-        this.content = content.replaceAll("\t", "");
-        this.reader.resetPosition();
-        this.reader.setContent(content);
+    public ByteBuffer getBuffer() {
+        return byteBuffer;
     }
 }
