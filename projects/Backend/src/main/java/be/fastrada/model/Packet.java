@@ -37,4 +37,13 @@ public class Packet {
     public void setTime(DateTime time) {
         this.time = time;
     }
+
+    @Override
+    public String toString() {
+        return "Packet{" +
+                "id='" + id + '\'' +
+                ", value='" + value + '\'' +
+                ", time=" + time +
+                '}';
+    }
 }

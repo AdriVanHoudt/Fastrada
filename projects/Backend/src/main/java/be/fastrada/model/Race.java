@@ -4,7 +4,9 @@ import org.joda.time.DateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document()
+import java.util.Arrays;
+
+@Document(collection = "races")
 public class Race {
 
     @Id
@@ -47,5 +49,15 @@ public class Race {
 
     public void setSensors(Sensor[] sensors) {
         this.sensors = sensors;
+    }
+
+    @Override
+    public String toString() {
+        return "Race{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", dateTime=" + dateTime +
+                ", sensors=" + Arrays.toString(sensors) +
+                '}';
     }
 }

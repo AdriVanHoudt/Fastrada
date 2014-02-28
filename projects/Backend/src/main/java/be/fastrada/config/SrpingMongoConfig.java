@@ -14,7 +14,7 @@ public class SrpingMongoConfig {
 
     public @Bean
     MongoDbFactory mongoDbFactory() throws UnknownHostException {
-        return new SimpleMongoDbFactory(new MongoClient(), "DATABASENAME");
+        return new SimpleMongoDbFactory(new MongoClient(), "Fastrada");
     }
 
     public @Bean
