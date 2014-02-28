@@ -15,7 +15,6 @@ describe('HomeCtrl', function () {
         $controller('HomeCtrl', {$scope: scope});
     }));
 
-    // tests start here
 
     // No logic to test
 
