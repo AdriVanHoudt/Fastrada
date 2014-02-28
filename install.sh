@@ -7,7 +7,7 @@
 #       OPTIONS:  $2 dirname to look after the scripts
 #  REQUIREMENTS:  /
 #        AUTHOR:  Xavier Geerinck (thebillkidy@gmail.com)
-#       COMPANY:  Feedient
+#       COMPANY:  KdG/Fastrada
 #       VERSION:  1.1.0
 #       CREATED:  18/08/13 20:12:38 CET
 #      REVISION:  ---
@@ -40,8 +40,8 @@ if ! test -f "$chef_binary"; then
 	ruby1.9.1 ruby1.9.1-dev build-essential \
 	make automake autoconf wget ssl-cert curl &&
 	sudo gem1.9.1 install --no-rdoc --no-ri chef
-else 
-	echo "Chef already installed"
+#else 
+#	echo "Chef already installed"
 fi
 
 echo "Running chef for the specified configuration"

@@ -1,6 +1,6 @@
 {
 	"name": "teamb.localhost.com",
-	"description": "School vagrant cobol",
+	"description": "School vagrant Fastrada",
     "tomcat": {
         "base_version": "7"
     },
@@ -11,6 +11,7 @@
 		"recipe[tomcat::users]",
 		"recipe[chef-android-sdk]",
 		"recipe[maven]",
-		"recipe[maven-android-sdk-deployer]"
+		"recipe[maven-android-sdk-deployer]",
+		"recipe[mongodb]"
 	]
 }
