@@ -1,95 +1,164 @@
 [
     {
         "name": "Race 1",
-        "data": [
+        "date":10210022005,
+        "speed": [
             {
-                "speed": 20,
-                "rpm": 2000,
-                "temperature": 80,
-                "gear": 1,
+                "value": 20,
                 "timestamp": 1392385140
             },
             {
-                "speed": 60,
-                "rpm": 2500,
-                "temperature": 70,
-                "gear": 2,
+                "value": 60,
                 "timestamp": 1392395150
             },
             {
-                "speed": 80,
-                "rpm": 2700,
-                "temperature": 85,
-                "gear": 4,
+                "value": 80,
                 "timestamp": 1392398160
             },
             {
-                "speed": 125,
-                "rpm": 2400,
-                "temperature": 90,
-                "gear": 5,
+                "value": 125,
                 "timestamp": 1392399170
             },
             {
-                "speed": 130,
-                "rpm": 2200,
-                "temperature": 80,
-                "gear": 6,
+                "value": 130,
                 "timestamp": 1392485180
             },
             {
-                "speed": 140,
-                "rpm": 2400,
-                "temperature": 70,
-                "gear": 6,
+                "value": 140,
+                "timestamp": 1392585190
+            }
+        ],
+        "rpm": [
+            {
+                "value": 20,
+                "timestamp": 1392385140
+            },
+            {
+                "value": 60,
+                "timestamp": 1392395150
+            },
+            {
+                "value": 80,
+                "timestamp": 1392398160
+            },
+            {
+                "value": 125,
+                "timestamp": 1392399170
+            },
+            {
+                "value": 130,
+                "timestamp": 1392485180
+            },
+            {
+                "value": 140,
+                "timestamp": 1392585190
+            }
+        ],
+        "temperature": [
+            {
+                "value": 20,
+                "timestamp": 1392385140
+            },
+            {
+                "value": 60,
+                "timestamp": 1392395150
+            },
+            {
+                "value": 80,
+                "timestamp": 1392398160
+            },
+            {
+                "value": 125,
+                "timestamp": 1392399170
+            },
+            {
+                "value": 130,
+                "timestamp": 1392485180
+            },
+            {
+                "value": 140,
                 "timestamp": 1392585190
             }
         ]
     },
     {
         "name": "Race 2",
-        "data": [
+        "speed": [
             {
-                "speed": 20,
-                "rpm": 4000,
-                "temperature": 20,
-                "gear": 1,
+                "value": 20,
                 "timestamp": 1392385140
             },
             {
-                "speed": 60,
-                "rpm": 6000,
-                "temperature": 90,
-                "gear": 2,
+                "value": 60,
                 "timestamp": 1392385150
             },
             {
-                "speed": 80,
-                "rpm": 8000,
-                "temperature": 70,
-                "gear": 4,
+                "value": 80,
                 "timestamp": 1392385160
             },
             {
-                "speed": 125,
-                "rpm": 2400,
-                "temperature": 90,
-                "gear": 5,
+                "value": 125,
                 "timestamp": 1392385170
             },
             {
-                "speed": 130,
-                "rpm": 2800,
-                "temperature": 80,
-                "gear": 6,
+                "value": 130,
                 "timestamp": 1392385180
             },
             {
-                "speed": 140,
-                "rpm": 2800,
-                "temperature": 70,
-                "gear": 6,
+                "value": 140,
                 "timestamp": 1392385190
+            }
+        ],
+        "rpm": [
+            {
+                "value": 20,
+                "timestamp": 1392385140
+            },
+            {
+                "value": 60,
+                "timestamp": 1392395150
+            },
+            {
+                "value": 80,
+                "timestamp": 1392398160
+            },
+            {
+                "value": 125,
+                "timestamp": 1392399170
+            },
+            {
+                "value": 130,
+                "timestamp": 1392485180
+            },
+            {
+                "value": 140,
+                "timestamp": 1392585190
+            }
+        ],
+        "temperature": [
+            {
+                "value": 20,
+                "timestamp": 1392385140
+            },
+            {
+                "value": 60,
+                "timestamp": 1392395150
+            },
+            {
+                "value": 80,
+                "timestamp": 1392398160
+            },
+            {
+                "value": 125,
+                "timestamp": 1392399170
+            },
+            {
+                "value": 130,
+                "timestamp": 1392485180
+            },
+            {
+                "value": 140,
+                "timestamp": 1392585190
             }
         ]
     }

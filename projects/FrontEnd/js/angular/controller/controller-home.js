@@ -4,7 +4,6 @@
 
 angular.module('fastradaApp.controllers').
     controller('HomeCtrl', ['$scope', 'dataFetcher', 'queryHandler', function ($scope, dataFetcher, queryHandler) {
-
         /*
          Function that refreshes the data on the screen based on the currently selected race
          */
@@ -50,73 +49,12 @@ angular.module('fastradaApp.controllers').
         /*
          Methods that build charts
          */
-        function buildRPMChart(race) {
-            var rpmData = [];
-
-            for (var i = 0; i < race.data.length; i++) {
-                rpmData.push({time: (new Date(race.data[i].timestamp)), rpm: race.data[i].rpm});
-            }
-
-            var series = [
-                {
-                    argumentField: 'time',
-                    valueField: 'rpm'
-                }
-            ];
-
-            $("#chartRPM").dxChart({
-                dataSource: rpmData,
-                series: series,
-                commonSeriesSettings: {
-                    argumentField: 'time',
-                    type: 'line'
-                },
-                legend: {
-                    visible: false
-                },
-                argumentAxis: {
-                    label: { format: 'longTime'}
-                },
-                tooltip: {
-                    enabled: true
-                },
-                adjustOnZoom: true
-            });
-
-            $("#chartRPMRangeSelector").dxRangeSelector({
-                size: {
-                    height: 120
-                },
-                margin: {
-                    left: 10
-                },
-                scale: {
-                    divisionValue: 1,
-                    minRange: 1
-                },
-                selectedRange: {
-                    startValue: race.data[0].timestamp,
-                    endValue: race.data[race.data.length - 1].timestamp
-                },
-                dataSource: rpmData,
-                chart: {
-                    series: series
-                },
-                behavior: {
-                    callSelectedRangeChanged: "onMoving"
-                },
-                selectedRangeChanged: function (e) {
-                    var zoomChart = $("#chartRPM").dxChart('instance');
-                    zoomChart.zoomArgument(e.startValue, e.endValue);
-                }
-            });
-        }
 
         function buildSpeedChart(race) {
             var speedData = [];
 
-            for (var i = 0; i < race.data.length; i++) {
-                speedData.push({ time: (new Date(race.data[i].timestamp)), speed: race.data[i].speed});
+            for (var i = 0; i < race.speed.length; i++) {
+                speedData.push({ time: (new Date(race.speed[i].timestamp)), speed: race.speed[i].value});
             }
 
             var series = [
@@ -157,8 +95,8 @@ angular.module('fastradaApp.controllers').
                     minRange: 1
                 },
                 selectedRange: {
-                    startValue: race.data[0].timestamp,
-                    endValue: race.data[race.data.length - 1].timestamp
+                    startValue: race.speed[0].timestamp,
+                    endValue: race.speed[race.speed.length - 1].timestamp
                 },
                 dataSource: speedData,
                 chart: {
@@ -174,11 +112,74 @@ angular.module('fastradaApp.controllers').
             });
         }
 
+        function buildRPMChart(race) {
+            var rpmData = [];
+
+            for (var i = 0; i < race.rpm.length; i++) {
+                rpmData.push({time: (new Date(race.rpm[i].timestamp)), rpm: race.rpm[i].value});
+            }
+
+            var series = [
+                {
+                    argumentField: 'time',
+                    valueField: 'rpm'
+                }
+            ];
+
+            $("#chartRPM").dxChart({
+                dataSource: rpmData,
+                series: series,
+                commonSeriesSettings: {
+                    argumentField: 'time',
+                    type: 'line'
+                },
+                legend: {
+                    visible: false
+                },
+                argumentAxis: {
+                    label: { format: 'longTime'}
+                },
+                tooltip: {
+                    enabled: true
+                },
+                adjustOnZoom: true
+            });
+
+            $("#chartRPMRangeSelector").dxRangeSelector({
+                size: {
+                    height: 120
+                },
+                margin: {
+                    left: 10
+                },
+                scale: {
+                    divisionValue: 1,
+                    minRange: 1
+                },
+                selectedRange: {
+                    startValue: race.rpm[0].timestamp,
+                    endValue: race.rpm[race.rpm.length - 1].timestamp
+                },
+                dataSource: rpmData,
+                chart: {
+                    series: series
+                },
+                behavior: {
+                    callSelectedRangeChanged: "onMoving"
+                },
+                selectedRangeChanged: function (e) {
+                    var zoomChart = $("#chartRPM").dxChart('instance');
+                    zoomChart.zoomArgument(e.startValue, e.endValue);
+                }
+            });
+        }
+
+
         function buildTemperatureChart(race) {
             var tempData = [];
 
-            for (var i = 0; i < race.data.length; i++) {
-                tempData.push({time: (new Date(race.data[i].timestamp)), temperature: race.data[i].temperature});
+            for (var i = 0; i < race.temperature.length; i++) {
+                tempData.push({time: (new Date(race.temperature[i].timestamp)), temperature: race.temperature[i].value});
             }
 
             var series = [
@@ -219,8 +220,8 @@ angular.module('fastradaApp.controllers').
                     minRange: 1
                 },
                 selectedRange: {
-                    startValue: race.data[0].timestamp,
-                    endValue: race.data[race.data.length - 1].timestamp
+                    startValue: race.temperature[0].timestamp,
+                    endValue: race.temperature[race.temperature.length - 1].timestamp
                 },
                 dataSource: tempData,
                 chart: {
@@ -236,12 +237,7 @@ angular.module('fastradaApp.controllers').
             });
         }
 
-        /*
-         Method to extract time from timestamp
-         */
-        function dateToTime(date) {
-            return date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + ":" + date.getMilliseconds();
-        }
+
 
         /*
          Method that retrieves the correct race from the data
