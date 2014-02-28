@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.*;
 import be.fastrada.Dashboard;
 import be.fastrada.R;
 
@@ -19,12 +17,16 @@ public class Configuration extends Activity {
     public static final String PREFS_KEY_MAXTEMP = "maxTemp";
     public static final String PREFS_KEY_MAXRPM = "maxRpm";
     public static final String PREFS_KEY_TEMP_ALARM = "alarmTemp";
+    public static final String PREFS_KEY_SHOWGEAR = "showGear";
+    public static final String PREFS_KEY_STYLE = "style";
 
     private SharedPreferences sharedPreferences;
     private EditText etMaxSpeed;
     private EditText etMaxTemperature;
     private EditText etMaxRPM;
     private EditText etAlarmingTemp;
+    private Switch gearChecked;
+    private Switch holoStyle;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +37,8 @@ public class Configuration extends Activity {
         etMaxTemperature = (EditText) findViewById(R.id.maxTemp);
         etMaxRPM = (EditText) findViewById(R.id.maxRPM);
         etAlarmingTemp = (EditText) findViewById(R.id.alarmTemp);
+        gearChecked = (Switch) findViewById(R.id.chkGear);
+        holoStyle = (Switch) findViewById(R.id.chkStyle);
 
         initialise();
 
@@ -52,6 +56,8 @@ public class Configuration extends Activity {
         etMaxRPM.setText(sharedPreferences.getInt(Configuration.PREFS_KEY_MAXRPM, 6000) + "");
         etMaxTemperature.setText(sharedPreferences.getInt(Configuration.PREFS_KEY_MAXTEMP, 120) + "");
         etAlarmingTemp.setText(sharedPreferences.getInt(Configuration.PREFS_KEY_TEMP_ALARM, 90) + "");
+        gearChecked.setChecked(sharedPreferences.getBoolean(Configuration.PREFS_KEY_SHOWGEAR, true));
+        holoStyle.setChecked(sharedPreferences.getBoolean(Configuration.PREFS_KEY_STYLE, true));
     }
 
     public void saveConfiguration() {
@@ -68,6 +74,8 @@ public class Configuration extends Activity {
             editor.putInt(Configuration.PREFS_KEY_MAXRPM, maxRpm);
             editor.putInt(Configuration.PREFS_KEY_MAXTEMP, maxTemp);
             editor.putInt(Configuration.PREFS_KEY_TEMP_ALARM, alarmTemp);
+            editor.putBoolean(Configuration.PREFS_KEY_SHOWGEAR, gearChecked.isChecked());
+            editor.putBoolean(Configuration.PREFS_KEY_STYLE, holoStyle.isChecked());
             editor.commit();
 
             Dashboard.setAlarmingTemperature(alarmTemp);
@@ -78,6 +86,22 @@ public class Configuration extends Activity {
             finish();
         } else {
             Toast.makeText(this, getString(R.string.alarmTempTooHigh), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void gearClicked(View v) {
+        if (((Switch) v).isChecked()) {
+            gearChecked.setChecked(true);
+        } else {
+            gearChecked.setChecked(false);
+        }
+    }
+
+    public void StyleClicked(View v){
+        if(((Switch) v).isChecked()){
+           holoStyle.setChecked(true);
+        } else {
+            holoStyle.setChecked(false);
         }
     }
 

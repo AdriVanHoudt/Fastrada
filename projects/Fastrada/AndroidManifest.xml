@@ -24,6 +24,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.Configuration"/>
+        <activity android:name=".activities.Settings"/>
 
         <service android:name=".networking.PacketListenerService"/>
     </application>

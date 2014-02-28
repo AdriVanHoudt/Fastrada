@@ -11,7 +11,7 @@
     <TableLayout
             android:gravity="center_horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent" android:layout_alignParentBottom="true">
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
                     android:layout_width="wrap_content"
                     android:paddingLeft="5dp"
                     android:text="@string/maximumrpm"
-                    android:labelFor="@+id/maxRPM"/>
+                    android:labelFor="@+id/maxRPM" android:autoText="false"/>
             <EditText
                     android:id="@+id/maxRPM"
                     android:layout_width="wrap_content"
@@ -98,6 +98,38 @@
                     android:layout_width="match_parent"
                     android:layout_weight="1"
                     android:text="@string/btn_submit"/>
+        </TableRow>
+        <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+        </TableRow>
+
+    </TableLayout>
+    <TableLayout
+            android:gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true">
+        <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="55dp">
+            <Switch
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Show Gear"
+                    android:id="@+id/chkGear"
+                    android:onClick="gearClicked"/>
+        </TableRow>
+        <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+            <Switch
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Holo Style Layout"
+                    android:id="@+id/chkStyle"
+                    android:onClick="StyleClicked"/>
         </TableRow>
     </TableLayout>
 </RelativeLayout>

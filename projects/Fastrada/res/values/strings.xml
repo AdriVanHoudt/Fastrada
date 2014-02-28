@@ -13,4 +13,5 @@
     <string name="btn_submit">Submit</string>
     <string name="alarmTempTooHigh">Your alarming temperature must not be higher than the maximum temperature</string>
     <string name="serverStartError">Server could not start</string>
+    <string name="gear_text">gear</string>
 </resources>

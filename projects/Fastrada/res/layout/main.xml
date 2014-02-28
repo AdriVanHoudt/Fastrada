@@ -33,10 +33,26 @@
             android:layout_height="wrap_content"
             android:id="@+id/meterMenu"
             android:layout_below="@+id/rpmMenu">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:custom="http://schemas.android.com/apk/res/be.fastrada"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:visibility="invisible"
+                        android:id="@+id/speedMeterBars">
+            <be.fastrada.Speedometer
+                    android:id="@+id/Speedometer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    custom:currentSpeed="100"
+                    custom:maxSpeed="300"
+                    />
+        </RelativeLayout>
         <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/speedMeter">
+                android:id="@+id/speedMeterHolo"
+                android:visibility="visible">
             <be.fastrada.HoloCircularProgressBar
                     android:id="@+id/speedIndicator"
                     android:layout_width="wrap_content"
@@ -66,10 +82,27 @@
                         android:layout_below="@+id/tvSpeed"/>
             </RelativeLayout>
         </RelativeLayout>
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:custom="http://schemas.android.com/apk/res/be.fastrada"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:visibility="visible"
+                        android:id="@+id/tempMeterBars">
+            <be.fastrada.Speedometer
+                    android:id="@+id/Tempometer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    custom:currentSpeed="100"
+                    custom:maxSpeed="300"
+                    />
+        </RelativeLayout>
         <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true">
+                android:layout_alignParentRight="true"
+                android:visibility="invisible"
+                android:id="@+id/tempMeterHolo">
             <be.fastrada.HoloCircularProgressBar
                     android:id="@+id/thermometer"
                     android:layout_width="wrap_content"
@@ -102,8 +135,8 @@
         <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/speedMeter"
-                android:layout_alignBottom="@+id/speedMeter">
+                android:layout_alignLeft="@+id/speedMeterHolo"
+                android:layout_alignBottom="@+id/speedMeterHolo">
             <ImageView
                     android:layout_width="70dp"
                     android:layout_height="50dp"
@@ -113,6 +146,29 @@
                     android:src="@android:drawable/ic_menu_preferences"
                     android:contentDescription="@string/settings"
                     android:padding="8dp"/>
+
+            <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="invisible"
+                    android:id="@+id/rlGear">
+                <be.fastrada.DigitalTextView
+                        android:id="@+id/tvGear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="50sp"
+                        android:text="1"
+                        android:layout_centerHorizontal="true"
+                        />
+                <be.fastrada.DigitalTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/gear_text"
+                        android:textSize="20sp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_below="@+id/tvGear"/>
+            </RelativeLayout>
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>
