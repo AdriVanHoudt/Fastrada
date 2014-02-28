@@ -2,6 +2,7 @@ package be.fastrada.networking;
 
 import android.os.Bundle;
 import android.os.Message;
+import android.util.Log;
 import be.fastrada.activities.Main;
 
 import java.io.IOException;
@@ -13,7 +14,7 @@ import java.net.SocketException;
  * Created by Thomas on 25/02/14.
  */
 public class PacketListener extends Thread {
-    public static final int PORT_NUMBER = 6666;
+    public static final int PORT_NUMBER = 9000;
     public static final int BUFFER_SIZE = 10;
     public static final String BUNDLE_BYTES_KEY = "PacketListenerService.Bytes";
 

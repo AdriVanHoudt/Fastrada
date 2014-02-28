@@ -28,6 +28,11 @@ public class PacketMapper {
         int id = this.getId();
         JSONObject packets = (JSONObject) packetConfiguration.getConfigFile().get("packets");
         JSONObject packet = (JSONObject) packets.get("" + id);
+
+        if (packet == null) {
+            return new JSONArray();
+        }
+
         return (JSONArray) packet.get("struct");
     }
 
@@ -52,6 +57,8 @@ public class PacketMapper {
 
         String methodToInvoke = (String) jo.get("name");
         int byteSize = Integer.parseInt(jo.get("size").toString());
+        double offset = Double.parseDouble(jo.get("offset").toString());
+        double factor = Double.parseDouble(jo.get("factor").toString());
 
         try {
             Class cls = Class.forName(packetConfiguration.getClassPath());
@@ -61,13 +68,22 @@ public class PacketMapper {
                 if (m.getName().equals(methodToInvoke)) {
                     switch (byteSize) {
                         case 8:
-                            m.invoke(obj, (short) (byteBuffer.get() & 0xff));
+                            short value1 = (short) (byteBuffer.get() & 0xff);
+                            value1 = (short) ((value1 * factor) - offset);
+                            Log.d("BROL", "" + value1);
+                            m.invoke(obj, value1);
                             break;
                         case 16:
-                            m.invoke(obj, (int) (byteBuffer.getShort() & 0xffff));
+                            int value2 = (int) (byteBuffer.getShort() & 0xffff);
+                            value2 = (int) ((value2 * factor) - offset);
+                            Log.d("BROL", "" + value2);
+                            m.invoke(obj, value2);
                             break;
                         case 32:
-                            m.invoke(obj, (long) (byteBuffer.getInt() & 0xffffffffL)); //kan dit niet coveren omdat dashboard geen parameter voor double heeft
+                            long value3 = (long) (byteBuffer.getInt() & 0xffffffffL);
+                            value3 = (long) ((value3 * factor) - offset);
+                            Log.d("BROL", "" + value3);
+                            m.invoke(obj, value3); //kan dit niet coveren omdat dashboard geen parameter voor double heeft
                             break;
                     }
                     return true;

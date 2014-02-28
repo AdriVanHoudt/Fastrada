@@ -1,35 +1,55 @@
 {
     "packets": {
-        "0": {
+        "256": {
             "struct": [
                 {
                     "name": "setCurrentRPM",
-                    "size": 16
+                    "size": 16,
+                    "factor": "0.0030518",
+                    "offset": "50",
+                    "minimum": "-50.0014",
+                    "maximum": "149.998"
+                },
+                {
+                    "name": "setThrottlePos",
+                    "size": 16,
+                    "factor": "0.0030518",
+                    "offset": "50",
+                    "minimum": "-50.0014",
+                    "maximum": "149.998"
+                },
+                {
+                    "name": "setCurrentTemperature",
+                    "size": 16,
+                    "factor": "0.0030518",
+                    "offset": "50",
+                    "minimum": "-50.0014",
+                    "maximum": "149.998"
                 }
             ]
         },
-        "1": {
+        "257": {
             "struct": [
                 {
                     "name": "setCurrentSpeed",
-                    "size": 16
-                }
-            ]
-        },
-        "2": {
-            "struct": [
+                    "size": 16,
+                    "factor": "0.00549324",
+                    "offset": "0",
+                    "minimum": "0",
+                    "maximum": "359.999"
+                },
                 {
-                    "name": "setCurrentTemperature",
-                    "size": 16
+                    "name": "setGear",
+                    "size": 8,
+                    "factor": "0.0030518",
+                    "offset": "50",
+                    "minimum": "-50.0014",
+                    "maximum": "149.998"
                 }
             ]
         },
-        "4": {
+        "258": {
           "struct": [
-              {
-                  "name":"setGear",
-                  "size":16
-              }
           ]
         },
         "65535": {
