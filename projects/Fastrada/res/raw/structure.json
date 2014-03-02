@@ -7,24 +7,22 @@
                     "size": 16,
                     "factor": "0.0030518",
                     "offset": "50",
-                    "minimum": "-50.0014",
-                    "maximum": "149.998"
+                    "signed": false
+
                 },
                 {
                     "name": "setThrottlePos",
                     "size": 16,
                     "factor": "0.0030518",
                     "offset": "50",
-                    "minimum": "-50.0014",
-                    "maximum": "149.998"
+                    "signed": false
                 },
                 {
                     "name": "setCurrentTemperature",
                     "size": 16,
                     "factor": "0.0030518",
                     "offset": "50",
-                    "minimum": "-50.0014",
-                    "maximum": "149.998"
+                    "signed": true
                 }
             ]
         },
@@ -34,17 +32,15 @@
                     "name": "setCurrentSpeed",
                     "size": 16,
                     "factor": "0.00549324",
-                    "offset": "0",
-                    "minimum": "0",
-                    "maximum": "359.999"
+                    "offset": "0" ,
+                    "signed": false
                 },
                 {
                     "name": "setGear",
                     "size": 8,
                     "factor": "0.0030518",
                     "offset": "50",
-                    "minimum": "-50.0014",
-                    "maximum": "149.998"
+                    "signed": false
                 }
             ]
         },
