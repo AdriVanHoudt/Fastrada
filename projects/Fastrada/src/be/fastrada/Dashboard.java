@@ -1,5 +1,6 @@
 package be.fastrada;
 
+import android.util.Log;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ProgressBar;
@@ -81,6 +82,7 @@ public class Dashboard implements Serializable, PacketInterface{
     }
 
     public void setCurrentSpeed(int currentSpeed) {
+
         if (speedMeter != null) {
             speedMeter.setProgress(((float) currentSpeed / (float) getMaxSpeed()));
         }
@@ -122,5 +124,10 @@ public class Dashboard implements Serializable, PacketInterface{
             effectOn = false;
             tempMeter.clearAnimation();
         }
+    }
+
+    public void setThrottlePos(int throttle)
+    {
+        //to be implemented
     }
 }

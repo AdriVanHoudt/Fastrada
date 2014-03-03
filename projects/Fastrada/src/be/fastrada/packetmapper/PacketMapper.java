@@ -59,7 +59,6 @@ public class PacketMapper {
         int byteSize = Integer.parseInt(jo.get("size").toString());
         double offset = Double.parseDouble(jo.get("offset").toString());
         double factor = Double.parseDouble(jo.get("factor").toString());
-        boolean signed = Boolean.parseBoolean(jo.get("signed").toString());
 
         try {
             Class cls = Class.forName(packetConfiguration.getClassPath());
@@ -69,35 +68,24 @@ public class PacketMapper {
                 if (m.getName().equals(methodToInvoke)) {
                     switch (byteSize) {
                         case 8:
-                            short value1;
-                            if (!signed)
-                                value1 = (short) (byteBuffer.get() & 0xff);
-                            else
-                                value1 = (short) (byteBuffer.get());
+                            short value1 = (short) (byteBuffer.get() & 0xff);
 
                             value1 = (short) ((value1 * factor) - offset);
-                            Log.d("BROL", "" + value1);
+
                             m.invoke(obj, value1);
                             break;
                         case 16:
-                            int value2;
-                            if (!signed)
-                                value2 = (int) (byteBuffer.getShort() & 0xffff);
-                            else
-                                value2 = (int) (byteBuffer.getShort());
+                            int value2 = byteBuffer.getShort() & 0xffff;
 
-                            value2 = (int) ((value2 * factor) - offset);
-                            Log.d("BROL", "" + value2);
+                            value2 = (int) (((double)value2 * factor) - offset);
+
                             m.invoke(obj, value2);
                             break;
                         case 32:
-                            long value3;
-                            if (!signed)
-                                value3 = (long) (byteBuffer.getInt() & 0xffffffffL);
-                            else
-                                value3 = (long) (byteBuffer.getInt());
+                            long value3 = (long) (byteBuffer.getInt() & 0xffffffffL);
+
                             value3 = (long) ((value3 * factor) - offset);
-                            Log.d("BROL", "" + value3);
+
                             m.invoke(obj, value3); //kan dit niet coveren omdat dashboard geen parameter voor double heeft
                             break;
                     }
