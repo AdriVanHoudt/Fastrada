@@ -28,7 +28,7 @@
           "struct": [
               {
                   "name":"setGear",
-                  "size":16
+                  "size":8
               }
           ]
         },

@@ -23,8 +23,9 @@
                 <category android:name="android.intent.category.STARTUP"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activities.Configuration"/>
+        <activity android:name=".activities.UiConfig"/>
         <activity android:name=".activities.Settings"/>
+        <activity android:name=".activities.GeneralConfig"/>
 
         <service android:name=".networking.PacketListenerService"/>
     </application>
