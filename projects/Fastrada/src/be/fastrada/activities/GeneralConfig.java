@@ -11,26 +11,21 @@ import be.fastrada.Dashboard;
 import be.fastrada.R;
 
 /**
- * Activity for configuration.
+ * @author: Shana Steenssens
+ * @version: 1.0 2/03/14 20:06
  */
-public class Configuration extends Activity {
-    public static final String PREFS_KEY = "be.fastrada.preferences";
-    public static final String PREFS_KEY_MAXSPEED = "maxSpeed";
-    public static final String PREFS_KEY_MAXTEMP = "maxTemp";
-    public static final String PREFS_KEY_MAXRPM = "maxRpm";
-    public static final String PREFS_KEY_TEMP_ALARM = "alarmTemp";
-
-    private SharedPreferences sharedPreferences;
+public class GeneralConfig extends Activity {
     private EditText etMaxSpeed;
     private EditText etMaxTemperature;
     private EditText etMaxRPM;
     private EditText etAlarmingTemp;
+    private SharedPreferences sharedPreferences;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.config);
+        setContentView(R.layout.generalconfig);
 
-        sharedPreferences = getSharedPreferences(PREFS_KEY, MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences(UiConfig.PREFS_KEY, MODE_PRIVATE);
         etMaxSpeed = (EditText) findViewById(R.id.maxSpeed);
         etMaxTemperature = (EditText) findViewById(R.id.maxTemp);
         etMaxRPM = (EditText) findViewById(R.id.maxRPM);
@@ -47,11 +42,11 @@ public class Configuration extends Activity {
         });
     }
 
-    public void initialise() {
-        etMaxSpeed.setText(sharedPreferences.getInt(Configuration.PREFS_KEY_MAXSPEED, 300) + "");
-        etMaxRPM.setText(sharedPreferences.getInt(Configuration.PREFS_KEY_MAXRPM, 6000) + "");
-        etMaxTemperature.setText(sharedPreferences.getInt(Configuration.PREFS_KEY_MAXTEMP, 120) + "");
-        etAlarmingTemp.setText(sharedPreferences.getInt(Configuration.PREFS_KEY_TEMP_ALARM, 90) + "");
+    private void initialise() {
+        etMaxSpeed.setText(sharedPreferences.getInt(UiConfig.PREFS_KEY_MAXSPEED, 300) + "");
+        etMaxRPM.setText(sharedPreferences.getInt(UiConfig.PREFS_KEY_MAXRPM, 6000) + "");
+        etMaxTemperature.setText(sharedPreferences.getInt(UiConfig.PREFS_KEY_MAXTEMP, 120) + "");
+        etAlarmingTemp.setText(sharedPreferences.getInt(UiConfig.PREFS_KEY_TEMP_ALARM, 90) + "");
     }
 
     public void saveConfiguration() {
@@ -64,10 +59,10 @@ public class Configuration extends Activity {
             final int maxSpeed = Integer.parseInt(etMaxSpeed.getText().toString());
             final int maxRpm = Integer.parseInt(etMaxRPM.getText().toString());
 
-            editor.putInt(Configuration.PREFS_KEY_MAXSPEED, maxSpeed);
-            editor.putInt(Configuration.PREFS_KEY_MAXRPM, maxRpm);
-            editor.putInt(Configuration.PREFS_KEY_MAXTEMP, maxTemp);
-            editor.putInt(Configuration.PREFS_KEY_TEMP_ALARM, alarmTemp);
+            editor.putInt(UiConfig.PREFS_KEY_MAXSPEED, maxSpeed);
+            editor.putInt(UiConfig.PREFS_KEY_MAXRPM, maxRpm);
+            editor.putInt(UiConfig.PREFS_KEY_MAXTEMP, maxTemp);
+            editor.putInt(UiConfig.PREFS_KEY_TEMP_ALARM, alarmTemp);
             editor.commit();
 
             Dashboard.setAlarmingTemperature(alarmTemp);
@@ -80,5 +75,4 @@ public class Configuration extends Activity {
             Toast.makeText(this, getString(R.string.alarmTempTooHigh), Toast.LENGTH_LONG).show();
         }
     }
-
 }

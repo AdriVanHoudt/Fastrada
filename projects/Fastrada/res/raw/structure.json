@@ -34,40 +34,8 @@
                 {
                     "name": "setGear",
                     "size": 8,
-                    "factor": "0.0030518",
-                    "offset": "50"
-                }
-            ]
-        },
-        "258": {
-          "struct": [
-          ]
-        },
-        "65535": {
-            "struct": [
-                {
-                    "name": "setCurrentSpeed",
-                    "size": 16
-                },
-                {
-                    "name": "setCurrentSpeed",
-                    "size": 16
-                },
-                {
-                    "name": "setCurrentSpeed",
-                    "size": 16
-                },
-                {
-                    "name": "setCurrentSpeed",
-                    "size": 16
-                },
-                {
-                    "name": "setCurrentSpeed",
-                    "size": 16
-                },
-                {
-                    "name": "setCurrentSpeed",
-                    "size": 16
+                    "factor": "1",
+                    "offset": "0"
                 }
             ]
         }

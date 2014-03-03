@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="horizontal"
@@ -11,7 +12,7 @@
     <TableLayout
             android:gravity="center_horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent" android:layout_alignParentBottom="true">
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -29,7 +30,7 @@
                     android:layout_width="wrap_content"
                     android:paddingLeft="5dp"
                     android:text="@string/maximumrpm"
-                    android:labelFor="@+id/maxRPM"/>
+                    android:labelFor="@+id/maxRPM" android:autoText="false"/>
             <EditText
                     android:id="@+id/maxRPM"
                     android:layout_width="wrap_content"
@@ -99,5 +100,11 @@
                     android:layout_weight="1"
                     android:text="@string/btn_submit"/>
         </TableRow>
+        <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+        </TableRow>
+
     </TableLayout>
+
 </RelativeLayout>

@@ -19,8 +19,9 @@ public class Dashboard implements Serializable, PacketInterface{
     private static int alarmingTemperature;
     private int currentTemperature;
 
-    private TextView tvCurrentTemp, tvCurrentSpeed;
-    private HoloCircularProgressBar tempMeter, speedMeter;
+    private TextView tvCurrentTemp, tvCurrentSpeed, tvGear;
+    private HoloCircularProgressBar holoTempMeter, holoSpeedMeter;
+    private Speedometer tempoMeter, speedoMeter;
     private ProgressBar rpmIndicator;
     private Animation blinkAnimation;
     private boolean effectOn;
@@ -30,7 +31,7 @@ public class Dashboard implements Serializable, PacketInterface{
     }
 
 
-    public Dashboard(TextView tvCurrentTemp, TextView tvCurrentSpeed, HoloCircularProgressBar tempMeter, HoloCircularProgressBar speedMeter, ProgressBar rpmIndicator) {
+    public Dashboard(TextView tvCurrentTemp, TextView tvCurrentSpeed, HoloCircularProgressBar holoTempMeter, HoloCircularProgressBar holoSpeedMeter, ProgressBar rpmIndicator, Speedometer speedoMeter, Speedometer tempoMeter, TextView tvGear) {
         this();
         this.blinkAnimation = new AlphaAnimation(0.0f, 1.0f);
         blinkAnimation.setDuration(800);
@@ -40,9 +41,12 @@ public class Dashboard implements Serializable, PacketInterface{
 
         this.tvCurrentTemp = tvCurrentTemp;
         this.tvCurrentSpeed = tvCurrentSpeed;
-        this.tempMeter = tempMeter;
-        this.speedMeter = speedMeter;
+        this.holoTempMeter = holoTempMeter;
+        this.holoSpeedMeter = holoSpeedMeter;
         this.rpmIndicator = rpmIndicator;
+        this.tempoMeter = tempoMeter;
+        this.speedoMeter = speedoMeter;
+        this.tvGear = tvGear;
     }
 
     public static void setMaxSpeed(int maxSpeed) {
@@ -83,8 +87,9 @@ public class Dashboard implements Serializable, PacketInterface{
 
     public void setCurrentSpeed(int currentSpeed) {
 
-        if (speedMeter != null) {
-            speedMeter.setProgress(((float) currentSpeed / (float) getMaxSpeed()));
+        if (holoSpeedMeter != null) {
+            holoSpeedMeter.setProgress(((float) currentSpeed / (float) getMaxSpeed()));
+            speedoMeter.onSpeedChanged(currentSpeed);
         }
         if (tvCurrentSpeed != null && currentSpeed <= maxSpeed) {
             tvCurrentSpeed.setText(String.format("%d", currentSpeed));
@@ -104,8 +109,9 @@ public class Dashboard implements Serializable, PacketInterface{
     public void setCurrentTemperature(int currentTemperature) {
         this.currentTemperature = currentTemperature;
 
-        if (tempMeter != null) {
-            tempMeter.setProgress(((float) currentTemperature / (float) getMaxSpeed()));
+        if (holoTempMeter != null) {
+            holoTempMeter.setProgress(((float) currentTemperature / (float) getMaxSpeed()));
+            tempoMeter.onSpeedChanged(currentTemperature);
         }
         if (tvCurrentTemp != null && currentTemperature <= maxTemperature) {
             tvCurrentTemp.setText(String.format("%d", currentTemperature));
@@ -119,15 +125,21 @@ public class Dashboard implements Serializable, PacketInterface{
     public void checkForExceedingTemp() {
         if (getCurrentTemperature() >= getAlarmingTemperature() && !effectOn) {
             effectOn = true;
-            tempMeter.startAnimation(blinkAnimation);
+            holoTempMeter.startAnimation(blinkAnimation);
+            tempoMeter.startAnimation(blinkAnimation);
         } else if (getCurrentTemperature() < getAlarmingTemperature()) {
             effectOn = false;
-            tempMeter.clearAnimation();
+            holoTempMeter.clearAnimation();
+            tempoMeter.clearAnimation();
         }
     }
+
 
     public void setThrottlePos(int throttle)
     {
         //to be implemented
+    }
+    public void setGear(int currentGear){
+        tvGear.setText(String.format("%d", currentGear));
     }
 }
