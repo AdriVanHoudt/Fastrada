@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        android:gravity="center"
+        android:paddingTop="15dp"
+        android:id="@+id/configLayout">
+    <TableLayout
+            android:gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true">
+        <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="55dp">
+            <Switch
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Show Gear"
+                    android:id="@+id/chkGear"
+                    android:onClick="gearClicked"/>
+        </TableRow>
+        <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+            <Switch
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Holo Style Layout"
+                    android:id="@+id/chkStyle"
+                    android:onClick="StyleClicked"/>
+        </TableRow>
+        <TableRow
+                android:layout_marginTop="15dp">
+            <Button
+                    android:id="@+id/saveConfig"
+                    android:layout_height="45dp"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:text="@string/btn_submit"/>
+        </TableRow>
+        <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+        </TableRow>
+    </TableLayout>
+</RelativeLayout>
