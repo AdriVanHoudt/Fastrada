@@ -9,7 +9,7 @@ import java.net.UnknownHostException;
 
 import static org.junit.Assert.assertEquals;
 
-public class PacketSenderTest {
+public class PacketMapperSenderTest {
     @Test
     public void testIncomingPacket() throws InterruptedException, SocketException, UnknownHostException {
         final PacketSender packetSender = new PacketSender("192.168.0.6");
@@ -31,7 +31,7 @@ public class PacketSenderTest {
         final Thread packetThread = new Thread(packetSender);
 
         for (int i = 0; i < 5; i++) {
-            packetSender.addPacket(String.format("Packet %d", i).getBytes());
+            packetSender.addPacket(String.format("PacketMapper %d", i).getBytes());
         }
 
         packetThread.start();

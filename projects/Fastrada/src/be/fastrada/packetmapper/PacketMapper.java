@@ -11,39 +11,33 @@ import org.json.simple.parser.ParseException;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.nio.ByteBuffer;
 
 /**
  * Class that represents a packet.
  */
-public class Packet {
-    private String content;
-    private PacketReader reader;
-    private JSONArray methods;
+public class PacketMapper {
+    private ByteBuffer byteBuffer;
     private PacketConfiguration packetConfiguration;
 
-    public Packet(String content, PacketConfiguration packetConfiguration) {
+    public PacketMapper(PacketConfiguration packetConfiguration) {
         this.packetConfiguration = packetConfiguration;
-        this.content = content.replace(" ", "");
-        this.reader = new PacketReader(this.content);
     }
-
-    public String getContent() {
-        return this.content;
-    }
-
-    public PacketReader getReader() {
-        return reader;
-    }
-
 
     public JSONArray getStructure() {
+        int id = this.getId();
         JSONObject packets = (JSONObject) packetConfiguration.getConfigFile().get("packets");
-        JSONObject packet = (JSONObject) packets.get("" + this.getId());
+        JSONObject packet = (JSONObject) packets.get("" + id);
+
+        if (packet == null) {
+            return new JSONArray();
+        }
+
         return (JSONArray) packet.get("struct");
     }
 
     public int getId() {
-        return reader.getId();
+        return byteBuffer.getShort();
     }
 
     public int getSize(String name) {
@@ -63,22 +57,36 @@ public class Packet {
 
         String methodToInvoke = (String) jo.get("name");
         int byteSize = Integer.parseInt(jo.get("size").toString());
+        double offset = Double.parseDouble(jo.get("offset").toString());
+        double factor = Double.parseDouble(jo.get("factor").toString());
 
         try {
-            Class cls = Class.forName(packetConfiguration.getClassPath()); // Probeer da eens :D
-            Object obj = packetConfiguration.getClassObject(); // Run eens in debug
+            Class cls = Class.forName(packetConfiguration.getClassPath());
+            Object obj = packetConfiguration.getClassObject();
 
             for (Method m : cls.getMethods()) {
                 if (m.getName().equals(methodToInvoke)) {
                     switch (byteSize) {
                         case 8:
-                            m.invoke(obj, (short) reader.readUint8());
+                            short value1 = (short) (byteBuffer.get() & 0xff);
+
+                            value1 = (short) ((value1 * factor) - offset);
+
+                            m.invoke(obj, value1);
                             break;
                         case 16:
-                            m.invoke(obj, (int) reader.readUint16());    // hier crasht em
+                            int value2 = byteBuffer.getShort() & 0xffff;
+
+                            value2 = (int) (((double)value2 * factor) - offset);
+
+                            m.invoke(obj, value2);
                             break;
                         case 32:
-                            m.invoke(obj, (long) reader.readUint32()); //kan dit niet coveren omdat dashboard geen parameter voor double heeft
+                            long value3 = (long) (byteBuffer.getInt() & 0xffffffffL);
+
+                            value3 = (long) ((value3 * factor) - offset);
+
+                            m.invoke(obj, value3); //kan dit niet coveren omdat dashboard geen parameter voor double heeft
                             break;
                     }
                     return true;
@@ -97,11 +105,6 @@ public class Packet {
             //does not happen
             e.printStackTrace();
             return false;
-        } /*catch (InstantiationException e) {
-            e.printStackTrace();
-            return false;
-        }*/ catch (EOFException e) {
-            throw new Error();
         }
     }
 
@@ -119,10 +122,11 @@ public class Packet {
         return true;
     }
 
-    public void setContent(String content) {
-        this.content = content.replaceAll(" ", "");
-        this.content = content.replaceAll("\t", "");
-        this.reader.resetPosition();
-        this.reader.setContent(content);
+    public ByteBuffer getBuffer() {
+        return byteBuffer;
+    }
+
+    public void setContent(byte[] content) {
+        this.byteBuffer = ByteBuffer.wrap(content); // Wrap the byte array in the buffer, BIG ENDIAN!
     }
 }
