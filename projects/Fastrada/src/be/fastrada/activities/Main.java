@@ -10,11 +10,9 @@ import android.os.Looper;
 import android.os.Message;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.*;
 import be.fastrada.Dashboard;
+import be.fastrada.Exception.FastradaException;
 import be.fastrada.HoloCircularProgressBar;
 import be.fastrada.R;
 import be.fastrada.Speedometer;
@@ -70,7 +68,14 @@ public class Main extends Activity {
          * Make sure that dashboard is initialised ( see initialise() )
          */
         InputStream res = context.getResources().openRawResource(R.raw.structure);
-        packetConfiguration = new PacketConfiguration(res, "be.fastrada.packetmapper.PacketInterface", dashboard);  // Maar gij roept nu packetConfiguration aan e? ja
+        try {
+            packetConfiguration = new PacketConfiguration(res, "be.fastrada.packetmapper.PacketInterface", dashboard);  // Maar gij roept nu packetConfiguration aan e? ja
+        } catch (FastradaException e) {
+            Toast toast = new Toast(getApplicationContext());
+            toast.setDuration(Toast.LENGTH_LONG);
+            toast.setText(e.getMessage());
+            toast.show();
+        }
         // Init packetMapper after packetConfiguration
         packetMapper = new PacketMapper(packetConfiguration);
 

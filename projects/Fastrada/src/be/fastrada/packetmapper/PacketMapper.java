@@ -3,6 +3,7 @@ package be.fastrada.packetmapper;
 
 import android.util.Log;
 import be.fastrada.Dashboard;
+import be.fastrada.Exception.FastradaException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -50,7 +51,7 @@ public class PacketMapper {
         return -1;
     }
 
-    public boolean invokeMethod(JSONObject jo) {
+    public boolean invokeMethod(JSONObject jo) throws FastradaException {
         if (jo == null) {
             return true;
         }
@@ -95,16 +96,19 @@ public class PacketMapper {
 
             return true;
         } catch (InvocationTargetException e) {
-            //kan niet gecoverd word
-            e.printStackTrace();
-            return false;
+            String message = "Invocation target, exception";
+            Log.e("Fastrada", message);
+            throw new FastradaException(message);
+
         } catch (IllegalAccessException e) {
-            //does not happen
-            return false;
+            String message = "ClassObject illegal!";
+            Log.e("Fastrada", message);
+            throw new FastradaException(message);
+
         } catch (ClassNotFoundException e) {
-            //does not happen
-            e.printStackTrace();
-            return false;
+            String message = "Class not found!";
+            Log.e("Fastrada", message);
+            throw new FastradaException(message);
         }
     }
 
@@ -114,7 +118,9 @@ public class PacketMapper {
         for (int i = 0; i < structure.size(); i++) {
             JSONObject jo = (JSONObject) structure.get(i);
 
-            if (!invokeMethod(jo)) {
+            try {
+                invokeMethod(jo);
+            } catch (FastradaException e) {
                 return false;
             }
         }

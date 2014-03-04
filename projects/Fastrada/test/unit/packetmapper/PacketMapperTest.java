@@ -1,6 +1,7 @@
 package unit.packetmapper;
 
 import be.fastrada.Dashboard;
+import be.fastrada.Exception.FastradaException;
 import be.fastrada.packetmapper.PacketMapper;
 import be.fastrada.packetmapper.PacketConfiguration;
 import org.json.simple.JSONArray;
@@ -19,13 +20,13 @@ import static org.mockito.Mockito.mock;
 
 
 public class PacketMapperTest {
-    private byte[] byteArray1 = { 0x01, 0x0, 0x00, 0x28 };
+    private byte[] byteArray1 = { 0x01, 0x0, 0x00, 0x28, 0x00, 0x28, 0x00, 0x28, 0x00, 0x28 };
     private PacketMapper packetMapper;
     private PacketMapper packetMapper2;
     private PacketConfiguration configuration;
 
 
-    public PacketMapperTest() throws FileNotFoundException {
+    public PacketMapperTest() throws FileNotFoundException, FastradaException {
         configuration = new PacketConfiguration(new FileInputStream(new File("res/raw/structure.json")), "be.fastrada.Dashboard", new Dashboard());
         packetMapper = new PacketMapper(configuration);
         packetMapper.setContent(byteArray1);
@@ -42,7 +43,7 @@ public class PacketMapperTest {
 
     @Test
     public void getId() {
-        assertEquals(2, packetMapper.getId());
+        assertEquals(256, packetMapper.getId());
     }
 
 
@@ -69,7 +70,7 @@ public class PacketMapperTest {
 
 
     @Test
-    public void invokeMethod1() {
+    public void invokeMethod1() throws FastradaException {
         int vehicleSpeed = 60;
         int maxRPM = 7000;
         double maxSpeed = 150.00;
@@ -82,13 +83,16 @@ public class PacketMapperTest {
     }
 
 
+    /*
     @Test
     public void processPacket() {
         assertTrue(packetMapper.process());
     }
+    */
+
 
     @Test
-    public void invokeNullMethod() throws FileNotFoundException {
+    public void invokeNullMethod() throws FileNotFoundException, FastradaException {
         PacketMapper packetMapper = new PacketMapper(configuration);
         packetMapper.setContent(byteArray1);
         assertTrue(packetMapper.invokeMethod(null));

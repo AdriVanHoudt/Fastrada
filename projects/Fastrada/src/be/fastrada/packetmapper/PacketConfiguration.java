@@ -1,6 +1,8 @@
 package be.fastrada.packetmapper;
 
+import android.util.Log;
 import be.fastrada.Dashboard;
+import be.fastrada.Exception.FastradaException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -21,21 +23,27 @@ public class PacketConfiguration {
     private String classPath;
     private PacketInterface classObject;
 
-    public PacketConfiguration(InputStream packetMappingPath, String classPath, PacketInterface classObject) {
+    public PacketConfiguration(InputStream packetMappingPath, String classPath, PacketInterface classObject) throws FastradaException {
         this.classPath = classPath;
         this.classObject = classObject;
 
         // Validate
         if (this.classObject == null) {
-            throw new NullPointerException("ClassObject can not be null!");
+            String message = "ClassObject can not be null!";
+            Log.e("Fastrada", message);
+            throw new FastradaException(message);
         }
 
         try {
             this.configFile = (JSONObject) new JSONParser().parse(new InputStreamReader(packetMappingPath));
         } catch (ParseException e) {
-            throw new Error("parse error");
+            String message = "Error parsing json";
+            Log.e("Fastrada", message);
+            throw new FastradaException(message);
         } catch (IOException e) {
-            e.printStackTrace();
+            String message = "File not found";
+            Log.e("Fastrada", message);
+            throw new FastradaException(message);
         }
     }
 
