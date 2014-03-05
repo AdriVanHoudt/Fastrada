@@ -6,7 +6,6 @@ import be.fastrada.packetmapper.PacketMapper;
 import be.fastrada.packetmapper.PacketConfiguration;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
@@ -16,7 +15,6 @@ import java.io.FileNotFoundException;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
 
 
 public class PacketMapperTest {

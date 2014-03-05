@@ -34,9 +34,9 @@ public class PacketListener extends Thread {
             try {
                 handleMessage(bytes);
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e("Fastrada", "Error met data te sturen naar UI thread");
             }
-            new WebRequest(5).start();
+
         }
     }
 
@@ -47,9 +47,9 @@ public class PacketListener extends Thread {
             packet = new DatagramPacket(buffer, buffer.length);
             socket.receive(packet);
         } catch (SocketException e) {
-            e.printStackTrace();
+            Log.e("Fastrada", "Error met de verbinding auto - android");
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("Fastrada", "Error met de verbinding auto - android");
         }
 
         return packet.getData();
