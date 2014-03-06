@@ -21,6 +21,7 @@ import be.fastrada.R;
 import be.fastrada.Speedometer;
 import be.fastrada.networking.PacketListener;
 import be.fastrada.networking.PacketListenerService;
+import be.fastrada.networking.PacketSenderService;
 import be.fastrada.packetmapper.PacketConfiguration;
 import be.fastrada.packetmapper.PacketMapper;
 
@@ -119,8 +120,8 @@ public class Main extends Activity {
         Dashboard.setAlarmingTemperature(sharedPreferences.getInt(UiConfig.PREFS_KEY_TEMP_ALARM, 90));
 
         rpmIndicator.setMax(dashboard.getMaxRPM());
-        //senderServiceIntent = new Intent(this, PacketSenderService.class);
-    }
+        senderServiceIntent = new Intent(this, PacketSenderService.class);
+}
 
     public void initDashboard() {
         holoSpeedMeter.setProgress(0.0f);
@@ -156,7 +157,7 @@ public class Main extends Activity {
                     .setView(input)
                     .setPositiveButton(getString(R.string.dialogPosButton), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-                            Editable value = input.getText();
+                            Editable value = input.getText();    //nog wegsteken
                             sendData();
                             Toast.makeText(context, input.getText(), Toast.LENGTH_LONG).show();
                         }

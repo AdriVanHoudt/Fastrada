@@ -1,59 +1,45 @@
 package be.fastrada.networking;
 
-import java.io.IOException;
-import java.net.*;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import android.util.Log;
 
 /**
- * Primitive class to send the packets to the backend server.
+ * @author: Shana Steenssens
+ * @version: 1.0 6/03/14 16:59
  */
-public class PacketSender implements Runnable {
-    public static final int SERVER_PORT = 1234;
+public class PacketSender extends Thread {
+    public static final int BUFFER_SIZE = 500;
+    private byte[] buffer;
+    private boolean isRunning;
 
-    private ConcurrentLinkedQueue<byte[]> packetQueue;
-    private String serverIp;
-    private int sentPackets;
-    private DatagramSocket socket;
-    private InetAddress inetAddress;
-
-    public PacketSender(String serverIp) throws SocketException, UnknownHostException {
-        this.serverIp = serverIp;
-        this.packetQueue = new ConcurrentLinkedQueue<byte[]>();
-        this.socket = new DatagramSocket();
-        this.inetAddress = InetAddress.getByName(serverIp);
-    }
-
-    public void addPacket(byte[] packet) {
-        this.packetQueue.add(packet);
+    public PacketSender() {
+        this.buffer = new byte[BUFFER_SIZE];
+        isRunning = true;
     }
 
     @Override
     public void run() {
-        while (true) {
-            if (packetQueue.peek() == null) continue;
+        while (isRunning) {
+            if (buffer.length == BUFFER_SIZE) {
+                final byte[] bytesToSend = buffer;
+                buffer = new byte[BUFFER_SIZE];
+                sendBytes(bytesToSend);
+            }
 
-            final byte[] bytes = packetQueue.poll();
+
             try {
-                sendPacket(bytes);
-            } catch (IOException e) {
-                e.printStackTrace();
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                Log.d("[PacketSender]", e.getMessage());
             }
         }
     }
 
-    public int getSentPackets() {
-        return sentPackets;
+    private void sendBytes(byte[] bytesToSend) {
+
     }
 
-    public int getQueueSize() {
-        return packetQueue.size();
+    public void stopSending(){
+        isRunning = false;
     }
 
-    //TODO test if packet actually reaches server
-    private void sendPacket(byte[] bytes) throws IOException {
-        final DatagramPacket packet = new DatagramPacket(bytes, bytes.length, inetAddress, SERVER_PORT);
-
-        socket.send(packet);
-        sentPackets++;
-    }
 }
