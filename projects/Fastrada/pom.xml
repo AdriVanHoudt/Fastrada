@@ -50,7 +50,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>3.0</version>
+                <version>3.3</version>
                 <configuration>
                     <reportPlugins>
                         <!-- Plugin om Javadoc te genereren -->
@@ -143,11 +143,6 @@
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
             <version>1.4</version>
-        </dependency>
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>2.3</version>
         </dependency>
     </dependencies>
 </project>

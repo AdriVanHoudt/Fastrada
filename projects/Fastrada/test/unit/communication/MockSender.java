@@ -2,9 +2,7 @@ package unit.communication;
 
 import be.fastrada.networking.Packet;
 import be.fastrada.networking.Sender;
-import org.joda.time.Instant;
-
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by bavo on 5/03/14.
@@ -17,12 +15,18 @@ public class MockSender implements Sender {
     }
 
     @Override
-    public void send(ArrayList<Packet> packets) {
+    public void send(List<Packet> packets) {
         amount += packets.size();
     }
 
     @Override
     public int getAmountSent() {
         return amount;
+    }
+
+
+    @Override
+    public void run() {
+
     }
 }
