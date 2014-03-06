@@ -146,6 +146,12 @@
                     android:src="@android:drawable/ic_menu_preferences"
                     android:contentDescription="@string/settings"
                     android:padding="8dp"/>
+            <ToggleButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tbSendData" android:layout_alignParentBottom="true"
+                    android:layout_alignParentStart="true"
+                    android:onClick="onToggleClick"/>
 
             <RelativeLayout
                     android:layout_width="wrap_content"

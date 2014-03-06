@@ -1,13 +1,16 @@
 package be.fastrada.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.text.Editable;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.*;
@@ -18,8 +21,8 @@ import be.fastrada.R;
 import be.fastrada.Speedometer;
 import be.fastrada.networking.PacketListener;
 import be.fastrada.networking.PacketListenerService;
-import be.fastrada.packetmapper.PacketMapper;
 import be.fastrada.packetmapper.PacketConfiguration;
+import be.fastrada.packetmapper.PacketMapper;
 
 import java.io.InputStream;
 
@@ -34,6 +37,7 @@ public class Main extends Activity {
     private TextView tvCurrentTemp, tvCurrentSpeed, tvGear;
     private PacketConfiguration packetConfiguration;
     final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
+    private Intent senderServiceIntent;
 
     private PacketMapper packetMapper;
 
@@ -115,6 +119,7 @@ public class Main extends Activity {
         Dashboard.setAlarmingTemperature(sharedPreferences.getInt(UiConfig.PREFS_KEY_TEMP_ALARM, 90));
 
         rpmIndicator.setMax(dashboard.getMaxRPM());
+        //senderServiceIntent = new Intent(this, PacketSenderService.class);
     }
 
     public void initDashboard() {
@@ -134,6 +139,40 @@ public class Main extends Activity {
         super.onResume();
         initHandler();
         customVisibility();
+    }
+
+    public void sendData(){
+        startService(senderServiceIntent);
+    }
+
+    public void onToggleClick(final View v){
+        boolean on = ((ToggleButton) v).isChecked();
+        final EditText input = new EditText(this);
+
+        if(on){
+            new AlertDialog.Builder(Main.this)
+                    .setTitle(getString(R.string.dialogTitle))
+                    .setMessage(getString(R.string.dialogMessage))
+                    .setView(input)
+                    .setPositiveButton(getString(R.string.dialogPosButton), new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            Editable value = input.getText();
+                            sendData();
+                            Toast.makeText(context, input.getText(), Toast.LENGTH_LONG).show();
+                        }
+                    }).setNegativeButton(getString(R.string.dialogNegButton), new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    ((ToggleButton) v).setChecked(false);
+                }
+            }).show();
+        }
+        else{
+            stopSendingData();
+        }
+    }
+
+    private void stopSendingData() {
+        stopService(senderServiceIntent);
     }
 
     private void customVisibility() {
