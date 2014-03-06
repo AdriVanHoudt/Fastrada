@@ -116,8 +116,7 @@ public class PacketGrouperTest{
     }
 
     @Test
-    public void MaxPacketsInBundle()
-    {
+    public void MaxPacketsInBundle() {
         byte[] bytes = new byte[10];
 
         packetGrouper = getPacketGrouper();
@@ -126,7 +125,7 @@ public class PacketGrouperTest{
         Sender sender = new MockSender();
         packetGrouper.setSender(sender);
 
-        for (int i = 0; i < 79; i++)
+        for (int i = 0; i < 179; i++)
         {
             packetGrouper.add(bytes);
         }
@@ -135,8 +134,7 @@ public class PacketGrouperTest{
     }
 
     @Test
-    public void testAmountSent()
-    {
+    public void testAmountSent() {
         byte[] bytes = new byte[10];
 
         packetGrouper = getPacketGrouper();
@@ -144,11 +142,33 @@ public class PacketGrouperTest{
         Sender sender = new MockSender();
         packetGrouper.setSender(sender);
 
-        for (int i = 0; i < 79; i++)
+        for (int i = 0; i < 179; i++)
         {
             packetGrouper.add(bytes);
         }
 
-        assertEquals(50, sender.getAmountSent());
+        assertEquals(150, sender.getAmountSent());
+    }
+
+    @Test
+    public void testTimeout() throws InterruptedException {
+        byte[] bytes = new byte[10];
+
+        packetGrouper = getPacketGrouper();
+        packetGrouper.setMax(50);
+        Sender sender = new MockSender();
+        packetGrouper.setSender(sender);
+
+        Thread t = new Thread(packetGrouper);
+        t.start();
+
+        for (int i = 0; i < 179; i++)
+        {
+            packetGrouper.add(bytes);
+        }
+
+        Thread.sleep(1000);
+
+        assertEquals(179, sender.getAmountSent());
     }
 }

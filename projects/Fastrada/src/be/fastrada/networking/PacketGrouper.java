@@ -1,21 +1,27 @@
 package be.fastrada.networking;
 
+
+
 import org.joda.time.Instant;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by bavo on 5/03/14.
  */
-public class PacketGrouper {
-    private ArrayList<Packet> packets;
+public class PacketGrouper implements Runnable {
+    private List<Packet> packets;
     private int amount;
     private int max;
     private Sender sender;
+    private Instant latestReceived;
+    public static final int TIMEOUT = 900;
 
     public PacketGrouper() {
         amount = 0;
-        packets = new ArrayList<Packet>();
+        packets = Collections.synchronizedList(new ArrayList<Packet>());
     }
 
     public int getAmount() {
@@ -24,6 +30,7 @@ public class PacketGrouper {
 
     public void add(byte[] bytes) {
         amount++;
+        latestReceived = new Instant();
 
         Packet p = new Packet(bytes, new Instant());
         packets.add(p);
@@ -32,6 +39,7 @@ public class PacketGrouper {
         {
             amount = 0;
             sender.send(packets);
+            packets.clear();
         }
     }
 
@@ -49,5 +57,24 @@ public class PacketGrouper {
 
     public void setSender(Sender sender) {
         this.sender = sender;
+        new Thread(sender).start();
+    }
+
+    @Override
+    public void run() {
+        while(true)
+        {
+            long timeout = new Instant().getMillis() - latestReceived.getMillis();
+
+            if (timeout > TIMEOUT){
+                flush();
+            }
+        }
+    }
+
+    private void flush() {
+        amount = 0;
+        sender.send(packets);
+        packets.clear();
     }
 }
