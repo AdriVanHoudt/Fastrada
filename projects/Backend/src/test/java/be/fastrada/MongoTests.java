@@ -1,6 +1,6 @@
 package be.fastrada;
 
-import be.fastrada.config.SrpingMongoConfig;
+import be.fastrada.config.SpringMongoConfig;
 import be.fastrada.model.Packet;
 import be.fastrada.model.Race;
 import be.fastrada.model.Sensor;
@@ -17,7 +17,7 @@ public class MongoTests {
 
     @Test
     public void addRace() {
-        ApplicationContext ctx = new AnnotationConfigApplicationContext(SrpingMongoConfig.class);
+        ApplicationContext ctx = new AnnotationConfigApplicationContext(SpringMongoConfig.class);
         MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
 
         // Make race with testdata
