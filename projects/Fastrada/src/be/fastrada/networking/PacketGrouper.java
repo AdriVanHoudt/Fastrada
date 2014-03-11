@@ -1,16 +1,11 @@
 package be.fastrada.networking;
 
-
-
 import org.joda.time.Instant;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Created by bavo on 5/03/14.
- */
 public class PacketGrouper implements Runnable {
     private List<Packet> packets;
     private int amount;
@@ -35,8 +30,7 @@ public class PacketGrouper implements Runnable {
         Packet p = new Packet(bytes, new Instant());
         packets.add(p);
 
-        if (amount == max)
-        {
+        if (amount == max) {
             amount = 0;
             sender.send(packets);
             packets.clear();
@@ -62,11 +56,10 @@ public class PacketGrouper implements Runnable {
 
     @Override
     public void run() {
-        while(true)
-        {
+        while (true) {
             long timeout = new Instant().getMillis() - latestReceived.getMillis();
 
-            if (timeout > TIMEOUT){
+            if (timeout > TIMEOUT) {
                 flush();
             }
         }

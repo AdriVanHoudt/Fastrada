@@ -10,10 +10,6 @@ import android.widget.Toast;
 import be.fastrada.Dashboard;
 import be.fastrada.R;
 
-/**
- * @author: Shana Steenssens
- * @version: 1.0 2/03/14 20:06
- */
 public class GeneralConfig extends Activity {
     private EditText etMaxSpeed;
     private EditText etMaxTemperature;

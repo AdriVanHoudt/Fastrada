@@ -5,4 +5,5 @@
     <color name="progressOrange">#D97914</color>
     <color name="progressRed">#D92E14</color>
     <color name="greyWhite">#EDEDED</color>
+    <color name="white">#FFFFFF</color>
 </resources>

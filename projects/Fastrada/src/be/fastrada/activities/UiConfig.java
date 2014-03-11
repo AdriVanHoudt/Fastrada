@@ -21,8 +21,7 @@ public class UiConfig extends Activity {
     public static final String PREFS_KEY_STYLE = "style";
 
     private SharedPreferences sharedPreferences;
-    private Switch gearChecked;
-    private Switch holoStyle;
+    private Switch gearChecked, styleChecked;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +29,7 @@ public class UiConfig extends Activity {
 
         sharedPreferences = getSharedPreferences(PREFS_KEY, MODE_PRIVATE);
         gearChecked = (Switch) findViewById(R.id.chkGear);
-        holoStyle = (Switch) findViewById(R.id.chkStyle);
+        styleChecked = (Switch) findViewById(R.id.chkStyle);
 
         initialise();
 
@@ -45,32 +44,27 @@ public class UiConfig extends Activity {
 
     public void initialise() {
         gearChecked.setChecked(sharedPreferences.getBoolean(UiConfig.PREFS_KEY_SHOWGEAR, true));
-        holoStyle.setChecked(sharedPreferences.getBoolean(UiConfig.PREFS_KEY_STYLE, true));
+        styleChecked.setChecked(sharedPreferences.getBoolean(UiConfig.PREFS_KEY_STYLE, true));
     }
 
     public void saveConfiguration() {
         final SharedPreferences.Editor editor = sharedPreferences.edit();
 
-            editor.putBoolean(UiConfig.PREFS_KEY_SHOWGEAR, gearChecked.isChecked());
-            editor.putBoolean(UiConfig.PREFS_KEY_STYLE, holoStyle.isChecked());
-            editor.commit();
-            finish();
+        editor.putBoolean(UiConfig.PREFS_KEY_SHOWGEAR, gearChecked.isChecked());
+        editor.putBoolean(UiConfig.PREFS_KEY_STYLE, styleChecked.isChecked());
+        editor.commit();
+        finish();
     }
 
     public void gearClicked(View v) {
-        if (((Switch) v).isChecked()) {
-            gearChecked.setChecked(true);
-        } else {
-            gearChecked.setChecked(false);
-        }
+        final Switch gearSwitch = (Switch) v;
+
+        gearChecked.setChecked(gearSwitch.isChecked());
     }
 
-    public void StyleClicked(View v){
-        if(((Switch) v).isChecked()){
-           holoStyle.setChecked(true);
-        } else {
-            holoStyle.setChecked(false);
-        }
-    }
+    public void styleClicked(View v) {
+        final Switch styleSwitch = (Switch) v;
 
+        styleChecked.setChecked(styleSwitch.isChecked());
+    }
 }
