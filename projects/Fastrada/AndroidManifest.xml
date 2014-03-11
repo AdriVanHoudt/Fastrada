@@ -20,13 +20,16 @@
                 android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.STARTUP"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activities.UiConfig"/>
-        <activity android:name=".activities.Settings"/>
-        <activity android:name=".activities.GeneralConfig"/>
-
+        <activity android:name=".activities.UiConfig"
+                  android:screenOrientation="sensorLandscape"/>
+        <activity android:name=".activities.Settings"
+                  android:screenOrientation="sensorLandscape"/>
+        <activity android:name=".activities.GeneralConfig"
+                  android:screenOrientation="sensorLandscape"/>
         <service android:name=".networking.PacketListenerService"/>
+        <service android:name=".networking.PacketSenderService"/>
     </application>
 </manifest>

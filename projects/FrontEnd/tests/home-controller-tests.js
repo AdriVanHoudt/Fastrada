@@ -16,13 +16,11 @@ describe('HomeCtrl', function () {
     }));
 
 
+
     // No logic to test
-
-    afterEach(function() {
-        $httpBackend.verifyNoOutstandingExpectation();
-        $httpBackend.verifyNoOutstandingRequest();
+    it('should have variable text = "hello"', function(){
+        expect(scope.test).toBe('hello');
     });
-
 
 
 

@@ -18,7 +18,7 @@ angular.module('fastradaApp.services', [])
                         return response.data;
                     }, function (response) {
                         // error handler
-                        alert("Something went wrong while receiving data - " + response.status);
+                        alert("Something went wrong while receiving data! - " + response.status);
                         return null;
                     });
             }
