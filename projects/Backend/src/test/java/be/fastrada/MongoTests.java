@@ -1,9 +1,9 @@
 package be.fastrada;
 
 import be.fastrada.config.SpringMongoConfig;
-import be.fastrada.model.Packet;
-import be.fastrada.model.Race;
-import be.fastrada.model.Sensor;
+import be.fastrada.pojo.Packet;
+import be.fastrada.pojo.Race;
+import be.fastrada.pojo.Sensor;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;

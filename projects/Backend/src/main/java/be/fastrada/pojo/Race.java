@@ -1,4 +1,4 @@
-package be.fastrada.model;
+package be.fastrada.pojo;
 
 import org.joda.time.DateTime;
 import org.springframework.data.annotation.Id;

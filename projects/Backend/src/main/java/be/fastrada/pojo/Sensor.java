@@ -1,4 +1,4 @@
-package be.fastrada.model;
+package be.fastrada.pojo;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
