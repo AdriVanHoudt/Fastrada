@@ -10,9 +10,6 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 
-/**
- * Created by Thomas on 25/02/14.
- */
 public class PacketListener extends Thread {
     public static final int PORT_NUMBER = 9000;
     public static final int BUFFER_SIZE = 10;
@@ -36,7 +33,6 @@ public class PacketListener extends Thread {
             } catch (IOException e) {
                 Log.e("Fastrada", "Error met data te sturen naar UI thread");
             }
-
         }
     }
 

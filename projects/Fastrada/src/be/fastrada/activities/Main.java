@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.text.Editable;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.*;
@@ -43,8 +42,6 @@ public class Main extends Activity {
     private PacketMapper packetMapper;
 
     private SharedPreferences sharedPreferences;
-    private boolean holoStyle;
-
 
     private Context context;
     public static Handler mHandler;
@@ -63,7 +60,7 @@ public class Main extends Activity {
         tvCurrentSpeed = (TextView) findViewById(R.id.tvSpeed);
         tvGear = (TextView) findViewById(R.id.tvGear);
         tempoMeter = (Speedometer) findViewById(R.id.tempometer);
-        speedoMeter =  (Speedometer) findViewById(R.id.speedometer);
+        speedoMeter = (Speedometer) findViewById(R.id.speedometer);
 
         initialise();
         initDashboard();
@@ -74,28 +71,14 @@ public class Main extends Activity {
          */
         InputStream res = context.getResources().openRawResource(R.raw.structure);
         try {
-            packetConfiguration = new PacketConfiguration(res, "be.fastrada.packetmapper.PacketInterface", dashboard);  // Maar gij roept nu packetConfiguration aan e? ja
+            packetConfiguration = new PacketConfiguration(res, "be.fastrada.packetmapper.PacketInterface", dashboard);
         } catch (FastradaException e) {
-            Toast toast = new Toast(getApplicationContext());
-            toast.setDuration(Toast.LENGTH_LONG);
-            toast.setText(e.getMessage());
-            toast.show();
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
         // Init packetMapper after packetConfiguration
         packetMapper = new PacketMapper(packetConfiguration);
 
-        final ImageView settings = (ImageView) findViewById(R.id.settings);
-        final Context context = this.getBaseContext();
-        settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Intent intent = new Intent(context, Settings.class);
-                startActivity(intent);
-            }
-        });
-
         startService(new Intent(this, PacketListenerService.class));
-
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
@@ -121,7 +104,7 @@ public class Main extends Activity {
 
         rpmIndicator.setMax(dashboard.getMaxRPM());
         senderServiceIntent = new Intent(this, PacketSenderService.class);
-}
+    }
 
     public void initDashboard() {
         holoSpeedMeter.setProgress(0.0f);
@@ -142,22 +125,27 @@ public class Main extends Activity {
         customVisibility();
     }
 
-    public void sendData(){
+    public void sendData() {
         startService(senderServiceIntent);
     }
 
-    public void onToggleClick(final View v){
+    @SuppressWarnings("unused")
+    public void onSettingsClick(View v) {
+        final Intent intent = new Intent(context, Settings.class);
+        startActivity(intent);
+    }
+
+    public void onToggleClick(final View v) {
         boolean on = ((ToggleButton) v).isChecked();
         final EditText input = new EditText(this);
 
-        if(on){
+        if (on) {
             new AlertDialog.Builder(Main.this)
                     .setTitle(getString(R.string.dialogTitle))
                     .setMessage(getString(R.string.dialogMessage))
                     .setView(input)
                     .setPositiveButton(getString(R.string.dialogPosButton), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-                            Editable value = input.getText();    //nog wegsteken
                             sendData();
                             Toast.makeText(context, input.getText(), Toast.LENGTH_LONG).show();
                         }
@@ -166,8 +154,7 @@ public class Main extends Activity {
                     ((ToggleButton) v).setChecked(false);
                 }
             }).show();
-        }
-        else{
+        } else {
             stopSendingData();
         }
     }
@@ -177,22 +164,16 @@ public class Main extends Activity {
     }
 
     private void customVisibility() {
-        RelativeLayout rlGear = (RelativeLayout) findViewById(R.id.rlGear);
-        RelativeLayout holoSpeed = (RelativeLayout) findViewById(R.id.speedMeterHolo);
-        RelativeLayout barsSpeed = (RelativeLayout) findViewById(R.id.speedMeterBars);
-        RelativeLayout holoTemp = (RelativeLayout) findViewById(R.id.tempMeterHolo);
-        RelativeLayout barsTemp = (RelativeLayout) findViewById(R.id.tempMeterBars);
-
+        final RelativeLayout rlGear = (RelativeLayout) findViewById(R.id.rlGear);
+        final RelativeLayout holoSpeed = (RelativeLayout) findViewById(R.id.speedMeterHolo);
+        final RelativeLayout barsSpeed = (RelativeLayout) findViewById(R.id.speedMeterBars);
+        final RelativeLayout holoTemp = (RelativeLayout) findViewById(R.id.tempMeterHolo);
+        final RelativeLayout barsTemp = (RelativeLayout) findViewById(R.id.tempMeterBars);
 
         boolean showGear = sharedPreferences.getBoolean(UiConfig.PREFS_KEY_SHOWGEAR, false);
-        holoStyle = sharedPreferences.getBoolean(UiConfig.PREFS_KEY_STYLE, true);
+        boolean holoStyle = sharedPreferences.getBoolean(UiConfig.PREFS_KEY_STYLE, true);
 
-
-        if (showGear) {
-            rlGear.setVisibility(View.VISIBLE);
-        } else {
-            rlGear.setVisibility(View.INVISIBLE);
-        }
+        rlGear.setVisibility(showGear ? View.VISIBLE : View.INVISIBLE);
 
         if (holoStyle) {
             holoSpeed.setVisibility(View.VISIBLE);
@@ -207,6 +188,5 @@ public class Main extends Activity {
             barsTemp.setVisibility(View.VISIBLE);
             rpmIndicator.setProgressDrawable(getResources().getDrawable(R.drawable.rpmindicator2));
         }
-
     }
 }

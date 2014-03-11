@@ -11,28 +11,39 @@
     <TableLayout
             android:gravity="center_horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent" android:layout_alignParentBottom="true"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true">
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/uiConfiguration"
+                android:textSize="30sp"
+                android:layout_marginLeft="1dp"
+                android:gravity="center"
+                android:layout_marginBottom="15dp"
+                android:textColor="@color/white"/>
         <TableRow
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_marginTop="55dp">
+                android:gravity="center_horizontal">
             <Switch
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Show Gear"
+                    android:text="@string/showGear"
                     android:id="@+id/chkGear"
                     android:onClick="gearClicked"/>
         </TableRow>
         <TableRow
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+                android:layout_height="fill_parent"
+                android:gravity="center_horizontal">
             <Switch
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Holo Style Layout"
+                    android:text="@string/holoStyle"
                     android:id="@+id/chkStyle"
-                    android:onClick="StyleClicked"/>
+                    android:onClick="styleClicked"/>
         </TableRow>
         <TableRow
                 android:layout_marginTop="15dp">
@@ -41,11 +52,7 @@
                     android:layout_height="45dp"
                     android:layout_width="match_parent"
                     android:layout_weight="1"
-                    android:text="@string/btn_submit"/>
-        </TableRow>
-        <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+                    android:text="@string/save"/>
         </TableRow>
     </TableLayout>
 </RelativeLayout>
