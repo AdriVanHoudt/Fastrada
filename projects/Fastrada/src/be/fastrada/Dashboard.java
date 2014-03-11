@@ -29,7 +29,6 @@ public class Dashboard implements Serializable, PacketInterface{
 
     }
 
-
     public Dashboard(TextView tvCurrentTemp, TextView tvCurrentSpeed, HoloCircularProgressBar holoTempMeter, HoloCircularProgressBar holoSpeedMeter, ProgressBar rpmIndicator, Speedometer speedoMeter, Speedometer tempoMeter, TextView tvGear) {
         this();
         this.blinkAnimation = new AlphaAnimation(0.0f, 1.0f);

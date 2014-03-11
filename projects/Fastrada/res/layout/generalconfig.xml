@@ -12,25 +12,28 @@
     <TableLayout
             android:gravity="center_horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent" android:layout_alignParentBottom="true">
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true">
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/configuration"
+                android:text="@string/genConfiguration"
                 android:textSize="30sp"
                 android:layout_marginLeft="1dp"
                 android:gravity="center"
-                android:layout_marginBottom="15dp"/>
-
+                android:layout_marginBottom="15dp"
+                android:textColor="@color/white"/>
         <TableRow
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal">
             <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:paddingLeft="5dp"
                     android:text="@string/maximumrpm"
-                    android:labelFor="@+id/maxRPM" android:autoText="false"/>
+                    android:labelFor="@+id/maxRPM"
+                    android:textColor="@color/white"/>
             <EditText
                     android:id="@+id/maxRPM"
                     android:layout_width="wrap_content"
@@ -41,13 +44,15 @@
         </TableRow>
         <TableRow
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal">
             <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:paddingLeft="5dp"
                     android:text="@string/maximumspeed"
-                    android:labelFor="@+id/maxSpeed"/>
+                    android:labelFor="@+id/maxSpeed"
+                    android:textColor="@color/white"/>
             <EditText
                     android:id="@+id/maxSpeed"
                     android:layout_width="wrap_content"
@@ -58,14 +63,15 @@
         </TableRow>
         <TableRow
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
-
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal">
             <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:paddingLeft="5dp"
                     android:text="@string/maxtemp"
-                    android:labelFor="@+id/maxTemp"/>
+                    android:labelFor="@+id/maxTemp"
+                    android:textColor="@color/white"/>
             <EditText
                     android:id="@+id/maxTemp"
                     android:layout_width="wrap_content"
@@ -76,13 +82,15 @@
         </TableRow>
         <TableRow
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal">
             <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:paddingLeft="5dp"
                     android:text="@string/alarmingTemp"
-                    android:labelFor="@+id/alarmTemp"/>
+                    android:labelFor="@+id/alarmTemp"
+                    android:textColor="@color/white"/>
             <EditText
                     android:id="@+id/alarmTemp"
                     android:layout_width="wrap_content"
@@ -98,13 +106,7 @@
                     android:layout_height="45dp"
                     android:layout_width="match_parent"
                     android:layout_weight="1"
-                    android:text="@string/btn_submit"/>
+                    android:text="@string/save"/>
         </TableRow>
-        <TableRow
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
-        </TableRow>
-
     </TableLayout>
-
 </RelativeLayout>

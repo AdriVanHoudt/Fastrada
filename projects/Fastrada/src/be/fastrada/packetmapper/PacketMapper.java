@@ -96,18 +96,21 @@ public class PacketMapper {
 
             return true;
         } catch (InvocationTargetException e) {
-            String message = "Invocation target, exception";
+            final String message = "Invocation target, exception";
             Log.e("Fastrada", message);
+
             throw new FastradaException(message);
 
         } catch (IllegalAccessException e) {
-            String message = "ClassObject illegal!";
+            final String message = "ClassObject illegal!";
             Log.e("Fastrada", message);
+
             throw new FastradaException(message);
 
         } catch (ClassNotFoundException e) {
-            String message = "Class not found!";
+            final String message = "Class not found!";
             Log.e("Fastrada", message);
+
             throw new FastradaException(message);
         }
     }

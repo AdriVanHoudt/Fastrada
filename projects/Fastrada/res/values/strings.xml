@@ -6,7 +6,6 @@
     <string name="maximumspeed">Maximum Speed</string>
     <string name="maxtemp">Maximum Temperature</string>
     <string name="settings">settings</string>
-    <string name="configuration">Configuration</string>
     <string name="alarmingTemp">Alarming temperature</string>
     <string name="celcius">°C</string>
     <string name="speed_unit">KM/H</string>
@@ -18,4 +17,9 @@
     <string name="dialogMessage">Fill in a name for this race!</string>
     <string name="dialogPosButton">Ok</string>
     <string name="dialogNegButton">Cancel</string>
+    <string name="uiConfiguration">UI Configuration</string>
+    <string name="showGear">Gear</string>
+    <string name="genConfiguration">General Configuration</string>
+    <string name="save">Save</string>
+    <string name="holoStyle">Holo Style Layout</string>
 </resources>

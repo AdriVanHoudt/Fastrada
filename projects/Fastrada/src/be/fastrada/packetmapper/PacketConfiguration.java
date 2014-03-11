@@ -11,13 +11,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-/**
- * Created with IntelliJ IDEA.
- * User: M
- * Date: 26/02/14
- * Time: 8:38
- * To change this template use File | Settings | File Templates.
- */
 public class PacketConfiguration {
     private JSONObject configFile;
     private String classPath;
@@ -29,20 +22,23 @@ public class PacketConfiguration {
 
         // Validate
         if (this.classObject == null) {
-            String message = "ClassObject can not be null!";
+            final String message = "ClassObject can not be null!";
             Log.e("Fastrada", message);
+
             throw new FastradaException(message);
         }
 
         try {
             this.configFile = (JSONObject) new JSONParser().parse(new InputStreamReader(packetMappingPath));
         } catch (ParseException e) {
-            String message = "Error parsing json";
+            final String message = "Error parsing json";
             Log.e("Fastrada", message);
+
             throw new FastradaException(message);
         } catch (IOException e) {
-            String message = "File not found";
+            final String message = "File not found";
             Log.e("Fastrada", message);
+
             throw new FastradaException(message);
         }
     }
