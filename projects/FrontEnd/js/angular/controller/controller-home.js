@@ -7,6 +7,7 @@ angular.module('fastradaApp.controllers').
         /*
          Function that refreshes the data on the screen based on the currently selected race
          */
+        $scope.test = "hello";
         function updateScreen() {
             dataFetcher.getRaceData().then(function (data) {
                 var race = getRaceFromData(data);
@@ -53,8 +54,8 @@ angular.module('fastradaApp.controllers').
         function buildSpeedChart(race) {
             var speedData = [];
 
-            for (var i = 0; i < race.speed.length; i++) {
-                speedData.push({ time: (new Date(race.speed[i].timestamp)), speed: race.speed[i].value});
+            for (var i = 0; i < race.sensors[0].packets.length; i++) {
+                speedData.push({ time: (new Date(race.sensors[0].packets[i].timestamp)), speed: race.sensors[0].packets[i].value});
             }
 
             var series = [
@@ -95,8 +96,8 @@ angular.module('fastradaApp.controllers').
                     minRange: 1
                 },
                 selectedRange: {
-                    startValue: race.speed[0].timestamp,
-                    endValue: race.speed[race.speed.length - 1].timestamp
+                    startValue: race.sensors[0].packets[0].timestamp,
+                    endValue:  race.sensors[0].packets[race.sensors[0].packets.length - 1].timestamp
                 },
                 dataSource: speedData,
                 chart: {
@@ -115,8 +116,8 @@ angular.module('fastradaApp.controllers').
         function buildRPMChart(race) {
             var rpmData = [];
 
-            for (var i = 0; i < race.rpm.length; i++) {
-                rpmData.push({time: (new Date(race.rpm[i].timestamp)), rpm: race.rpm[i].value});
+            for (var i = 0; i < race.sensors[1].packets.length; i++) {
+                rpmData.push({time: (new Date(race.sensors[1].packets[i].timestamp)), rpm: race.sensors[1].packets[i].value});
             }
 
             var series = [
@@ -157,8 +158,8 @@ angular.module('fastradaApp.controllers').
                     minRange: 1
                 },
                 selectedRange: {
-                    startValue: race.rpm[0].timestamp,
-                    endValue: race.rpm[race.rpm.length - 1].timestamp
+                    startValue: race.sensors[1].packets[0].timestamp,
+                    endValue: race.sensors[1].packets[race.sensors[0].packets.length - 1].timestamp
                 },
                 dataSource: rpmData,
                 chart: {
@@ -178,8 +179,8 @@ angular.module('fastradaApp.controllers').
         function buildTemperatureChart(race) {
             var tempData = [];
 
-            for (var i = 0; i < race.temperature.length; i++) {
-                tempData.push({time: (new Date(race.temperature[i].timestamp)), temperature: race.temperature[i].value});
+            for (var i = 0; i < race.sensors[2].packets.length; i++) {
+                tempData.push({time: (new Date(race.sensors[2].packets[i].timestamp)), temperature: race.sensors[2].packets[i].value});
             }
 
             var series = [
@@ -220,8 +221,8 @@ angular.module('fastradaApp.controllers').
                     minRange: 1
                 },
                 selectedRange: {
-                    startValue: race.temperature[0].timestamp,
-                    endValue: race.temperature[race.temperature.length - 1].timestamp
+                    startValue: race.sensors[2].packets[0].timestamp,
+                    endValue: race.sensors[2].packets[race.sensors[2].packets.length - 1].timestamp
                 },
                 dataSource: tempData,
                 chart: {
