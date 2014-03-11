@@ -7,6 +7,10 @@ import java.util.List;
 public class PostPacketList {
     private List<Packet> packets;
 
+    public PostPacketList() {
+
+    }
+
     public List<Packet> getPackets() {
         return packets;
     }

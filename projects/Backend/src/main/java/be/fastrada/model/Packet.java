@@ -13,6 +13,10 @@ public class Packet {
     private String value;
     private DateTime time;
 
+    public Packet() {
+
+    }
+
     public Packet(String value, DateTime time) {
         this.value = value;
         this.time = time;
