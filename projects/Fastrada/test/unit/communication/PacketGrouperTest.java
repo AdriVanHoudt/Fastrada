@@ -1,6 +1,7 @@
 package unit.communication;
 
 import be.fastrada.networking.PacketGrouper;
+import be.fastrada.networking.RestSender;
 import be.fastrada.networking.Sender;
 import org.joda.time.Instant;
 import org.junit.Test;
@@ -156,7 +157,8 @@ public class PacketGrouperTest{
 
         packetGrouper = getPacketGrouper();
         packetGrouper.setMax(50);
-        Sender sender = new MockSender();
+        //Sender sender = new MockSender();
+        Sender sender = new RestSender();
         packetGrouper.setSender(sender);
 
         Thread t = new Thread(packetGrouper);
