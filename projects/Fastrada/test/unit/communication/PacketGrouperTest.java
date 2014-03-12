@@ -158,8 +158,8 @@ public class PacketGrouperTest{
 
         packetGrouper = getPacketGrouper();
         packetGrouper.setMax(50);
-        Sender sender = new MockSender();
-        //Sender sender = new RestSender();
+        //Sender sender = new MockSender();
+        Sender sender = new RestSender();
         packetGrouper.setSender(sender);
 
 
