@@ -14,7 +14,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     /**
-     * Since we don't have any controller logic, simpler to just
+     * Since we don't have any controller logic, better to just
      * define controller for page using View Controller. Note:
      * had to extend WebMvcConfigurerAdapter to get this functionality
      * @param registry

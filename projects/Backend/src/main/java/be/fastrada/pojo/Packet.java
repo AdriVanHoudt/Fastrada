@@ -10,27 +10,27 @@ public class Packet {
     @Id
     private String id;
 
-    private String value;
+    private double value;
     private DateTime time;
+    private String raceId;
+    private String type;
 
-    public Packet() {
-
-    }
-
-    public Packet(String value, DateTime time) {
+    public Packet(double value, DateTime time, String raceId, String type) {
         this.value = value;
         this.time = time;
+        this.raceId = raceId;
+        this.type = type;
     }
 
     public String getId() {
         return id;
     }
 
-    public String getValue() {
+    public double getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    public void setValue(double value) {
         this.value = value;
     }
 
@@ -42,12 +42,30 @@ public class Packet {
         this.time = time;
     }
 
+    public String getRaceId() {
+        return raceId;
+    }
+
+    public void setRaceId(String raceId) {
+        this.raceId = raceId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         return "Packet{" +
                 "id='" + id + '\'' +
                 ", value='" + value + '\'' +
                 ", time=" + time +
+                ", raceId='" + raceId + '\'' +
+                ", type='" + type + '\'' +
                 '}';
     }
 }
