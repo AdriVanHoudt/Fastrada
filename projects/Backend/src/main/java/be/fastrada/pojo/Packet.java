@@ -1,7 +1,6 @@
 package be.fastrada.pojo;
 
 import org.joda.time.DateTime;
-import org.joda.time.Instant;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 

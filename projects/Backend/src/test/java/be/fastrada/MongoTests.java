@@ -31,8 +31,14 @@ public class MongoTests {
 
         // Gen packets
         Packet packet1 = new Packet(5000, new DateTime(), race.getId(), "rpm");
+        Packet packet2 = new Packet(80, new DateTime(), race.getId(), "temp");
+        Packet packet3 = new Packet(100, new DateTime(), race.getId(), "speed");
+        Packet packet4 = new Packet(5, new DateTime(), race.getId(), "gear");
 
         mongoOperation.save(packet1);
+        mongoOperation.save(packet2);
+        mongoOperation.save(packet3);
+        mongoOperation.save(packet4);
 
 
         /* mongo operations examples
