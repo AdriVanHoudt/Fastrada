@@ -1,7 +1,6 @@
 package be.fastrada.pojo;
 
 import org.joda.time.DateTime;
-import org.joda.time.Instant;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,28 +10,29 @@ public class Packet {
     @Id
     private String id;
 
-    private String content;
+    private double value;
     private DateTime timestamp;
+    private String raceId;
+    private String type;
 
-    public Packet() {
-
-    }
-
-    public Packet(String value, DateTime time) {
-        this.content = value;
-        this.timestamp = time;
+    public Packet(double value, DateTime timestamp, String raceId, String type) {
+        this.value = value;
+        this.timestamp = timestamp;
+        this.raceId = raceId;
+        this.type = type;
     }
 
     public String getId() {
         return id;
     }
 
-    public String getContent() {
-        return content;
+
+    public double getValue() {
+        return value;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setValue(double value) {
+        this.value = value;
     }
 
     public DateTime getTimestamp() {
@@ -43,12 +43,30 @@ public class Packet {
         this.timestamp = timestamp;
     }
 
+    public String getRaceId() {
+        return raceId;
+    }
+
+    public void setRaceId(String raceId) {
+        this.raceId = raceId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         return "Packet{" +
                 "id='" + id + '\'' +
-                ", value='" + content + '\'' +
+                ", value='" + value + '\'' +
                 ", time=" + timestamp +
+                ", raceId='" + raceId + '\'' +
+                ", type='" + type + '\'' +
                 '}';
     }
 }
