@@ -40,6 +40,8 @@ public class RestSender implements Sender {
                 try {
                     json = mapper.writeValueAsString(local);
 
+                    System.out.println(json);
+
                     //versturen
                     HttpClient client = new DefaultHttpClient();
                     HttpPost request = new HttpPost("192.168.0.6:8080/fastrada/api/packet");

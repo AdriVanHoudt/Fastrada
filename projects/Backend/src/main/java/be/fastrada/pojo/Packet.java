@@ -1,6 +1,7 @@
 package be.fastrada.pojo;
 
 import org.joda.time.DateTime;
+import org.joda.time.Instant;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -10,44 +11,44 @@ public class Packet {
     @Id
     private String id;
 
-    private String value;
-    private DateTime time;
+    private String content;
+    private DateTime timestamp;
 
     public Packet() {
 
     }
 
     public Packet(String value, DateTime time) {
-        this.value = value;
-        this.time = time;
+        this.content = value;
+        this.timestamp = time;
     }
 
     public String getId() {
         return id;
     }
 
-    public String getValue() {
-        return value;
+    public String getContent() {
+        return content;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public DateTime getTime() {
-        return time;
+    public DateTime getTimestamp() {
+        return timestamp;
     }
 
-    public void setTime(DateTime time) {
-        this.time = time;
+    public void setTimestamp(DateTime timestamp) {
+        this.timestamp = timestamp;
     }
 
     @Override
     public String toString() {
         return "Packet{" +
                 "id='" + id + '\'' +
-                ", value='" + value + '\'' +
-                ", time=" + time +
+                ", value='" + content + '\'' +
+                ", time=" + timestamp +
                 '}';
     }
 }

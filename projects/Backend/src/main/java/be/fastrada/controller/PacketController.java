@@ -17,8 +17,8 @@ import java.io.IOException;
 public class PacketController {
     @RequestMapping(value="packet", method=RequestMethod.POST)
     @ResponseBody
-    public String addPacket(@RequestBody Person person) {
-        return "Saved person: " + person.toString();
+    public String addPacket(@RequestBody PostPacketList packetList) {
+        return "Saved packetList: " + packetList.getPackets().size();
     }
 
     @RequestMapping(value="packet", method=RequestMethod.GET)
