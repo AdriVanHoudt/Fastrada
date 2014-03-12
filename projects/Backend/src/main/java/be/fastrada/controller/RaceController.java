@@ -1,14 +1,8 @@
 package be.fastrada.controller;
 
-import be.fastrada.config.SpringMongoConfig;
-import be.fastrada.pojo.Packet;
-import be.fastrada.pojo.Race;
-import org.bson.types.ObjectId;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
+import be.fastrada.model.Race;
+import be.fastrada.service.RaceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,29 +15,24 @@ import java.util.List;
 @RequestMapping("api")
 public class RaceController {
 
-    private ApplicationContext ctx = new AnnotationConfigApplicationContext(SpringMongoConfig.class);
-    private MongoOperations mongoOperations = (MongoOperations) ctx.getBean("mongoTemplate");
+    @Autowired
+    private RaceService raceService;
 
     @RequestMapping(value = "races", method = RequestMethod.GET)
     @ResponseBody
     public List getRaces() {
-        return mongoOperations.findAll(Race.class);
+        return raceService.getAllRaces();
     }
 
     @RequestMapping(value = "races/{raceId}", method = RequestMethod.GET)
     @ResponseBody
     public Race getRaceById(@PathVariable(value = "raceId") String raceId) {
-        Query query = new Query(Criteria.where("_id").is(new ObjectId(raceId)));
-        return mongoOperations.findOne(query, Race.class);
+        return  raceService.getRaceById(raceId);
     }
 
     @RequestMapping(value = "races/{raceId}/data", method = RequestMethod.GET)
     @ResponseBody
     public List getRaceDataById(@PathVariable(value = "raceId") String raceId) {
-        Query queryRace = new Query(Criteria.where("_id").is(new ObjectId(raceId)));
-        Race foundRace = mongoOperations.findOne(queryRace, Race.class);
-        Query queryData = new Query(Criteria.where("raceId").is(raceId));
-        List data = mongoOperations.find(queryData, Packet.class);
-        return data;
+        return raceService.getRaceDataById(raceId);
     }
 }

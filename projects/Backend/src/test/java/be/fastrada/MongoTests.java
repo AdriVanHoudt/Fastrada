@@ -1,14 +1,16 @@
 package be.fastrada;
 
 import be.fastrada.config.SpringMongoConfig;
-import be.fastrada.pojo.Packet;
-import be.fastrada.pojo.Race;
-import be.fastrada.pojo.Sensor;
+import be.fastrada.model.Packet;
+import be.fastrada.model.Race;
+import be.fastrada.model.Sensor;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 
 public class MongoTests {
 
@@ -41,7 +43,7 @@ public class MongoTests {
         mongoOperation.save(packet4);
 
 
-        /* mongo operations examples
+        // mongo operations examples
             // query db for the race
             Query query = new Query(Criteria.where("name").is("TestRace"));
 
@@ -49,12 +51,12 @@ public class MongoTests {
             Race foundRace = mongoOperation.findOne(query, Race.class);
             System.out.println("Found race: " + foundRace);
 
-            // delete race
+            // delete race, not enabled to make sure we have data in the db
             // mongoOperation.remove(query, Race.class);
 
-            // list races, should be 0
-            List<Race> raceList = mongoOperation.findAll(Race.class);
-            System.out.println("number of races: " + raceList.size());
-        */
+            // list races, not enabled to prevent spam
+            // List<Race> raceList = mongoOperation.findAll(Race.class);
+            // System.out.println("number of races: " + raceList.size());
+
     }
 }

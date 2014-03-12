@@ -1,25 +1,22 @@
-package be.fastrada.pojo;
+package be.fastrada.model;
 
-import org.joda.time.DateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "races")
-public class Race {
+import java.util.Arrays;
+
+@Document
+public class Sensor {
 
     @Id
     private String id;
 
     private String name;
-    private DateTime dateTime;
+    private String[] types;
 
-    public Race(String name, DateTime dateTime) {
+    public Sensor(String name, String[] types) {
         this.name = name;
-        this.dateTime = dateTime;
-    }
-
-    public String getId() {
-        return id;
+        this.types = types;
     }
 
     public String getName() {
@@ -30,20 +27,20 @@ public class Race {
         this.name = name;
     }
 
-    public DateTime getDateTime() {
-        return dateTime;
+    public String[] getTypes() {
+        return types;
     }
 
-    public void setDateTime(DateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setTypes(String[] types) {
+        this.types = types;
     }
 
     @Override
     public String toString() {
-        return "Race{" +
+        return "Sensor{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", dateTime=" + dateTime +
+                ", types=" + Arrays.toString(types) +
                 '}';
     }
 }
