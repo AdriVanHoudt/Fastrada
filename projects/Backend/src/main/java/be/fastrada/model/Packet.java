@@ -15,9 +15,6 @@ public class Packet {
     private String raceId;
     private String type;
 
-    public Packet() {
-
-    }
     public Packet(double content, DateTime timestamp, String raceId, String type) {
         this.content = content;
         this.timestamp = timestamp;
