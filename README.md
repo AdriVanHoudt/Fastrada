@@ -13,3 +13,5 @@ This is a readme so read me!
 [Generate report with Maven](https://github.com/AdriVanHoudt/Fastrada/wiki/Generating-a-Report-with-Maven)
 
 [YouTrack](https://github.com/AdriVanHoudt/Fastrada/wiki/YouTrack)
+
+[NodeJS] (https://github.com/AdriVanHoudt/Fastrada/wiki/NodeJS)
