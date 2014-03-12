@@ -1,12 +1,13 @@
 package be.fastrada.networking;
 
-import org.joda.time.Instant;
+import org.joda.time.DateTime;
+
 
 public class Packet {
     private byte[] content;
-    private Instant timestamp;
+    private DateTime timestamp;
 
-    public Packet(byte[] content, Instant timestamp) {
+    public Packet(byte[] content, DateTime timestamp) {
         this.content = content;
         this.timestamp = timestamp;
     }
@@ -15,7 +16,7 @@ public class Packet {
         return content;
     }
 
-    public Instant getTimestamp() {
+    public DateTime getTimestamp() {
         return timestamp;
     }
 }

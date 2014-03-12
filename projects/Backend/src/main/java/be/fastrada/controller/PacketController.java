@@ -1,6 +1,6 @@
 package be.fastrada.controller;
 
-import be.fastrada.pojo.Person;
+import be.fastrada.pojo.PostPacketList;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class PacketController {
     @RequestMapping(value="packet", method=RequestMethod.POST)
     @ResponseBody
-    public String addPacket(@RequestBody Person person) {
-        return "Saved person: " + person.toString();
+    public String addPacket(@RequestBody PostPacketList packetList) {
+        return "Saved packetList: " + packetList.getPackets().size();
     }
 
     @RequestMapping(value="packet", method=RequestMethod.GET)

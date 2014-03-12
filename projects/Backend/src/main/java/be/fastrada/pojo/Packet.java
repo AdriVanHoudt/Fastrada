@@ -1,6 +1,7 @@
 package be.fastrada.pojo;
 
 import org.joda.time.DateTime;
+import org.joda.time.Instant;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,13 +12,13 @@ public class Packet {
     private String id;
 
     private double value;
-    private DateTime time;
+    private DateTime timestamp;
     private String raceId;
     private String type;
 
-    public Packet(double value, DateTime time, String raceId, String type) {
+    public Packet(double value, DateTime timestamp, String raceId, String type) {
         this.value = value;
-        this.time = time;
+        this.timestamp = timestamp;
         this.raceId = raceId;
         this.type = type;
     }
@@ -25,6 +26,7 @@ public class Packet {
     public String getId() {
         return id;
     }
+
 
     public double getValue() {
         return value;
@@ -34,12 +36,12 @@ public class Packet {
         this.value = value;
     }
 
-    public DateTime getTime() {
-        return time;
+    public DateTime getTimestamp() {
+        return timestamp;
     }
 
-    public void setTime(DateTime time) {
-        this.time = time;
+    public void setTimestamp(DateTime timestamp) {
+        this.timestamp = timestamp;
     }
 
     public String getRaceId() {
@@ -63,7 +65,7 @@ public class Packet {
         return "Packet{" +
                 "id='" + id + '\'' +
                 ", value='" + value + '\'' +
-                ", time=" + time +
+                ", time=" + timestamp +
                 ", raceId='" + raceId + '\'' +
                 ", type='" + type + '\'' +
                 '}';

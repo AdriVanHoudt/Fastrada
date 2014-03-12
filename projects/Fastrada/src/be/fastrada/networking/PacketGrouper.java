@@ -1,5 +1,6 @@
 package be.fastrada.networking;
 
+import org.joda.time.DateTime;
 import org.joda.time.Instant;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class PacketGrouper implements Runnable {
         amount++;
         latestReceived = new Instant();
 
-        Packet p = new Packet(bytes, new Instant());
+        Packet p = new Packet(bytes, new DateTime());
         packets.add(p);
 
         if (amount == max) {
@@ -41,7 +42,8 @@ public class PacketGrouper implements Runnable {
         return packets.get(i).getContent();
     }
 
-    public Instant getTimestamp(int i) {
+    public DateTime getTimestamp(int i) {
+
         return packets.get(i).getTimestamp();
     }
 
