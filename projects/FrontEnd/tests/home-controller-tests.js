@@ -17,6 +17,8 @@ describe('HomeCtrl', function () {
 
 
 
+
+
     // No logic to test
     it('should have variable text = "hello"', function(){
         expect(scope.test).toBe('hello');
