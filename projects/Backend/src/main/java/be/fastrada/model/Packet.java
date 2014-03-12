@@ -10,13 +10,16 @@ public class Packet {
     @Id
     private String id;
 
-    private double value;
+    private double content;
     private DateTime timestamp;
     private String raceId;
     private String type;
 
-    public Packet(double value, DateTime timestamp, String raceId, String type) {
-        this.value = value;
+    public Packet() {
+
+    }
+    public Packet(double content, DateTime timestamp, String raceId, String type) {
+        this.content = content;
         this.timestamp = timestamp;
         this.raceId = raceId;
         this.type = type;
@@ -27,12 +30,12 @@ public class Packet {
     }
 
 
-    public double getValue() {
-        return value;
+    public double getContent() {
+        return content;
     }
 
-    public void setValue(double value) {
-        this.value = value;
+    public void setContent(double value) {
+        this.content = value;
     }
 
     public DateTime getTimestamp() {
@@ -63,7 +66,7 @@ public class Packet {
     public String toString() {
         return "Packet{" +
                 "id='" + id + '\'' +
-                ", value='" + value + '\'' +
+                ", content='" + content + '\'' +
                 ", time=" + timestamp +
                 ", raceId='" + raceId + '\'' +
                 ", type='" + type + '\'' +
