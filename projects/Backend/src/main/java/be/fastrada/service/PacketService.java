@@ -10,7 +10,7 @@ public class PacketService {
     @Autowired
     private MongoTemplate mongoTemplate;
 
-    private static final String COLLECTION_NAME = "Packets";
+    private static final String COLLECTION_NAME = "packets";
 
     public void addPacket(Packet packet) {
         // If the collection does not exist, create it
