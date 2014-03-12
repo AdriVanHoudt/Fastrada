@@ -1,6 +1,7 @@
 package be.fastrada.controller;
 
 import be.fastrada.model.Race;
+import be.fastrada.service.PacketService;
 import be.fastrada.service.RaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,8 @@ public class RaceController {
 
     @Autowired
     private RaceService raceService;
+    @Autowired
+    private PacketService packetService;
 
     @RequestMapping(value = "races", method = RequestMethod.GET)
     @ResponseBody
@@ -33,6 +36,6 @@ public class RaceController {
     @RequestMapping(value = "races/{raceId}/data", method = RequestMethod.GET)
     @ResponseBody
     public List getRaceDataById(@PathVariable(value = "raceId") String raceId) {
-        return raceService.getRaceDataById(raceId);
+        return packetService.getPacketsByRaceId(raceId);
     }
 }

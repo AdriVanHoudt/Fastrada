@@ -1,7 +1,5 @@
 package be.fastrada.pojo;
 
-import be.fastrada.pojo.Packet;
-
 import java.util.List;
 
 public class PostPacketList {

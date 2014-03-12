@@ -18,6 +18,7 @@ public class MongoTests {
     public void addRace() {
         ApplicationContext ctx = new AnnotationConfigApplicationContext(SpringMongoConfig.class);
         MongoOperations mongoOperation = (MongoOperations) ctx.getBean("mongoTemplate");
+        final String COLLECTION_NAME = "packets";
 
         // Gen race
         Race race = new Race("TestRace", new DateTime());
@@ -37,10 +38,10 @@ public class MongoTests {
         Packet packet3 = new Packet(100, new DateTime(), race.getId(), "speed");
         Packet packet4 = new Packet(5, new DateTime(), race.getId(), "gear");
 
-        mongoOperation.save(packet1);
-        mongoOperation.save(packet2);
-        mongoOperation.save(packet3);
-        mongoOperation.save(packet4);
+        mongoOperation.save(packet1, COLLECTION_NAME);
+        mongoOperation.save(packet2, COLLECTION_NAME);
+        mongoOperation.save(packet3, COLLECTION_NAME);
+        mongoOperation.save(packet4, COLLECTION_NAME);
 
 
         // mongo operations examples

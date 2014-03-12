@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Arrays;
 
-@Document
+@Document(collection = "sensors")
 public class Sensor {
 
     @Id

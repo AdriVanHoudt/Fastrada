@@ -47,6 +47,7 @@ public class RaceControllerTests {
 
     @Test
     public void testGetRaceDataById() throws Exception {
-        this.mockMvc.perform(get("/api/races/532029aa0cf2b0d5eed65634/data").accept(MediaType.parseMediaType("application/json;charset=UTF-8"))).andDo(print()).andExpect(status().isOk());
+        System.out.println("Make sure the id is valid!");
+        this.mockMvc.perform(get("/api/races/53207f830cf2b2f9532f997b/data").accept(MediaType.parseMediaType("application/json;charset=UTF-8"))).andDo(print()).andExpect(status().isOk());
     }
 }

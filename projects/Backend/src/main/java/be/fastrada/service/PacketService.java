@@ -3,7 +3,11 @@ package be.fastrada.service;
 import be.fastrada.pojo.Packet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class PacketService {
@@ -23,4 +27,8 @@ public class PacketService {
         mongoTemplate.insert(packet, COLLECTION_NAME);
     }
 
+    public List getPacketsByRaceId(String raceId) {
+        Query queryData = new Query(Criteria.where("raceId").is(raceId));
+        return mongoTemplate.find(queryData, Packet.class, COLLECTION_NAME);
+    }
 }
