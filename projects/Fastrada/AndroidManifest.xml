@@ -23,12 +23,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activities.UiConfig"
-                  android:screenOrientation="sensorLandscape"/>
-        <activity android:name=".activities.Settings"
-                  android:screenOrientation="sensorLandscape"/>
-        <activity android:name=".activities.GeneralConfig"
-                  android:screenOrientation="sensorLandscape"/>
+
+        <activity android:name=".activities.Settings"/>
         <service android:name=".networking.PacketListenerService"/>
         <service android:name=".networking.PacketSenderService"/>
     </application>
