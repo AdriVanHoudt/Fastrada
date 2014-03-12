@@ -3,6 +3,7 @@ package unit.communication;
 import be.fastrada.networking.PacketGrouper;
 import be.fastrada.networking.RestSender;
 import be.fastrada.networking.Sender;
+import org.joda.time.DateTime;
 import org.joda.time.Instant;
 import org.junit.Test;
 
@@ -86,7 +87,7 @@ public class PacketGrouperTest{
         byte[] bytes = new byte[10];
 
         packetGrouper.add(bytes);
-        Instant instant = new Instant();
+        DateTime instant = new DateTime();
 
         long millis = instant.getMillis() - packetGrouper.getTimestamp(0).getMillis();
 
@@ -112,8 +113,8 @@ public class PacketGrouperTest{
         long millis1 = instant1.getMillis() - packetGrouper.getTimestamp(0).getMillis();
         long millis2 = instant2.getMillis() - packetGrouper.getTimestamp(1).getMillis();
 
-        assertEquals("tijden komen niet overeen", 0, millis1);
-        assertEquals("tijden komen niet overeen", 0, millis2);
+        assertTrue("tijden komen niet overeen", millis1 < 5);
+        assertTrue("tijden komen niet overeen", millis2 < 5);
     }
 
     @Test
@@ -157,9 +158,11 @@ public class PacketGrouperTest{
 
         packetGrouper = getPacketGrouper();
         packetGrouper.setMax(50);
-        //Sender sender = new MockSender();
-        Sender sender = new RestSender();
+        Sender sender = new MockSender();
+        //Sender sender = new RestSender();
         packetGrouper.setSender(sender);
+
+
 
         Thread t = new Thread(packetGrouper);
         t.start();
