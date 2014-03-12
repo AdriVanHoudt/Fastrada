@@ -22,7 +22,7 @@ module.exports = function (config) {
             'lib/js/ui-bootstrap.min.js',
             'js/angular/service/**/*.js',
             'js/angular/controller/**/*.js',
-            'tests/*.js'
+            'karma-tests/*.js'
         ],
 
 
@@ -62,7 +62,7 @@ module.exports = function (config) {
         // - Safari (only Mac; has to be installed with `npm install karma-safari-launcher`)
         // - PhantomJS
         // - IE (only Windows; has to be installed with `npm install karma-ie-launcher`)
-        browsers: ['Chrome', 'PhantomJS'],
+        browsers: ['Chrome'],
 
 
         // If browser does not capture in given timeout [ms], kill it
@@ -78,7 +78,6 @@ module.exports = function (config) {
             'karma-jasmine',
             'karma-chrome-launcher',
             'karma-firefox-launcher',
-            'karma-phantomjs-launcher'
         ]
     });
 };

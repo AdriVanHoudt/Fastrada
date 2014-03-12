@@ -53,7 +53,7 @@ exports.config = {
   //
   // Spec patterns are relative to the location of this config.
   specs: [
-    'tests/*_selenium.js',
+    'selenium-tests/*_selenium.js',
   ],
 
   // Patterns to exclude.
