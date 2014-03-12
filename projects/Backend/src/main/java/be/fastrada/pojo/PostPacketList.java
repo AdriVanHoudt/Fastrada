@@ -6,6 +6,7 @@ import java.util.List;
 
 public class PostPacketList {
     private String raceName;
+    private String raceId;
     private List<Packet> packets;
 
     public PostPacketList() {
@@ -18,6 +19,14 @@ public class PostPacketList {
 
     public void setRaceName(String raceName) {
         this.raceName = raceName;
+    }
+
+    public String getRaceId() {
+        return raceId;
+    }
+
+    public void setRaceId(String raceId) {
+        this.raceId = raceId;
     }
 
     public List<Packet> getPackets() {

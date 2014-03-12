@@ -5,6 +5,7 @@ import org.joda.time.DateTime;
 public class Packet {
     private String content;
     private DateTime timestamp;
+    private String type;
 
     public Packet() {
 
@@ -24,5 +25,13 @@ public class Packet {
 
     public void setTimestamp(DateTime timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }
