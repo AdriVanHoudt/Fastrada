@@ -2,7 +2,6 @@ package be.fastrada.activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.*;
@@ -29,7 +29,7 @@ import java.io.InputStream;
 /**
  * Activity with all the visualized data.
  */
-public class Main extends Activity {
+public class Main extends Activity implements SharedPreferences.OnSharedPreferenceChangeListener {
     private Dashboard dashboard;
     private ProgressBar rpmIndicator;
     private HoloCircularProgressBar holoSpeedMeter, holoTempMeter;
@@ -43,7 +43,7 @@ public class Main extends Activity {
 
     private SharedPreferences sharedPreferences;
 
-    private Context context;
+
     public static Handler mHandler;
 
     @Override
@@ -51,8 +51,7 @@ public class Main extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        context = this.getApplicationContext();
-        sharedPreferences = getSharedPreferences(UiConfig.PREFS_KEY, MODE_PRIVATE);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         rpmIndicator = (ProgressBar) findViewById(R.id.rpmIndicator);
         holoSpeedMeter = (HoloCircularProgressBar) findViewById(R.id.speedIndicator);
         holoTempMeter = (HoloCircularProgressBar) findViewById(R.id.thermometer);
@@ -69,7 +68,7 @@ public class Main extends Activity {
          * Initialise packetConfiguration for each packet to be received
          * Make sure that dashboard is initialised ( see initialise() )
          */
-        InputStream res = context.getResources().openRawResource(R.raw.structure);
+        InputStream res = getResources().openRawResource(R.raw.structure);
         try {
             packetConfiguration = new PacketConfiguration(res, "be.fastrada.packetmapper.PacketInterface", dashboard);
         } catch (FastradaException e) {
@@ -80,6 +79,7 @@ public class Main extends Activity {
 
         startService(new Intent(this, PacketListenerService.class));
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
     }
 
     private void initHandler() {
@@ -97,10 +97,11 @@ public class Main extends Activity {
 
     public void initialise() {
         dashboard = new Dashboard(tvCurrentTemp, tvCurrentSpeed, holoTempMeter, holoSpeedMeter, rpmIndicator, speedoMeter, tempoMeter, tvGear);
-        Dashboard.setMaxSpeed(sharedPreferences.getInt(UiConfig.PREFS_KEY_MAXSPEED, 300));
-        Dashboard.setMaxRPM(sharedPreferences.getInt(UiConfig.PREFS_KEY_MAXRPM, 6000));
-        Dashboard.setMaxTemperature(sharedPreferences.getInt(UiConfig.PREFS_KEY_MAXTEMP, 120));
-        Dashboard.setAlarmingTemperature(sharedPreferences.getInt(UiConfig.PREFS_KEY_TEMP_ALARM, 90));
+
+        dashboard.setMaxSpeed(sharedPreferences.getInt(getString(R.string.prefs_max_speed), Settings.DEFAULT_MAX_SPEED));
+        dashboard.setMaxRPM(sharedPreferences.getInt(getString(R.string.prefs_max_rpm), Settings.DEFAULT_MAX_RPM));
+        dashboard.setMaxTemperature(sharedPreferences.getInt(getString(R.string.prefs_max_temp), Settings.DEFAULT_MAX_TEMP));
+        dashboard.setAlarmingTemperature(sharedPreferences.getInt(getString(R.string.prefs_alarm_temp), Settings.DEFAULT_ALARM_TEMP));
 
         rpmIndicator.setMax(dashboard.getMaxRPM());
         senderServiceIntent = new Intent(this, PacketSenderService.class);
@@ -121,8 +122,18 @@ public class Main extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+
         initHandler();
-        customVisibility();
+        //customVisibility();
+
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        //PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
     }
 
     public void sendData() {
@@ -131,7 +142,9 @@ public class Main extends Activity {
 
     @SuppressWarnings("unused")
     public void onSettingsClick(View v) {
-        final Intent intent = new Intent(context, Settings.class);
+        /*final Intent intent = new Intent(context, Settings.class);
+        startActivity(intent);*/
+        final Intent intent = new Intent(this, Settings.class);
         startActivity(intent);
     }
 
@@ -147,7 +160,7 @@ public class Main extends Activity {
                     .setPositiveButton(getString(R.string.dialogPosButton), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
                             sendData();
-                            Toast.makeText(context, input.getText(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(Main.this, input.getText(), Toast.LENGTH_LONG).show();
                         }
                     }).setNegativeButton(getString(R.string.dialogNegButton), new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
@@ -170,23 +183,53 @@ public class Main extends Activity {
         final RelativeLayout holoTemp = (RelativeLayout) findViewById(R.id.tempMeterHolo);
         final RelativeLayout barsTemp = (RelativeLayout) findViewById(R.id.tempMeterBars);
 
-        boolean showGear = sharedPreferences.getBoolean(UiConfig.PREFS_KEY_SHOWGEAR, false);
-        boolean holoStyle = sharedPreferences.getBoolean(UiConfig.PREFS_KEY_STYLE, true);
+        boolean showGear = sharedPreferences.getBoolean(getString(R.string.prefs_show_gear), Settings.DEFAULT_SHOW_GEAR);
+        boolean holoStyle = sharedPreferences.getBoolean(getString(R.string.prefs_holo_style), Settings.DEFAULT_HOLO_STYLE);
 
         rlGear.setVisibility(showGear ? View.VISIBLE : View.INVISIBLE);
 
         if (holoStyle) {
             holoSpeed.setVisibility(View.VISIBLE);
             holoTemp.setVisibility(View.VISIBLE);
+
             barsSpeed.setVisibility(View.INVISIBLE);
             barsTemp.setVisibility(View.INVISIBLE);
             rpmIndicator.setProgressDrawable(getResources().getDrawable(R.drawable.rpmindicator));
         } else {
             holoSpeed.setVisibility(View.INVISIBLE);
             holoTemp.setVisibility(View.INVISIBLE);
+
             barsSpeed.setVisibility(View.VISIBLE);
             barsTemp.setVisibility(View.VISIBLE);
             rpmIndicator.setProgressDrawable(getResources().getDrawable(R.drawable.rpmindicator2));
         }
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+        final String alarmTempKey = getString(R.string.prefs_alarm_temp);
+        final String showGearKey = getString(R.string.prefs_show_gear);
+        final String holoStyleKey = getString(R.string.prefs_holo_style);
+        final int maxTemp = sharedPreferences.getInt(getString(R.string.prefs_max_temp), Settings.DEFAULT_MAX_TEMP);
+        final int maxSpeed = sharedPreferences.getInt(getString(R.string.prefs_max_speed), Settings.DEFAULT_MAX_SPEED);
+        final int maxRpm = sharedPreferences.getInt(getString(R.string.prefs_max_rpm), Settings.DEFAULT_MAX_SPEED);
+        int alarmTemp = sharedPreferences.getInt(alarmTempKey, Settings.DEFAULT_ALARM_TEMP);
+
+        if (s.equals(alarmTempKey) && alarmTemp > maxTemp) {
+            final SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            Toast.makeText(this, getString(R.string.alarmTempTooHigh), Toast.LENGTH_LONG).show();
+            alarmTemp = maxTemp;
+            editor.putInt(alarmTempKey, alarmTemp);
+            editor.commit();
+        }
+        if (s.equals(showGearKey) || s.equals(holoStyleKey)) {
+            customVisibility();
+        }
+
+        dashboard.setAlarmingTemperature(alarmTemp);
+        dashboard.setMaxTemperature(maxTemp);
+        dashboard.setMaxSpeed(maxSpeed);
+        dashboard.setMaxRPM(maxRpm);
     }
 }

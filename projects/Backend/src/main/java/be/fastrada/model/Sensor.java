@@ -12,19 +12,11 @@ public class Sensor {
     private String id;
 
     private String name;
-    private Packet[] packets;
+    private String[] types;
 
-    public Sensor(String name, Packet[] packets) {
-        this.packets = packets;
+    public Sensor(String name, String[] types) {
         this.name = name;
-    }
-
-    public Packet[] getPackets() {
-        return packets;
-    }
-
-    public void setPackets(Packet[] packets) {
-        this.packets = packets;
+        this.types = types;
     }
 
     public String getName() {
@@ -35,12 +27,20 @@ public class Sensor {
         this.name = name;
     }
 
+    public String[] getTypes() {
+        return types;
+    }
+
+    public void setTypes(String[] types) {
+        this.types = types;
+    }
+
     @Override
     public String toString() {
         return "Sensor{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", packets=" + Arrays.toString(packets) +
+                ", types=" + Arrays.toString(types) +
                 '}';
     }
 }

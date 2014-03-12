@@ -11,11 +11,11 @@ import java.io.Serializable;
 /**
  * Class that represents the dashboard.
  */
-public class Dashboard implements Serializable, PacketInterface{
-    private static int maxSpeed;
-    private static int maxTemperature;
-    private static int maxRPM;
-    private static int alarmingTemperature;
+public class Dashboard implements Serializable, PacketInterface {
+    private int maxSpeed;
+    private int maxTemperature;
+    private int maxRPM;
+    private int alarmingTemperature;
     private int currentTemperature;
 
     private TextView tvCurrentTemp, tvCurrentSpeed, tvGear;
@@ -47,20 +47,20 @@ public class Dashboard implements Serializable, PacketInterface{
         this.tvGear = tvGear;
     }
 
-    public static void setMaxSpeed(int maxSpeed) {
-        Dashboard.maxSpeed = maxSpeed;
+    public void setMaxSpeed(int maxSpeed) {
+        this.maxSpeed = maxSpeed;
     }
 
-    public static void setMaxTemperature(int maxTemperature) {
-        Dashboard.maxTemperature = maxTemperature;
+    public void setMaxTemperature(int maxTemperature) {
+        this.maxTemperature = maxTemperature;
     }
 
-    public static void setMaxRPM(int maxRPM) {
-        Dashboard.maxRPM = maxRPM;
+    public void setMaxRPM(int maxRPM) {
+        this.maxRPM = maxRPM;
     }
 
-    public static void setAlarmingTemperature(int alarmingTemperature) {
-        Dashboard.alarmingTemperature = alarmingTemperature;
+    public void setAlarmingTemperature(int alarmingTemperature) {
+        this.alarmingTemperature = alarmingTemperature;
     }
 
     public int getMaxSpeed() {
@@ -133,11 +133,11 @@ public class Dashboard implements Serializable, PacketInterface{
     }
 
 
-    public void setThrottlePos(int throttle)
-    {
+    public void setThrottlePos(int throttle) {
         //to be implemented
     }
-    public void setGear(int currentGear){
+
+    public void setGear(int currentGear) {
         tvGear.setText(String.format("%d", currentGear));
     }
 }

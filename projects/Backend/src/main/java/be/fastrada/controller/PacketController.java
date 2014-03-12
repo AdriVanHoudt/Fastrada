@@ -1,26 +1,28 @@
 package be.fastrada.controller;
 
+import be.fastrada.pojo.Packet;
 import be.fastrada.pojo.PostPacketList;
-import be.fastrada.pojo.SuccessResponse;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import be.fastrada.service.PacketService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
 @Controller
-@RequestMapping("/packet")
+@RequestMapping("api")
 public class PacketController {
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<PostPacketList> addPacket(@RequestBody PostPacketList packetList) throws IOException {
-        System.out.println(packetList);
-        return new ResponseEntity<PostPacketList>(packetList, HttpStatus.CREATED);
+    @Autowired
+    private PacketService packetService;
+
+    @RequestMapping(value="packet", method=RequestMethod.POST)
+    @ResponseBody
+    public String addPacket(@RequestBody PostPacketList packetList) {
+        for (Packet p : packetList.getPackets()) {
+            packetService.addPacket(p);
+        }
+
+        return "Created " + packetList.getPackets().size() + " packets.";
     }
 }
