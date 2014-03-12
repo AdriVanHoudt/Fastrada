@@ -22,4 +22,12 @@
     <string name="genConfiguration">General Configuration</string>
     <string name="save">Save</string>
     <string name="holoStyle">Holo Style Layout</string>
+
+    <!-- Shared Preferences Keys -->
+    <string name="prefs_max_speed">prefs_max_speed</string>
+    <string name="prefs_max_temp">prefs_max_temp</string>
+    <string name="prefs_max_rpm">prefs_max_rpm</string>
+    <string name="prefs_alarm_temp">prefs_alarm_temp</string>
+    <string name="prefs_show_gear">prefs_show_gear</string>
+    <string name="prefs_holo_style">prefs_holo_style</string>
 </resources>
