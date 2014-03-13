@@ -5,7 +5,8 @@ import android.content.Intent;
 import android.os.IBinder;
 
 public class PacketSenderService extends Service {
-    private PacketSender packetSender;
+    private PacketGrouper packetGrouper;
+    private RestSender restSender;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -14,13 +15,16 @@ public class PacketSenderService extends Service {
 
     @Override
     public void onCreate() {
-        this.packetSender = new PacketSender();
+        this.packetGrouper = new PacketGrouper();
+        this.restSender = new RestSender();
+        this.packetGrouper.setSender(restSender);
+        //TODO: get name from UI
+        this.restSender.setRaceName("");
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        packetSender.start();
-
+        new Thread(packetGrouper).start();
         return START_STICKY;
     }
 }
