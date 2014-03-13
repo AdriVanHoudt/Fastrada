@@ -1,6 +1,6 @@
 package be.fastrada.service;
 
-import be.fastrada.pojo.Packet;
+import be.fastrada.model.Packet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;

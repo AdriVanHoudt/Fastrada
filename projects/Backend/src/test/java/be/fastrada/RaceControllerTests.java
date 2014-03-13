@@ -33,7 +33,7 @@ public class RaceControllerTests {
 
     @Test
     public void testGetRaces() throws Exception {
-        this.mockMvc.perform(get("/api/races").accept(MediaType.parseMediaType("application/json;charset=UTF-8"))).andDo(print()).andExpect(status().isOk());
+        this.mockMvc.perform(get("/api/races").accept(MediaType.parseMediaType("application/json;charset=UTF-8"))).andExpect(status().isOk());
     }
 
     /* The id's below were taken from the db
@@ -42,12 +42,12 @@ public class RaceControllerTests {
      */
     @Test
     public void testGetRaceById() throws Exception {
-        this.mockMvc.perform(get("/api/races/5320240e0cf23bd4ea0ce01e").accept(MediaType.parseMediaType("application/json;charset=UTF-8"))).andDo(print()).andExpect(status().isOk());
+        this.mockMvc.perform(get("/api/races/5320240e0cf23bd4ea0ce01e").accept(MediaType.parseMediaType("application/json;charset=UTF-8"))).andExpect(status().isOk());
     }
 
     @Test
     public void testGetRaceDataById() throws Exception {
         System.out.println("Make sure the id is valid!");
-        this.mockMvc.perform(get("/api/races/53207f830cf2b2f9532f997b/data").accept(MediaType.parseMediaType("application/json;charset=UTF-8"))).andDo(print()).andExpect(status().isOk());
+        this.mockMvc.perform(get("/api/races/53207f830cf2b2f9532f997b/data").accept(MediaType.parseMediaType("application/json;charset=UTF-8"))).andExpect(status().isOk());
     }
 }
