@@ -1,5 +1,5 @@
-describe('angularjs homepage', function() {
-    it('should greet the named user', function() {
+describe('angularjs search', function() {
+    it('Should search and go to Race 2', function() {
         browser.get('http://localhost:63343/FrontEnd/index.html#/home');
 
         element(by.id('speed')).click();
