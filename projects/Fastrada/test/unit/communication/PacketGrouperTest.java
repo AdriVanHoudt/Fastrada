@@ -158,11 +158,12 @@ public class PacketGrouperTest {
 
 
         Thread t = new Thread(packetGrouper);
-        t.start();
+
 
         for (int i = 0; i < 179; i++) {
             packetGrouper.add(bytes);
         }
+        t.start();
 
         Thread.sleep(1000);
 

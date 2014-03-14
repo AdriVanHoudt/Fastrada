@@ -1,6 +1,6 @@
 package be.fastrada.service;
 
-import be.fastrada.pojo.Packet;
+import be.fastrada.model.Packet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -27,8 +27,15 @@ public class PacketService {
         mongoTemplate.insert(packet, COLLECTION_NAME);
     }
 
-    public List getPacketsByRaceId(String raceId) {
-        Query queryData = new Query(Criteria.where("raceId").is(raceId));
+    public List getPacketsByRaceId(String raceId, String filterKey) {
+        Query queryData;
+
+        if (filterKey.equals("") || filterKey == null) {
+            queryData = new Query(Criteria.where("raceId").is(raceId));
+        } else {
+            queryData = new Query(Criteria.where("raceId").is(raceId).and("type").is(filterKey));
+        }
+
         return mongoTemplate.find(queryData, Packet.class, COLLECTION_NAME);
     }
 }
