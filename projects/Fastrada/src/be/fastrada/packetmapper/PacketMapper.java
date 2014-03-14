@@ -2,14 +2,10 @@ package be.fastrada.packetmapper;
 
 
 import android.util.Log;
-import be.fastrada.Dashboard;
 import be.fastrada.Exception.FastradaException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
@@ -78,7 +74,7 @@ public class PacketMapper {
                         case 16:
                             int value2 = byteBuffer.getShort() & 0xffff;
 
-                            value2 = (int) (((double)value2 * factor) - offset);
+                            value2 = (int) (((double) value2 * factor) - offset);
 
                             m.invoke(obj, value2);
                             break;

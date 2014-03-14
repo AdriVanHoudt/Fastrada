@@ -4,6 +4,8 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import be.fastrada.components.HoloCircularProgressBar;
+import be.fastrada.components.Speedometer;
 import be.fastrada.packetmapper.PacketInterface;
 
 import java.io.Serializable;
@@ -26,7 +28,6 @@ public class Dashboard implements Serializable, PacketInterface {
     private boolean effectOn;
 
     public Dashboard() {
-
     }
 
     public Dashboard(TextView tvCurrentTemp, TextView tvCurrentSpeed, HoloCircularProgressBar holoTempMeter, HoloCircularProgressBar holoSpeedMeter, ProgressBar rpmIndicator, Speedometer speedoMeter, Speedometer tempoMeter, TextView tvGear) {

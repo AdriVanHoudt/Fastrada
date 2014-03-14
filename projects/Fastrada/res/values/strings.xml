@@ -14,7 +14,7 @@
     <string name="serverStartError">Server could not start</string>
     <string name="gear_text">gear</string>
     <string name="dialogTitle">Race Name</string>
-    <string name="dialogMessage">Fill in a name for this race!</string>
+    <string name="dialogMessage">Fill in a name for this race</string>
     <string name="dialogPosButton">Ok</string>
     <string name="dialogNegButton">Cancel</string>
     <string name="uiConfiguration">UI Configuration</string>
@@ -30,4 +30,5 @@
     <string name="prefs_alarm_temp">prefs_alarm_temp</string>
     <string name="prefs_show_gear">prefs_show_gear</string>
     <string name="prefs_holo_style">prefs_holo_style</string>
+    <string name="noHotspot">Your wifi hotspot is turned off</string>
 </resources>

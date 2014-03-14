@@ -1,4 +1,4 @@
-package be.fastrada.networking;
+package be.fastrada.networking.listening;
 
 import android.os.Bundle;
 import android.os.Message;
@@ -10,7 +10,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 
-public class PacketListener extends Thread {
+public class PacketListener implements Runnable {
     public static final int PORT_NUMBER = 9000;
     public static final int BUFFER_SIZE = 10;
     public static final String BUNDLE_BYTES_KEY = "PacketListenerService.Bytes";

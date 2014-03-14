@@ -1,8 +1,7 @@
 package unit.communication;
 
-import be.fastrada.networking.PacketGrouper;
-import be.fastrada.networking.RestSender;
-import be.fastrada.networking.Sender;
+import be.fastrada.networking.sending.PacketGrouper;
+import be.fastrada.tryouts.Sender;
 import org.joda.time.DateTime;
 import org.joda.time.Instant;
 import org.junit.Test;
@@ -13,7 +12,7 @@ import static junit.framework.Assert.assertTrue;
 /**
  * Created by bavo on 5/03/14.
  */
-public class PacketGrouperTest{
+public class PacketGrouperTest {
 
     private PacketGrouper packetGrouper;
 
@@ -38,8 +37,7 @@ public class PacketGrouperTest{
     public void checkContent() {
         byte[] bytes = new byte[10];
 
-        for (int i = 0; i < 10; ++i)
-        {
+        for (int i = 0; i < 10; ++i) {
             byte b = (byte) i;
             bytes[i] = b;
         }
@@ -56,8 +54,7 @@ public class PacketGrouperTest{
 
         byte[] bytes = new byte[10];
 
-        for (int i = 0; i < 5; i++)
-        {
+        for (int i = 0; i < 5; i++) {
             packetGrouper.add(bytes);
         }
 
@@ -123,12 +120,11 @@ public class PacketGrouperTest{
 
         packetGrouper = getPacketGrouper();
 
-        packetGrouper.setMax(50);
+        //packetGrouper.setMax(50);
         Sender sender = new MockSender();
-        packetGrouper.setSender(sender);
+        //packetGrouper.setSender(sender);//TODO wegdoen
 
-        for (int i = 0; i < 179; i++)
-        {
+        for (int i = 0; i < 179; i++) {
             packetGrouper.add(bytes);
         }
 
@@ -140,12 +136,10 @@ public class PacketGrouperTest{
         byte[] bytes = new byte[10];
 
         packetGrouper = getPacketGrouper();
-        packetGrouper.setMax(50);
         Sender sender = new MockSender();
-        packetGrouper.setSender(sender);
+        //packetGrouper.setSender(sender);//TODO wegdoen
 
-        for (int i = 0; i < 179; i++)
-        {
+        for (int i = 0; i < 179; i++) {
             packetGrouper.add(bytes);
         }
 
@@ -157,18 +151,16 @@ public class PacketGrouperTest{
         byte[] bytes = new byte[10];
 
         packetGrouper = getPacketGrouper();
-        packetGrouper.setMax(50);
-        //Sender sender = new MockSender();
-        Sender sender = new RestSender();
-        packetGrouper.setSender(sender);
-
+        //packetGrouper.setMax(50);//TODO wegdoen
+        Sender sender = new MockSender();
+        //Sender sender = new RestSender("racename");//Sender sender = new RestSender();//TODO wegdoen
+        //packetGrouper.setSender(sender);//TODO wegdoen
 
 
         Thread t = new Thread(packetGrouper);
 
 
-        for (int i = 0; i < 179; i++)
-        {
+        for (int i = 0; i < 179; i++) {
             packetGrouper.add(bytes);
         }
         t.start();

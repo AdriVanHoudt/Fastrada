@@ -1,4 +1,4 @@
-package be.fastrada.networking;
+package be.fastrada.networking.listening;
 
 import android.app.Service;
 import android.content.Intent;
@@ -26,8 +26,7 @@ public class PacketListenerService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        packetListener.start();
-
+        new Thread(packetListener).start();
         return START_STICKY;
     }
 }

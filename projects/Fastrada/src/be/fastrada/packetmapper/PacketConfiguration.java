@@ -1,7 +1,6 @@
 package be.fastrada.packetmapper;
 
 import android.util.Log;
-import be.fastrada.Dashboard;
 import be.fastrada.Exception.FastradaException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

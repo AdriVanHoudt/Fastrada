@@ -1,11 +1,10 @@
-package be.fastrada;
+package be.fastrada.components;
 
 import android.content.Context;
 import android.preference.EditTextPreference;
 import android.util.AttributeSet;
 
 public class NumberPreference extends EditTextPreference {
-
     public NumberPreference(Context context) {
         super(context);
     }
