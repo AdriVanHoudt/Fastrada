@@ -43,21 +43,33 @@ public class MongoTests {
         mongoOperation.save(packet3, COLLECTION_NAME);
         mongoOperation.save(packet4, COLLECTION_NAME);
 
+        // gen testdata
+        Packet[] packets = new Packet[10000];
+        for (int i = 0; i < 10000; i += 4) {
+            packets[i] = new Packet((Math.random() * 5000 + 1), new DateTime(), race.getId(), "rpm");
+            packets[i + 1] = new Packet((Math.random() * 90 + 1), new DateTime(), race.getId(), "temp");
+            packets[i + 2] = new Packet((Math.random() * 160 + 1), new DateTime(), race.getId(), "speed");
+            packets[i + 3] = new Packet((Math.random() * 6 + 1), new DateTime(), race.getId(), "gear");
+        }
+
+        for (Packet p : packets) {
+            mongoOperation.insert(p, COLLECTION_NAME);
+        }
 
         // mongo operations examples
-            // query db for the race
-            Query query = new Query(Criteria.where("name").is("TestRace"));
+        // query db for the race
+        Query query = new Query(Criteria.where("name").is("TestRace"));
 
-            // find the race with the query
-            Race foundRace = mongoOperation.findOne(query, Race.class);
-            System.out.println("Found race: " + foundRace);
+        // find the race with the query
+        Race foundRace = mongoOperation.findOne(query, Race.class);
+        System.out.println("Found race: " + foundRace);
 
-            // delete race, not enabled to make sure we have data in the db
-            // mongoOperation.remove(query, Race.class);
+        // delete race, not enabled to make sure we have data in the db
+        // mongoOperation.remove(query, Race.class);
 
-            // list races, not enabled to prevent spam
-            // List<Race> raceList = mongoOperation.findAll(Race.class);
-            // System.out.println("number of races: " + raceList.size());
+        // list races, not enabled to prevent spam
+        // List<Race> raceList = mongoOperation.findAll(Race.class);
+        // System.out.println("number of races: " + raceList.size());
 
     }
 }

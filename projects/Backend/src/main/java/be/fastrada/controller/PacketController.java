@@ -4,7 +4,6 @@ import be.fastrada.Exception.FastradaException;
 import be.fastrada.model.Race;
 import be.fastrada.packetmapper.PacketConfiguration;
 import be.fastrada.packetmapper.PacketMapper;
-import be.fastrada.packetmapper.PacketProcessor;
 import be.fastrada.pojo.Packet;
 import be.fastrada.pojo.PostPacketList;
 import be.fastrada.service.PacketService;
