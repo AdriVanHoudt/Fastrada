@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -32,7 +33,7 @@ public class RaceControllerTests {
 
     @Test
     public void testGetRaces() throws Exception {
-        this.mockMvc.perform(get("/api/race").accept(MediaType.parseMediaType("application/json;charset=UTF-8"))).andExpect(status().isOk());
+        this.mockMvc.perform(get("/api/race").accept(MediaType.parseMediaType("application/json;charset=UTF-8"))).andDo(print()).andExpect(status().isOk());
     }
 
     /*

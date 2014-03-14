@@ -22,6 +22,14 @@ public class Race {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public DateTime getDateTime() {
+        return dateTime;
+    }
+
     @Override
     public String toString() {
         return "Race{" +

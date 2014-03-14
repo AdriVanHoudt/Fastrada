@@ -20,8 +20,9 @@ public class RaceService {
     private PacketService packetService;
     private static final String COLLECTION_NAME = "races";
 
-    public List getAllRaces() {
-        return mongoTemplate.findAll(Race.class);
+    public List<Race> getAllRaces() {
+        List l = mongoTemplate.findAll(Race.class);
+        return l;
     }
 
     public Race getRaceById(String raceId) {

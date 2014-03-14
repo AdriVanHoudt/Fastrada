@@ -19,6 +19,14 @@ public class Sensor {
         this.types = types;
     }
 
+    public String[] getTypes() {
+        return types;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     @Override
     public String toString() {
         return "Sensor{" +
