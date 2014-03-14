@@ -16,13 +16,13 @@ import android.view.WindowManager;
 import android.widget.*;
 import be.fastrada.Dashboard;
 import be.fastrada.Exception.FastradaException;
-import be.fastrada.components.HoloCircularProgressBar;
 import be.fastrada.R;
+import be.fastrada.components.HoloCircularProgressBar;
 import be.fastrada.components.Speedometer;
+import be.fastrada.networking.hotspot.WifiApManager;
 import be.fastrada.networking.listening.PacketListener;
 import be.fastrada.networking.listening.PacketListenerService;
 import be.fastrada.networking.sending.PacketSenderService;
-import be.fastrada.networking.hotspot.WifiApManager;
 import be.fastrada.packetmapper.PacketConfiguration;
 import be.fastrada.packetmapper.PacketMapper;
 
@@ -94,6 +94,7 @@ public class Main extends Activity implements SharedPreferences.OnSharedPreferen
 
                 senderServiceIntent.putExtras(bundle);
                 startService(senderServiceIntent);
+                Log.d("PACKETRECEIVED", bytes.toString());
             }
         };
     }
@@ -150,8 +151,15 @@ public class Main extends Activity implements SharedPreferences.OnSharedPreferen
                     .setView(input)
                     .setPositiveButton(getString(R.string.dialogPosButton), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-                            senderServiceIntent.setAction(input.getText().toString());
-                            startService(senderServiceIntent);
+                            final String raceName = input.getText().toString();
+                            if (raceName != null && !raceName.isEmpty()) {
+                                senderServiceIntent.setAction(raceName);
+                                startService(senderServiceIntent);
+                            } else {
+                                Toast.makeText(Main.this, getString(R.string.emptyRacename), Toast.LENGTH_LONG).show();
+                                ((ToggleButton) v).setChecked(false);
+                            }
+
                         }
                     }).setNegativeButton(getString(R.string.dialogNegButton), new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {

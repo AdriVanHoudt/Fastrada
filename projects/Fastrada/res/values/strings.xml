@@ -31,4 +31,5 @@
     <string name="prefs_show_gear">prefs_show_gear</string>
     <string name="prefs_holo_style">prefs_holo_style</string>
     <string name="noHotspot">Your wifi hotspot is turned off</string>
+    <string name="emptyRacename">Racename cannot be empty</string>
 </resources>

@@ -1,6 +1,11 @@
 package be.fastrada.networking;
 
 import be.fastrada.tryouts.Sender;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -60,12 +65,12 @@ public class RestSender implements Sender {
                     System.out.println(jo.toJSONString());
 
                     //versturen
-                    /*HttpClient client = new DefaultHttpClient();
-                    HttpPost request = new HttpPost("192.168.0.6:8080/fastrada/api/packet");
+                    HttpClient client = new DefaultHttpClient();
+                    HttpPost request = new HttpPost("teamb.feedient.com:8080/fastrada/api/packet");
                     StringEntity params = new StringEntity(json);
                     request.addHeader("content-type", "application/json");
                     request.setEntity(params);
-                    HttpResponse response = client.execute(request); */
+                    HttpResponse response = client.execute(request);
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (ParseException e) {

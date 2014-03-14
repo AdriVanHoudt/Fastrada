@@ -34,7 +34,7 @@ public class PacketMapperSenderTest {
         }
 
         packetThread.start();
-        Thread.sleep(1000); //My pc is too fast
+        Thread.sleep(1000);
         final int sentPackets = packetSender.getSentPackets();
         assertEquals(5, sentPackets);
     }
