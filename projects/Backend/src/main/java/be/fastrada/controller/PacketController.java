@@ -46,7 +46,7 @@ public class PacketController {
 
         for (Packet p : packetList.getPackets()) {
             packetMapper.clearArrays();
-            packetMapper.setContent(hexStringToByteArray(p.getContent()));
+            packetMapper.setContent(p.getContent());
             packetMapper.process();
 
             ArrayList<Double> values = packetMapper.getValues();

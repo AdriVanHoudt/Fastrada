@@ -3,18 +3,18 @@ package be.fastrada.pojo;
 import org.joda.time.DateTime;
 
 public class Packet {
-    private String content;
+    private byte[] content;
     private DateTime timestamp;
 
     public Packet() {
 
     }
 
-    public String getContent() {
+    public byte[] getContent() {
         return content;
     }
 
-    public void setContent(String content) {
+    public void setContent(byte[] content) {
         this.content = content;
     }
 
