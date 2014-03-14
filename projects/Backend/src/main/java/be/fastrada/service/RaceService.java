@@ -16,13 +16,10 @@ public class RaceService {
 
     @Autowired
     private MongoTemplate mongoTemplate;
-    @Autowired
-    private PacketService packetService;
     private static final String COLLECTION_NAME = "races";
 
-    public List<Race> getAllRaces() {
-        List l = mongoTemplate.findAll(Race.class);
-        return l;
+    public List getAllRaces() {
+        return mongoTemplate.findAll(Race.class);
     }
 
     public Race getRaceById(String raceId) {

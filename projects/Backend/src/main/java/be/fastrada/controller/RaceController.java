@@ -23,9 +23,8 @@ public class RaceController {
 
     @RequestMapping(value = "race", method = RequestMethod.GET)
     @ResponseBody
-    public List<Race> getRaces() {
-        List l = raceService.getAllRaces();
-        return l;
+    public List getRaces() {
+        return raceService.getAllRaces();
     }
 
     @RequestMapping(value = "race/{raceId}", method = RequestMethod.GET)
