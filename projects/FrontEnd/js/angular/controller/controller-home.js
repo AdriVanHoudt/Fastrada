@@ -9,32 +9,39 @@ angular.module('fastradaApp.controllers').
          */
         $scope.test = "hello";
         function updateScreen() {
-            dataFetcher.getRaceData().then(function (data) {
-                var race = getRaceFromData(data);
-                $scope.race = race;
+            var id = queryHandler.getCurrentRaceId();
+            // Build Speed chart on startup
+            /*
+             Data inside and http call cannot be deferred
+             url: https://groups.google.com/forum/#!topic/angular/Pf4yQ0Z9he8
+             */
 
-                /*
-                 Build all charts on load of the page
-                 */
-                buildSpeedChart(race);
-                buildRPMChart(race);
-                buildTemperatureChart(race);
 
-                /*
-                 Methods that are invoked to build the charts when a user switches between tabs
-                 */
-                $scope.openRPM = (function () {
-                    buildRPMChart(race);
-                });
-
-                $scope.openSpeed = (function () {
-                    buildSpeedChart(race);
-                });
-
-                $scope.openTemperature = (function () {
-                    buildTemperatureChart(race);
+            // Methods that are invoked to build the charts when a user switches between tabs
+            $scope.openRPM = (function () {
+                dataFetcher.getRaceRPMData(id).then(function (data) {
+                    buildRPMChart(data);
                 });
             });
+
+            $scope.openSpeed = (function () {
+                dataFetcher.getRaceSpeedData(id).then(function (data) {
+                    buildSpeedChart(data);
+                });
+            });
+
+            $scope.openTemperature = (function () {
+                dataFetcher.getRaceTemperatureData(id).then(function (data) {
+                    buildTemperatureChart(data);
+                });
+            });
+
+
+            /* open initially */
+            $scope.openSpeed();
+            $scope.openRPM();
+            $scope.openTemperature();
+
         }
 
         updateScreen();
@@ -51,17 +58,12 @@ angular.module('fastradaApp.controllers').
          Methods that build charts
          */
 
-        function buildSpeedChart(race) {
-            var speedData = [];
-
-            for (var i = 0; i < race.sensors[0].packets.length; i++) {
-                speedData.push({ time: (new Date(race.sensors[0].packets[i].timestamp)), speed: race.sensors[0].packets[i].value});
-            }
-
+        function buildSpeedChart(packets) {
+            var speedData = $scope.aggregatePackets(packets);
             var series = [
                 {
                     argumentField: 'time',
-                    valueField: 'speed'
+                    valueField: 'content'
                 }
             ];
 
@@ -95,10 +97,6 @@ angular.module('fastradaApp.controllers').
                     divisionValue: 1,
                     minRange: 1
                 },
-                selectedRange: {
-                    startValue: race.sensors[0].packets[0].timestamp,
-                    endValue:  race.sensors[0].packets[race.sensors[0].packets.length - 1].timestamp
-                },
                 dataSource: speedData,
                 chart: {
                     series: series
@@ -113,17 +111,12 @@ angular.module('fastradaApp.controllers').
             });
         }
 
-        function buildRPMChart(race) {
-            var rpmData = [];
-
-            for (var i = 0; i < race.sensors[1].packets.length; i++) {
-                rpmData.push({time: (new Date(race.sensors[1].packets[i].timestamp)), rpm: race.sensors[1].packets[i].value});
-            }
-
+        function buildRPMChart(packets) {
+            var rpmData = $scope.aggregatePackets(packets);
             var series = [
                 {
                     argumentField: 'time',
-                    valueField: 'rpm'
+                    valueField: 'content'
                 }
             ];
 
@@ -157,10 +150,6 @@ angular.module('fastradaApp.controllers').
                     divisionValue: 1,
                     minRange: 1
                 },
-                selectedRange: {
-                    startValue: race.sensors[1].packets[0].timestamp,
-                    endValue: race.sensors[1].packets[race.sensors[0].packets.length - 1].timestamp
-                },
                 dataSource: rpmData,
                 chart: {
                     series: series
@@ -175,18 +164,12 @@ angular.module('fastradaApp.controllers').
             });
         }
 
-
-        function buildTemperatureChart(race) {
-            var tempData = [];
-
-            for (var i = 0; i < race.sensors[2].packets.length; i++) {
-                tempData.push({time: (new Date(race.sensors[2].packets[i].timestamp)), temperature: race.sensors[2].packets[i].value});
-            }
-
+        function buildTemperatureChart(packets) {
+            var tempData = $scope.aggregatePackets(packets);
             var series = [
                 {
                     argumentField: 'time',
-                    valueField: 'temperature'
+                    valueField: 'content'
                 }
             ];
 
@@ -220,10 +203,6 @@ angular.module('fastradaApp.controllers').
                     divisionValue: 1,
                     minRange: 1
                 },
-                selectedRange: {
-                    startValue: race.sensors[2].packets[0].timestamp,
-                    endValue: race.sensors[2].packets[race.sensors[2].packets.length - 1].timestamp
-                },
                 dataSource: tempData,
                 chart: {
                     series: series
@@ -238,19 +217,48 @@ angular.module('fastradaApp.controllers').
             });
         }
 
+        $scope.aggregatePackets = (function (packets) {
+            packets.sort(function (a, b) {
+                return a.timestamp - b.timestamp;
+            });
 
+            var size = packets.length;
+            var endSize = (size > 0) ? size - 1 : 0;
+            var interval = 10;
 
-        /*
-         Method that retrieves the correct race from the data
-         */
-        function getRaceFromData(data) {
-            for (var i = 0; i < data.length; i++) {
-                if (queryHandler.getCurrentRace().toLowerCase() === data[i].name.toLowerCase()) {
-                    return data [i];
+            var newPackets = [];
+
+            var startTime = packets[0].timestamp;
+            var newPacket = {
+                content: packets[0].content,
+                time: packets[0].timestamp
+            };
+            newPackets.push(newPacket);
+            var endTime = packets[endSize].timestamp;
+
+            for (var i = startTime; i < endTime; i += interval) {
+                var timestamps = 0;
+                var contents = 0;
+                var numberOfPackets = 0;
+                for (var j = 0; j < packets.length; j++) {
+                    if (packets[j].timestamp < (i + interval) && packets[j].timestamp > i) {
+                        timestamps += packets[j].timestamp;
+                        contents += packets[j].content;
+                        numberOfPackets++;
+                    }
                 }
+                var averageTime = Math.round((timestamps / numberOfPackets));
+                var averageContent = Math.round(contents / numberOfPackets);
+
+                newPacket = {
+                    content: averageContent,
+                    time: averageTime
+                };
+                newPackets.push(newPacket);
             }
-            // return first race if none found
-            return data[0];
-        }
+
+            return newPackets;
+        });
+
     }])
 ;
