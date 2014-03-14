@@ -21,19 +21,19 @@ public class RaceController {
     @Autowired
     private PacketService packetService;
 
-    @RequestMapping(value = "races", method = RequestMethod.GET)
+    @RequestMapping(value = "race", method = RequestMethod.GET)
     @ResponseBody
     public List getRaces() {
         return raceService.getAllRaces();
     }
 
-    @RequestMapping(value = "races/{raceId}", method = RequestMethod.GET)
+    @RequestMapping(value = "race/{raceId}", method = RequestMethod.GET)
     @ResponseBody
     public Race getRaceById(@PathVariable(value = "raceId") String raceId) {
         return  raceService.getRaceById(raceId);
     }
 
-    @RequestMapping(value = "races/{raceId}/data", method = RequestMethod.GET)
+    @RequestMapping(value = "race/{raceId}/data", method = RequestMethod.GET)
     @ResponseBody
     public List getRaceDataById(@PathVariable(value = "raceId") String raceId) {
         return packetService.getPacketsByRaceId(raceId);
