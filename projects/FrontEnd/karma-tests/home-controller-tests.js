@@ -15,15 +15,30 @@ describe('HomeCtrl', function () {
         $controller('HomeCtrl', {$scope: scope});
     }));
 
+    it('should return aggregated packages', function () {
+        var packets = [
+            {time: 100, content: 20},
+            {time: 105, content: 40},
+            {time: 110, content: 30},
+            {time: 115, content: 40},
+            {time: 120, content: 40},
+            {time: 125, content: 40},
+            {time: 130, content: 40},
+            {time: 140, content: 40},
+            {time: 145, content: 40},
+        ];
+        scope.interval = 100;
+        var aPackets = scope.aggregatePackets(packets);
+        expect(aPackets[0].content).toBe(20);
+        expect(aPackets.length).toBe(1);
 
-
+    });
 
 
     // No logic to test
-    it('should have variable text = "hello"', function(){
+    it('should have variable text = "hello"', function () {
         expect(scope.test).toBe('hello');
     });
-
 
 
 });

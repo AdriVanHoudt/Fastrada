@@ -7,6 +7,7 @@ angular.module('fastradaApp.controllers').
         /*
          Function that refreshes the data on the screen based on the currently selected race
          */
+        $scope.interval = 10;
         $scope.test = "hello";
         function updateScreen() {
             var id = queryHandler.getCurrentRaceId();
@@ -217,6 +218,7 @@ angular.module('fastradaApp.controllers').
             });
         }
 
+
         $scope.aggregatePackets = (function (packets) {
             packets.sort(function (a, b) {
                 return a.timestamp - b.timestamp;
@@ -224,7 +226,7 @@ angular.module('fastradaApp.controllers').
 
             var size = packets.length;
             var endSize = (size > 0) ? size - 1 : 0;
-            var interval = 10;
+            var interval = $scope.interval;
 
             var newPackets = [];
 
@@ -258,6 +260,15 @@ angular.module('fastradaApp.controllers').
             }
 
             return newPackets;
+        });
+
+
+        $scope.$watch('interval', function () {
+            if ($scope.interval > 0) {
+                $scope.openSpeed();
+                $scope.openRPM();
+                $scope.openTemperature();
+            }
         });
 
     }])
