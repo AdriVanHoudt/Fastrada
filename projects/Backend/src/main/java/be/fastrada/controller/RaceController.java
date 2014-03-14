@@ -32,7 +32,13 @@ public class RaceController {
 
     @RequestMapping(value = "race/{raceId}/data", method = RequestMethod.GET)
     @ResponseBody
-    public List getRaceDataById(@PathVariable(value = "raceId") String raceId, @RequestParam("filter") String filterKey) {
+    public List getRaceDataById(@PathVariable(value = "raceId") String raceId) {
+        return packetService.getPacketsByRaceId(raceId, "");
+    }
+
+    @RequestMapping(value = "race/{raceId}/data/{filter}", method = RequestMethod.GET)
+    @ResponseBody
+    public List getRaceDataById(@PathVariable(value = "raceId") String raceId, @PathVariable("filter") String filterKey) {
         return packetService.getPacketsByRaceId(raceId, filterKey);
     }
 }
