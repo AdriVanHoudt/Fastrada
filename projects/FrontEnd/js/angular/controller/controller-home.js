@@ -10,15 +10,12 @@ angular.module('fastradaApp.controllers').
         $scope.test = "hello";
         function updateScreen() {
             var id = queryHandler.getCurrentRaceId();
-
             // Build Speed chart on startup
             /*
              Data inside and http call cannot be deferred
              url: https://groups.google.com/forum/#!topic/angular/Pf4yQ0Z9he8
              */
-            dataFetcher.getRaceSpeedData(id).then(function (data) {
-                buildSpeedChart(data);
-            });
+
 
             // Methods that are invoked to build the charts when a user switches between tabs
             $scope.openRPM = (function () {
@@ -38,6 +35,13 @@ angular.module('fastradaApp.controllers').
                     buildTemperatureChart(data);
                 });
             });
+
+
+            /* open initially */
+            $scope.openSpeed();
+            $scope.openRPM();
+            $scope.openTemperature();
+
         }
 
         updateScreen();
@@ -56,11 +60,6 @@ angular.module('fastradaApp.controllers').
 
         function buildSpeedChart(packets) {
             var speedData = $scope.aggregatePackets(packets);
-
-            for(var i = 0; i < speedData.length; i++) {
-                console.log(angular.toJson(speedData[i]));
-            }
-
             var series = [
                 {
                     argumentField: 'time',
@@ -98,10 +97,6 @@ angular.module('fastradaApp.controllers').
                     divisionValue: 1,
                     minRange: 1
                 },
-                selectedRange: {
-                    startValue: packets[0].timestamp,
-                    endValue: packets[packets.length - 1].timestamp
-                },
                 dataSource: speedData,
                 chart: {
                     series: series
@@ -117,9 +112,7 @@ angular.module('fastradaApp.controllers').
         }
 
         function buildRPMChart(packets) {
-            var rpmData = [];
-            rpmData = $scope.aggregatePackets(packets);
-
+            var rpmData = $scope.aggregatePackets(packets);
             var series = [
                 {
                     argumentField: 'time',
@@ -157,10 +150,6 @@ angular.module('fastradaApp.controllers').
                     divisionValue: 1,
                     minRange: 1
                 },
-                selectedRange: {
-                    startValue: packets[0].timestamp,
-                    endValue: packets[packets.length - 1].timestamp - 1
-                },
                 dataSource: rpmData,
                 chart: {
                     series: series
@@ -176,10 +165,7 @@ angular.module('fastradaApp.controllers').
         }
 
         function buildTemperatureChart(packets) {
-            var tempData = [];
-
-            tempData = $scope.aggregatePackets(packets);
-
+            var tempData = $scope.aggregatePackets(packets);
             var series = [
                 {
                     argumentField: 'time',
@@ -216,10 +202,6 @@ angular.module('fastradaApp.controllers').
                 scale: {
                     divisionValue: 1,
                     minRange: 1
-                },
-                selectedRange: {
-                    startValue: packets[0].timestamp,
-                    endValue: packets[packets.length - 1].timestamp - 1
                 },
                 dataSource: tempData,
                 chart: {
