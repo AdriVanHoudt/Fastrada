@@ -1,13 +1,13 @@
-package be.fastrada.networking;
+package be.fastrada.tryouts;
 
 import android.util.Log;
 
-public class PacketSender extends Thread {
+public class PacketSenderold extends Thread {
     public static final int BUFFER_SIZE = 500;
     private byte[] buffer;
     private boolean isRunning;
 
-    public PacketSender() {
+    public PacketSenderold() {
         this.buffer = new byte[BUFFER_SIZE];
         isRunning = true;
     }

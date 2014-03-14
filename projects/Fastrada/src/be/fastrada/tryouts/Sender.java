@@ -1,4 +1,6 @@
-package be.fastrada.networking;
+package be.fastrada.tryouts;
+
+import be.fastrada.networking.Packet;
 
 import java.util.List;
 

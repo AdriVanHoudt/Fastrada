@@ -1,4 +1,4 @@
-package be.fastrada;
+package be.fastrada.components;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -6,6 +6,7 @@ import android.graphics.*;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import be.fastrada.R;
 
 public class Speedometer extends View implements SpeedChangeListener {
     private static final String TAG = Speedometer.class.getSimpleName();

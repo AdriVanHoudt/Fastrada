@@ -1,12 +1,9 @@
 package unit.communication;
 
 import be.fastrada.networking.Packet;
-import be.fastrada.networking.Sender;
+import be.fastrada.tryouts.Sender;
 import java.util.List;
 
-/**
- * Created by bavo on 5/03/14.
- */
 public class MockSender implements Sender {
     private int amount;
 

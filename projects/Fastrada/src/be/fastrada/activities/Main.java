@@ -10,17 +10,19 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.*;
 import be.fastrada.Dashboard;
 import be.fastrada.Exception.FastradaException;
-import be.fastrada.HoloCircularProgressBar;
+import be.fastrada.components.HoloCircularProgressBar;
 import be.fastrada.R;
-import be.fastrada.Speedometer;
-import be.fastrada.networking.PacketListener;
-import be.fastrada.networking.PacketListenerService;
-import be.fastrada.networking.PacketSenderService;
+import be.fastrada.components.Speedometer;
+import be.fastrada.networking.listening.PacketListener;
+import be.fastrada.networking.listening.PacketListenerService;
+import be.fastrada.networking.sending.PacketSenderService;
+import be.fastrada.networking.hotspot.WifiApManager;
 import be.fastrada.packetmapper.PacketConfiguration;
 import be.fastrada.packetmapper.PacketMapper;
 
@@ -37,13 +39,10 @@ public class Main extends Activity implements SharedPreferences.OnSharedPreferen
     private TextView tvCurrentTemp, tvCurrentSpeed, tvGear;
     private PacketConfiguration packetConfiguration;
     final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
-    private Intent senderServiceIntent;
+    private Intent senderServiceIntent, listenerServiceIntent;
 
     private PacketMapper packetMapper;
-
     private SharedPreferences sharedPreferences;
-
-
     public static Handler mHandler;
 
     @Override
@@ -77,7 +76,7 @@ public class Main extends Activity implements SharedPreferences.OnSharedPreferen
         // Init packetMapper after packetConfiguration
         packetMapper = new PacketMapper(packetConfiguration);
 
-        startService(new Intent(this, PacketListenerService.class));
+
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
     }
@@ -86,25 +85,33 @@ public class Main extends Activity implements SharedPreferences.OnSharedPreferen
         mHandler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message msg) {
+                Log.d("mymsghandler", "message");
                 final Bundle bundle = msg.getData();
                 final byte[] bytes = bundle.getByteArray(PacketListener.BUNDLE_BYTES_KEY);
 
                 packetMapper.setContent(bytes);
                 packetMapper.process();
+
+                senderServiceIntent.putExtras(bundle);
+                startService(senderServiceIntent);
             }
         };
     }
 
     public void initialise() {
-        dashboard = new Dashboard(tvCurrentTemp, tvCurrentSpeed, holoTempMeter, holoSpeedMeter, rpmIndicator, speedoMeter, tempoMeter, tvGear);
-
+        this.dashboard = new Dashboard(tvCurrentTemp, tvCurrentSpeed, holoTempMeter, holoSpeedMeter, rpmIndicator, speedoMeter, tempoMeter, tvGear);
         dashboard.setMaxSpeed(sharedPreferences.getInt(getString(R.string.prefs_max_speed), Settings.DEFAULT_MAX_SPEED));
         dashboard.setMaxRPM(sharedPreferences.getInt(getString(R.string.prefs_max_rpm), Settings.DEFAULT_MAX_RPM));
         dashboard.setMaxTemperature(sharedPreferences.getInt(getString(R.string.prefs_max_temp), Settings.DEFAULT_MAX_TEMP));
         dashboard.setAlarmingTemperature(sharedPreferences.getInt(getString(R.string.prefs_alarm_temp), Settings.DEFAULT_ALARM_TEMP));
 
         rpmIndicator.setMax(dashboard.getMaxRPM());
-        senderServiceIntent = new Intent(this, PacketSenderService.class);
+
+        this.senderServiceIntent = new Intent(this, PacketSenderService.class);
+        this.listenerServiceIntent = new Intent(this, PacketListenerService.class);
+        startService(listenerServiceIntent);
+
+        if (!isHotspotRunning()) Toast.makeText(this, getString(R.string.noHotspot), Toast.LENGTH_LONG).show();
     }
 
     public void initDashboard() {
@@ -122,45 +129,29 @@ public class Main extends Activity implements SharedPreferences.OnSharedPreferen
     @Override
     protected void onResume() {
         super.onResume();
-
         initHandler();
-        //customVisibility();
-
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        //PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
-    }
-
-    public void sendData() {
-        startService(senderServiceIntent);
     }
 
     @SuppressWarnings("unused")
     public void onSettingsClick(View v) {
-        /*final Intent intent = new Intent(context, Settings.class);
-        startActivity(intent);*/
         final Intent intent = new Intent(this, Settings.class);
         startActivity(intent);
     }
 
     public void onToggleClick(final View v) {
-        boolean on = ((ToggleButton) v).isChecked();
+        final boolean on = ((ToggleButton) v).isChecked();
         final EditText input = new EditText(this);
 
         if (on) {
             new AlertDialog.Builder(Main.this)
+                    .setCancelable(false)
                     .setTitle(getString(R.string.dialogTitle))
                     .setMessage(getString(R.string.dialogMessage))
                     .setView(input)
                     .setPositiveButton(getString(R.string.dialogPosButton), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-                            sendData();
-                            Toast.makeText(Main.this, input.getText(), Toast.LENGTH_LONG).show();
+                            senderServiceIntent.setAction(input.getText().toString());
+                            startService(senderServiceIntent);
                         }
                     }).setNegativeButton(getString(R.string.dialogNegButton), new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
@@ -168,12 +159,8 @@ public class Main extends Activity implements SharedPreferences.OnSharedPreferen
                 }
             }).show();
         } else {
-            stopSendingData();
+            stopService(senderServiceIntent);
         }
-    }
-
-    private void stopSendingData() {
-        stopService(senderServiceIntent);
     }
 
     private void customVisibility() {
@@ -231,5 +218,17 @@ public class Main extends Activity implements SharedPreferences.OnSharedPreferen
         dashboard.setMaxTemperature(maxTemp);
         dashboard.setMaxSpeed(maxSpeed);
         dashboard.setMaxRPM(maxRpm);
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopService(listenerServiceIntent);
+        stopService(senderServiceIntent);
+        super.onDestroy();
+    }
+
+    private boolean isHotspotRunning() {
+        final WifiApManager wifiApManager = new WifiApManager(this);
+        return wifiApManager.isWifiApEnabled();
     }
 }

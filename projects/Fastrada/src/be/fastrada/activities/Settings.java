@@ -5,7 +5,7 @@ import android.os.Bundle;
 import be.fastrada.R;
 
 public class Settings extends Activity {
-    // When changing these, do not forget to change in xml/xml_settings.xml as well TODO Naam veranderen
+    // When changing these, do not forget to change in xml/xml_settings.xml as well
     public static final int DEFAULT_MAX_TEMP = 120;
     public static final int DEFAULT_MAX_SPEED = 300;
     public static final int DEFAULT_MAX_RPM = 6000;

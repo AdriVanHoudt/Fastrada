@@ -2,7 +2,6 @@ package be.fastrada.networking;
 
 import org.joda.time.DateTime;
 
-
 public class Packet {
     private byte[] content;
     private DateTime timestamp;
