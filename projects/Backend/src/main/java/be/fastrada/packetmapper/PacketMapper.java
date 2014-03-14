@@ -5,7 +5,6 @@ import be.fastrada.Exception.FastradaException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
@@ -57,55 +56,48 @@ public class PacketMapper {
         }
 
         String methodToInvoke = (String) jo.get("name");
+        String type = (String) jo.get("type");
         int byteSize = Integer.parseInt(jo.get("size").toString());
         double offset = Double.parseDouble(jo.get("offset").toString());
         double factor = Double.parseDouble(jo.get("factor").toString());
 
-        try {
-            Class cls = Class.forName(packetConfiguration.getClassPath());
-            Object obj = packetConfiguration.getClassObject();
 
-            for (Method m : cls.getMethods()) {
-                if (m.getName().equals(methodToInvoke)) {
-                    types.add(methodToInvoke);
-                    switch (byteSize) {
-                        case 8:
-                            short value1 = (short) (byteBuffer.get() & 0xff);
+        types.add(type);
+        switch (byteSize) {
+            case 8:
+                short value1 = (short) (byteBuffer.get() & 0xff);
 
-                            value1 = (short) ((value1 * factor) - offset);
+                value1 = (short) ((value1 * factor) - offset);
 
-                            values.add((double) value1);
+                values.add((double) value1);
 
-                            //m.invoke(obj, value1);
-                            break;
-                        case 16:
-                            int value2 = byteBuffer.getShort() & 0xffff;
+                //m.invoke(obj, value1);
+                break;
+            case 16:
+                int value2 = byteBuffer.getShort() & 0xffff;
 
-                            value2 = (int) (((double)value2 * factor) - offset);
+                value2 = (int) (((double)value2 * factor) - offset);
 
-                            values.add((double) value2);
-                            //m.invoke(obj, value2);
-                            break;
-                        case 32:
-                            long value3 = (long) (byteBuffer.getInt() & 0xffffffffL);
+                values.add((double) value2);
+                //m.invoke(obj, value2);
+                break;
+            case 32:
+                long value3 = (long) (byteBuffer.getInt() & 0xffffffffL);
 
-                            value3 = (long) ((value3 * factor) - offset);
+                value3 = (long) ((value3 * factor) - offset);
 
-                            values.add((double) value3);
-                            //m.invoke(obj, value3); //kan dit niet coveren omdat dashboard geen parameter voor double heeft
-                            break;
-                    }
-                    return true;
-                }
-            }
-
-            return true;
-        } catch (ClassNotFoundException e) {
-            final String message = "Class not found!";
-
-
-            throw new FastradaException(message);
+                values.add((double) value3);
+                //m.invoke(obj, value3); //kan dit niet coveren omdat dashboard geen parameter voor double heeft
+                break;
         }
+        return true;
+
+    }
+
+    public void clearArrays()
+    {
+        values.clear();
+        types.clear();
     }
 
     public ArrayList<Double> getValues() {

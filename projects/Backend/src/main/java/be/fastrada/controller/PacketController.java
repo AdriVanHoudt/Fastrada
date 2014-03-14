@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.io.File;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 @Controller
@@ -34,29 +32,40 @@ public class PacketController {
             //servletcontext
             //web-inf/classes/structure.json
             //servletcontext.getRealPath(url)
-            System.out.println(new File("/resources/structure.json"));
-            System.out.println(this.getClass().getResourceAsStream("structure.json"));
-            configuration = new PacketConfiguration(this.getClass().getResourceAsStream("structure.json"), "be.fastrada.packetmapper.PacketProcessor", new PacketProcessor());
+            //configuration = new PacketConfiguration(ClassLoader.getSystemResourceAsStream("structure.json"), "be.fastrada.packetmapper.PacketProcessor", new PacketProcessor());
+            configuration = new PacketConfiguration(this.getClass().getResourceAsStream("/structure.json"), "be.fastrada.packetmapper.PacketProcessor", new PacketProcessor());
+
         } catch (FastradaException e) {
             e.printStackTrace();
         }
 
-
+        PacketMapper packetMapper = new PacketMapper(configuration);
         for (Packet p : packetList.getPackets()){
-            PacketMapper packetMapper = new PacketMapper(configuration);
-            packetMapper.setContent(p.getContent().getBytes(Charset.forName("UTF-8")));
+
+            packetMapper.clearArrays();
+            packetMapper.setContent(hexStringToByteArray(p.getContent()));
             packetMapper.process();
 
             ArrayList<Double> values = packetMapper.getValues();
             ArrayList<String> types = packetMapper.getTypes();
 
             for (int i = 0; i < values.size(); i++) {
-                be.fastrada.model.Packet packet = new be.fastrada.model.Packet(values.get(i), p.getTimestamp(), packetList.getRaceName(), "temp");
+                be.fastrada.model.Packet packet = new be.fastrada.model.Packet(values.get(i), p.getTimestamp(), packetList.getRaceName(), types.get(i));
                 packetService.addPacket(packet);
             }
 
         }
 
         return "Created " + packetList.getPackets().size() + " packets.";
+    }
+
+    public static byte[] hexStringToByteArray(String s) {
+        int len = s.length();
+        byte[] data = new byte[len / 2];
+        for (int i = 0; i < len; i += 2) {
+            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
+                    + Character.digit(s.charAt(i+1), 16));
+        }
+        return data;
     }
 }
