@@ -5,7 +5,6 @@
 angular.module('fastradaApp.controllers').
     controller('NavigationCtrl', ['$scope', '$http', 'queryHandler', function ($scope, $http, queryHandler) {
 
-
         /*
             Data retrieval that is used for typeahead directive, returns a promise that the typeahead directive uses to
             autocomplete what you fill in
