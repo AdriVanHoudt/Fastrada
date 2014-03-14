@@ -1,6 +1,5 @@
 package be.fastrada.packetmapper;
 
-
 import be.fastrada.Exception.FastradaException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -8,9 +7,6 @@ import org.json.simple.JSONObject;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
-/**
- * Class that represents a packet.
- */
 public class PacketMapper {
     private ByteBuffer byteBuffer;
     private PacketConfiguration packetConfiguration;
@@ -40,22 +36,11 @@ public class PacketMapper {
         return byteBuffer.getShort();
     }
 
-    public int getSize(String name) {
-        for (Object o : this.getStructure()) {
-            JSONObject obj = (JSONObject) o;
-            if (obj.get("name").equals(name)) {
-                return ((Long) obj.get("size")).intValue();
-            }
-        }
-        return -1;
-    }
-
     public boolean invokeMethod(JSONObject jo) throws FastradaException {
         if (jo == null) {
             return true;
         }
 
-        String methodToInvoke = (String) jo.get("name");
         String type = (String) jo.get("type");
         int byteSize = Integer.parseInt(jo.get("size").toString());
         double offset = Double.parseDouble(jo.get("offset").toString());
@@ -66,36 +51,24 @@ public class PacketMapper {
         switch (byteSize) {
             case 8:
                 short value1 = (short) (byteBuffer.get() & 0xff);
-
                 value1 = (short) ((value1 * factor) - offset);
-
                 values.add((double) value1);
-
-                //m.invoke(obj, value1);
                 break;
             case 16:
                 int value2 = byteBuffer.getShort() & 0xffff;
-
                 value2 = (int) (((double)value2 * factor) - offset);
-
                 values.add((double) value2);
-                //m.invoke(obj, value2);
                 break;
             case 32:
                 long value3 = (long) (byteBuffer.getInt() & 0xffffffffL);
-
                 value3 = (long) ((value3 * factor) - offset);
-
                 values.add((double) value3);
-                //m.invoke(obj, value3); //kan dit niet coveren omdat dashboard geen parameter voor double heeft
                 break;
         }
         return true;
-
     }
 
-    public void clearArrays()
-    {
+    public void clearArrays() {
         values.clear();
         types.clear();
     }
@@ -113,14 +86,12 @@ public class PacketMapper {
 
         for (int i = 0; i < structure.size(); i++) {
             JSONObject jo = (JSONObject) structure.get(i);
-
             try {
                 invokeMethod(jo);
             } catch (FastradaException e) {
                 return false;
             }
         }
-
         return true;
     }
 

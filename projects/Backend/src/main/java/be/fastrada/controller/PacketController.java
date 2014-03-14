@@ -10,7 +10,6 @@ import be.fastrada.pojo.PostPacketList;
 import be.fastrada.service.PacketService;
 import be.fastrada.service.RaceService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,17 +25,14 @@ public class PacketController {
     @Autowired
     private PacketService packetService;
     @Autowired
-    private MongoTemplate mongoTemplate;
-    @Autowired
     private RaceService raceService;
 
     @RequestMapping(value = "packet", method = RequestMethod.POST)
     @ResponseBody
     public String addPacket(@RequestBody PostPacketList packetList) {
-        // TODO insert packetmapper
         PacketConfiguration configuration = null;
         try {
-            configuration = new PacketConfiguration(this.getClass().getResourceAsStream("/structure.json"), "be.fastrada.packetmapper.PacketProcessor", new PacketProcessor());
+            configuration = new PacketConfiguration(this.getClass().getResourceAsStream("/structure.json"));
 
         } catch (FastradaException e) {
             e.printStackTrace();
@@ -44,7 +40,6 @@ public class PacketController {
 
         PacketMapper packetMapper = new PacketMapper(configuration);
 
-        // cgeck if race already exists
         Race race = raceService.getRaceByNameAndTime(packetList.getRaceName(), packetList.getStartTime());
         if (race == null) {
             raceService.addRace(packetList.getRaceName(), packetList.getStartTime());
