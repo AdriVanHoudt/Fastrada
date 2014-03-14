@@ -6,9 +6,6 @@ import org.joda.time.Instant;
 import org.junit.Test;
 import static junit.framework.Assert.assertEquals;
 
-/**
- * Created by bavo on 5/03/14.
- */
 public class PacketTest
 {
     @Test

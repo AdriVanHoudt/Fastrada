@@ -16,8 +16,6 @@ public class RaceService {
 
     @Autowired
     private MongoTemplate mongoTemplate;
-    @Autowired
-    private PacketService packetService;
     private static final String COLLECTION_NAME = "races";
 
     public List getAllRaces() {
