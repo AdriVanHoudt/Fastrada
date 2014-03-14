@@ -1,10 +1,5 @@
 package be.fastrada.networking;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -12,6 +7,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RestSender implements Sender {
@@ -44,10 +40,10 @@ public class RestSender implements Sender {
         String json = "";
         while (true)
         {
-            if (packets.size() >= 0)
+            if (packets.size() > 0)
             {
                 List<Packet> local = packets;
-                packets = null;
+                packets = new ArrayList<Packet>();
 
 
 

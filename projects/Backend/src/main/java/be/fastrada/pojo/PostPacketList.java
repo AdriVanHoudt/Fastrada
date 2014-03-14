@@ -1,10 +1,13 @@
 package be.fastrada.pojo;
 
+import org.joda.time.DateTime;
+
 import java.util.List;
 
 public class PostPacketList {
     private String raceName;
     private String raceId;
+    private DateTime startTime;
     private List<Packet> packets;
 
     public PostPacketList() {
@@ -33,5 +36,13 @@ public class PostPacketList {
 
     public void setPackets(List<Packet> packets) {
         this.packets = packets;
+    }
+
+    public DateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(DateTime startTime) {
+        this.startTime = startTime;
     }
 }
