@@ -36,7 +36,7 @@
     <div class="container">
         <div class="navbar-collapse collapse">
             <div class="nav navbar-nav navbar-right">
-                <input type="text" id="query" placeholder="search ..." id="searchField" class="searchbox" typeahead="race as race.name for race in getRaceData() | filter:{name:$viewValue} | limitTo:8" ng-model="query"/>
+                <input type="text" placeholder="search ..." id="searchField" class="searchbox" typeahead="race as race.name for race in getRaceData() | filter:{name:$viewValue} | limitTo:8" ng-model="query"/>
                 &nbsp<span id="searchButton" ng-model="searchIcon" ng-click="search()" class="glyphicon glyphicon-search"></span>
             </div>
         </div>
