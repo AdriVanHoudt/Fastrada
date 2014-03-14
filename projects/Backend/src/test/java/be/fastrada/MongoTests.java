@@ -12,6 +12,8 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
+import static junit.framework.TestCase.assertTrue;
+
 public class MongoTests {
 
     @Test
@@ -71,5 +73,24 @@ public class MongoTests {
         // List<Race> raceList = mongoOperation.findAll(Race.class);
         // System.out.println("number of races: " + raceList.size());
 
+    }
+
+    @Test
+    public void checkPacketString()
+    {
+        Packet p = new Packet(0, null, "racenaam", "type");
+
+        assertTrue(p.toString().contains("racenaam"));
+    }
+
+    @Test
+    public void checkSensorString()
+    {
+        String[] strings = new String[1];
+        strings[0] = "hallo";
+        Sensor s = new Sensor("cardata", strings);
+
+        assertTrue(s.toString().contains("hallo"));
+        assertTrue(s.toString().contains("cardata"));
     }
 }

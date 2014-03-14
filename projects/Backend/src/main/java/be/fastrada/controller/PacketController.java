@@ -32,7 +32,6 @@ public class PacketController {
         PacketConfiguration configuration = null;
         try {
             configuration = new PacketConfiguration(this.getClass().getResourceAsStream("/structure.json"));
-
         } catch (FastradaException e) {
             e.printStackTrace();
         }

@@ -22,43 +22,6 @@ public class Packet {
         this.type = type;
     }
 
-    public String getId() {
-        return id;
-    }
-
-
-    public double getContent() {
-        return content;
-    }
-
-    public void setContent(double value) {
-        this.content = value;
-    }
-
-    public DateTime getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(DateTime timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public String getRaceId() {
-        return raceId;
-    }
-
-    public void setRaceId(String raceId) {
-        this.raceId = raceId;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
     @Override
     public String toString() {
         return "Packet{" +
