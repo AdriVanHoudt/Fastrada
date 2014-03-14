@@ -11,7 +11,7 @@ angular.module('fastradaApp.controllers').
             autocomplete what you fill in
          */
         $scope.getRaceData = (function () {
-            return $http.get('json/data.json').then(function(response){
+            return $http.get('http://teamb.feedient.com:8080/fastrada/api/race').then(function(response){
                 return response.data;
             });
         });
@@ -20,7 +20,7 @@ angular.module('fastradaApp.controllers').
             Search method that is invoked when a user presses the search button
          */
         $scope.search = (function() {
-            queryHandler.setCurrentRace($scope.query);
+            queryHandler.setCurrentRaceId($scope.query.id);
         });
 
     }]);
