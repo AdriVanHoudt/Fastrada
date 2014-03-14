@@ -1,6 +1,5 @@
 <div class="chart">
     <h1 id="title">{{race.name}}</h1>
-
     <tabset justified="true">
         <tab id="speed" heading="Speed" ng-click="openSpeed()" style="cursor: pointer!important;">
             <br/>
@@ -24,4 +23,5 @@
             </div>
         </tab>
     </tabset>
+    <input type="number" min="10" id="interval" placeholder="Interval" class="form-control" style="width: 200px; margin:0 auto!important;  margin-bottom: 50px!important;" ng-model="interval"/>
 </div>

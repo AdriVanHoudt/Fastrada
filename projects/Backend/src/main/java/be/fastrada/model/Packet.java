@@ -22,6 +22,22 @@ public class Packet {
         this.type = type;
     }
 
+    public double getContent() {
+        return content;
+    }
+
+    public DateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public String getRaceId() {
+        return raceId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
     @Override
     public String toString() {
         return "Packet{" +
