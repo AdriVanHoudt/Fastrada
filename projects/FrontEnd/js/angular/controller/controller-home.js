@@ -11,7 +11,7 @@ angular.module('fastradaApp.controllers').
                 /*
                  Function that refreshes the data on the screen based on the currently selected race
                  */
-                $scope.interval = 10;
+                $scope.interval = 1000;
                 $scope.test = "hello";
                 function updateScreen() {
                     // Build Speed chart on startup
