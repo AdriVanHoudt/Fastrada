@@ -14,7 +14,6 @@ angular.module('fastradaApp.controllers').
                 $scope.interval = 10;
                 $scope.test = "hello";
                 function updateScreen() {
-
                     // Build Speed chart on startup
                     /*
                      Data inside and http call cannot be deferred
@@ -55,6 +54,7 @@ angular.module('fastradaApp.controllers').
                  Scope will invoke the updateScreen method when a user query's for a new race
                  */
                 $scope.$on('newRaceQuery', function () {
+                    id = queryHandler.getCurrentRaceId();
                     updateScreen();
                 });
 
