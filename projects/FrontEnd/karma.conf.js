@@ -34,11 +34,7 @@ module.exports = function (config) {
 
         // test results reporter to use
         // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
-        reporters: ['progress', 'coverage'],
-
-        preprocessors: {
-            'js/angular/**/*.js': ['coverage']
-        },
+        reporters: ['progress'],
 
         // web server port
         port: 9876,
@@ -74,13 +70,12 @@ module.exports = function (config) {
 
         // Continuous Integration mode
         // if true, it capture browsers, run tests and exit
-        singleRun: false,
+        singleRun: true,
 
         //load the needed plugins (according to karma docs, this should not be needed tho)
         plugins: [
             'karma-jasmine',
-            'karma-chrome-launcher',
-            'karma-firefox-launcher'
+            'karma-chrome-launcher'
         ]
     });
 };

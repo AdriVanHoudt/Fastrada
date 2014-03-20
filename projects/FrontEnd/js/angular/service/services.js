@@ -58,7 +58,7 @@ angular.module('fastradaApp.services', [])
                     });
             },
             getRaceTemperatureData: function (id) {
-                return $http.get(url + id + '/data/temp').then(
+                return $http.get(url + id + '/data/temperature').then(
                     function (response) {
                         // success handler
                         return response.data;

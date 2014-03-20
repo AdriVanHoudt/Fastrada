@@ -15,6 +15,11 @@ describe('HomeCtrl', function () {
         $controller('HomeCtrl', {$scope: scope});
     }));
 
+    // No logic to test
+    it('should have variable text = "hello"', function () {
+        expect(scope.test).toBe('hello');
+    });
+
     it('should return aggregated packages', function () {
         var packets = [
             {time: 100, content: 20},
@@ -35,10 +40,7 @@ describe('HomeCtrl', function () {
     });
 
 
-    // No logic to test
-    it('should have variable text = "hello"', function () {
-        expect(scope.test).toBe('hello');
-    });
+
 
 
 });
